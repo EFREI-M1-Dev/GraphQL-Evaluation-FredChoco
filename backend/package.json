@@ -6,7 +6,9 @@
   "scripts": {
     "compile": "tsc",
     "start": "npm run compile && node ./dist/index.js",
-    "dev": "node --import ./scripts/register.js --watch src/index.ts"
+    "dev": "node --import ./scripts/register.js --watch src/index.ts",
+    "generate": "graphql-codegen",
+    "prisma": "prisma"
   },
   "keywords": [],
   "author": "",
@@ -14,11 +16,20 @@
   "type": "module",
   "dependencies": {
     "@apollo/server": "^4.10.4",
+    "bcrypt": "^5.1.1",
+    "consola": "^3.2.3",
     "graphql": "^16.8.1",
-    "graphql-tag": "^2.12.6"
+    "graphql-tag": "^2.12.6",
+    "jsonwebtoken": "^9.0.2"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.2",
+    "@graphql-codegen/typescript": "^4.0.6",
+    "@graphql-codegen/typescript-resolvers": "^4.0.6",
+    "@types/bcrypt": "^5.0.2",
+    "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20.12.7",
+    "prisma": "^5.12.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
   }
