@@ -27,7 +27,7 @@ export const resolvers: Resolvers = {
         //     }
         // },
         createUser: createUser,
-        signInUser: signInUser
+        signInUser: signInUser,
     },
 
     // People: {
