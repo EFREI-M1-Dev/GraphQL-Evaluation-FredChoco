@@ -1,28 +1,58 @@
 import gql from "graphql-tag";
 
 export const typeDefs = gql`
-type User {
+type UserJWT {
   id: ID!
   username: String!
 }
 
+type User {
+  id: ID!
+  username: String!
+  email: String!
+}
+
+
 type Query {
-  getEmpty: Boolean!
+  getUser(id: ID!): User
 }
 
 type Mutation {
-  createUser(username: String!, password: String!, email: String!): CreateUserResponse
-  signInUser(username: String!, password: String!): SignInUserResponse
+  createUser(username: String!, password: String!, email: String!): UserCreateResponse!
+  deleteUser(id: ID!): UserDeleteResponse!
+  updateUser(id: ID!, input: UpdateUserInput!): UserUpdateResponse!
+  
+  signInUser(username: String!, password: String!): UserSignInResponse!
 }
 
-type CreateUserResponse {
+type UserCreateResponse {
+  code: Int!
+  success: Boolean!
+  message: String!
+  user: UserJWT
+}
+
+type UserDeleteResponse {
+  code: Int!
+  success: Boolean!
+  message: String!
+}
+
+input UpdateUserInput {
+  username: String!
+  email: String!
+  password: String!
+}
+
+type UserUpdateResponse {
   code: Int!
   success: Boolean!
   message: String!
   user: User
 }
 
-type SignInUserResponse {
+
+type UserSignInResponse {
   code: Int!
   success: Boolean!
   message: String!
