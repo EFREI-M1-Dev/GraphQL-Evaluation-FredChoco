@@ -6,9 +6,9 @@ import * as bcrypt from "bcrypt";
 
 export type JWTUser = Pick<User, "id" | "username">;
 
-export const createJWT = (user: JWTUser) => jwt.sign(user, process.env.JWT_SECRET as string);
+export const createJWT = (user: JWTUser) => jwt.sign(user, process.env.JWT_SECRET);
 
-export const verifyJWT = (token: string) => jwt.verify(token, process.env.JWT_SECRET as string) as JWTUser;
+export const verifyJWT = (token: string) => jwt.verify(token, process.env.JWT_SECRET) as JWTUser;
 
 export const getUserFromToken = (token: string) : JWTUser | null => {
     try {
