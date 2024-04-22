@@ -4,9 +4,9 @@ import { createUser } from "./mutations/createUser.js";
 import { signInUser } from "./mutations/signInUser.js";
 
 export const resolvers: Resolvers = {
-    // Query: {
-    //
-    // },
+    Query: {
+        getEmpty: (_, __, {dataSources}) => true,
+    },
     Mutation: {
         //    incrementTrackLikes: async (_, {id}, {dataSources}) => {
         //     try {

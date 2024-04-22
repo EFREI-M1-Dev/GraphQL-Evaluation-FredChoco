@@ -5,13 +5,12 @@ type User {
   username: String!
 }
 
-
-# type Query {
-# 
-# }
+type Query {
+  getEmpty: Boolean!
+}
 
 type Mutation {
-  createUser(username: String!, password: String!): CreateUserResponse
+  createUser(username: String!, password: String!, email: String!): CreateUserResponse
   signInUser(username: String!, password: String!): SignInUserResponse
 }
 

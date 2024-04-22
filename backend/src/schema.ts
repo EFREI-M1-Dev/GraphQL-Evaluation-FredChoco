@@ -6,10 +6,9 @@ type User {
   username: String!
 }
 
-
-# type Query {
-# 
-# }
+type Query {
+  getEmpty: Boolean!
+}
 
 type Mutation {
   createUser(username: String!, password: String!, email: String!): CreateUserResponse

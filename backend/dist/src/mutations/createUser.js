@@ -1,10 +1,11 @@
 import consola from "consola";
 import { hashPassword } from "../modules/auth.js";
-export const createUser = async (_, { username, password }, { dataSources }) => {
+export const createUser = async (_, { username, password, email }, { dataSources }) => {
     try {
         const createdUser = await dataSources.db.user.create({
             data: {
                 username,
+                email,
                 password: await hashPassword(password)
             }
         });
