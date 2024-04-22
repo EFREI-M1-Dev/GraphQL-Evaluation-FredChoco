@@ -1,7 +1,8 @@
 import { GraphQLError } from "graphql";
 import { Resolvers } from "./types.js";
-import { createUser } from "./mutations/createUser.js";
-import { signInUser } from "./mutations/signInUser.js";
+
+import { UserMutations, UserQueries } from './models/User';
+import { signInUser } from './models/signInUser';
 
 export const resolvers: Resolvers = {
     Query: {
@@ -21,6 +22,7 @@ export const resolvers: Resolvers = {
         getAllDislikes: (_, __, {dataSources}) => {
             throw new GraphQLError('Not implemented')
         },
+        ...UserQueries
     },
     Mutation: {
         //    incrementTrackLikes: async (_, {id}, {dataSources}) => {
@@ -41,8 +43,6 @@ export const resolvers: Resolvers = {
         //         }
         //     }
         // },
-        createUser: createUser,
-        signInUser: signInUser,
         // createLike: createLike,
         // createDislike: createDislike,
         // createComment: createComment,
@@ -50,13 +50,7 @@ export const resolvers: Resolvers = {
         // deleteDislike: deleteDislike,
         // deleteComment: deleteComment,
         // updateComment: updateComment
+        ...UserMutations,
+        signInUser,
     },
-
-    // People: {
-    //     eyeColor: ({eye_color}) => eye_color,
-    //     films: ({films}, _, {dataSources}) => {
-    //         return dataSources.ghibliAPI.getFilmsByUrls(films)
-    //     }
-    // },
-
 }

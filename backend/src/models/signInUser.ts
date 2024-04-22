@@ -1,6 +1,6 @@
 import consola from "consola";
 import { MutationResolvers } from "../types";
-import { comparePasswords, createJWT } from "../modules/auth.js";
+import { comparePasswords, createJWT } from "../modules/auth";
 
 export const signInUser: MutationResolvers["signInUser"] = async (_, { username, password }, { dataSources }) => {
     try {

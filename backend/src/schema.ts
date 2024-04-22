@@ -1,10 +1,17 @@
 import gql from "graphql-tag";
 
 export const typeDefs = gql`
-type User {
+type UserJWT {
   id: ID!
   username: String!
 }
+
+type User {
+  id: ID!
+  username: String!
+  email: String!
+}
+
 
 type Post {
   id: ID!
@@ -33,6 +40,7 @@ type Comment {
 }
 
 type Query {
+  getUser(id: ID!): User
   getEmpty: Boolean!
   getLike: Like!
   getDislike: Dislike!
@@ -43,8 +51,10 @@ type Query {
 }
 
 type Mutation {
-  createUser(username: String!, password: String!, email: String!): CreateUserResponse
-  signInUser(username: String!, password: String!): SignInUserResponse
+  createUser(username: String!, password: String!, email: String!): UserCreateResponse!
+  deleteUser(id: ID!): UserDeleteResponse!
+  updateUser(id: ID!, input: UpdateUserInput!): UserUpdateResponse!
+  signInUser(username: String!, password: String!): UserSignInResponse!
   
   createLike(userId: ID!, postId: ID!): LikeCreateResponse
   createDislike(userId: ID!, postId: ID!): DislikeCreateResponse
@@ -57,14 +67,34 @@ type Mutation {
   updateComment(userId: ID!, postId: ID!, content: String!): CommentUpdateResponse
 }
 
-type CreateUserResponse {
+type UserCreateResponse {
+  code: Int!
+  success: Boolean!
+  message: String!
+  user: UserJWT
+}
+
+type UserDeleteResponse {
+  code: Int!
+  success: Boolean!
+  message: String!
+}
+
+input UpdateUserInput {
+  username: String!
+  email: String!
+  password: String!
+}
+
+type UserUpdateResponse {
   code: Int!
   success: Boolean!
   message: String!
   user: User
 }
 
-type SignInUserResponse {
+
+type UserSignInResponse {
   code: Int!
   success: Boolean!
   message: String!

@@ -1,6 +1,6 @@
 import consola from "consola";
-import { MutationResolvers } from "../types";
-import { hashPassword } from "../modules/auth.js";
+import { MutationResolvers } from "../../../types";
+import { hashPassword } from "../../../modules/auth";
 
 export const createUser: MutationResolvers["createUser"] = async (_, { username, password, email }, { dataSources }) => {
 
