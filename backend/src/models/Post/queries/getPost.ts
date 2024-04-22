@@ -12,12 +12,7 @@ export const getPost: QueryResolvers["getPost"] = async (_, { id }, { dataSource
             return null;
         }
 
-        return {
-            id: post.id,
-            title: post.title,
-            content: post.content,
-            userId: post.userId
-        };
+        return post;
     } catch (e) {
         return null;
     }
