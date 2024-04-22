@@ -6,6 +6,21 @@ import { signInUser } from "./mutations/signInUser.js";
 export const resolvers: Resolvers = {
     Query: {
         getEmpty: (_, __, {dataSources}) => true,
+        getLike: (_, __, {dataSources}) => {
+            throw new GraphQLError('Not implemented')
+        },
+        getDislike: (_, __, {dataSources}) => {
+            throw new GraphQLError('Not implemented')
+        },
+        getComment: (_, __, {dataSources}) => {
+            throw new GraphQLError('Not implemented')
+        },
+        getAllLikes: (_, __, {dataSources}) => {
+            throw new GraphQLError('Not implemented')
+        },
+        getAllDislikes: (_, __, {dataSources}) => {
+            throw new GraphQLError('Not implemented')
+        },
     },
     Mutation: {
         //    incrementTrackLikes: async (_, {id}, {dataSources}) => {
@@ -28,6 +43,13 @@ export const resolvers: Resolvers = {
         // },
         createUser: createUser,
         signInUser: signInUser,
+        // createLike: createLike,
+        // createDislike: createDislike,
+        // createComment: createComment,
+        // deleteLike: deleteLike,
+        // deleteDislike: deleteDislike,
+        // deleteComment: deleteComment,
+        // updateComment: updateComment
     },
 
     // People: {
