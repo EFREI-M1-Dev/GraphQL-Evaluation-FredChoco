@@ -97,16 +97,16 @@ export type LikeDeleteResponse = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createComment?: Maybe<CommentCreateResponse>;
-  createDislike?: Maybe<DislikeCreateResponse>;
-  createLike?: Maybe<LikeCreateResponse>;
+  createComment: CommentCreateResponse;
+  createDislike: DislikeCreateResponse;
+  createLike: LikeCreateResponse;
   createUser: UserCreateResponse;
-  deleteComment?: Maybe<CommentDeleteResponse>;
-  deleteDislike?: Maybe<DislikeDeleteResponse>;
-  deleteLike?: Maybe<LikeDeleteResponse>;
+  deleteComment: CommentDeleteResponse;
+  deleteDislike: DislikeDeleteResponse;
+  deleteLike: LikeDeleteResponse;
   deleteUser: UserDeleteResponse;
   signInUser: UserSignInResponse;
-  updateComment?: Maybe<CommentUpdateResponse>;
+  updateComment: CommentUpdateResponse;
   updateUser: UserUpdateResponse;
 };
 
@@ -192,9 +192,14 @@ export type Query = {
   getAllLikes: Array<Like>;
   getComment: Comment;
   getDislike: Dislike;
-  getEmpty: Scalars['Boolean']['output'];
   getLike: Like;
+  getPost?: Maybe<Post>;
   getUser?: Maybe<User>;
+};
+
+
+export type QueryGetPostArgs = {
+  id: Scalars['ID']['input'];
 };
 
 
@@ -456,16 +461,16 @@ export type LikeDeleteResponseResolvers<ContextType = DataSourceContext, ParentT
 };
 
 export type MutationResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  createComment?: Resolver<Maybe<ResolversTypes['CommentCreateResponse']>, ParentType, ContextType, RequireFields<MutationCreateCommentArgs, 'content' | 'postId' | 'userId'>>;
-  createDislike?: Resolver<Maybe<ResolversTypes['DislikeCreateResponse']>, ParentType, ContextType, RequireFields<MutationCreateDislikeArgs, 'postId' | 'userId'>>;
-  createLike?: Resolver<Maybe<ResolversTypes['LikeCreateResponse']>, ParentType, ContextType, RequireFields<MutationCreateLikeArgs, 'postId' | 'userId'>>;
+  createComment?: Resolver<ResolversTypes['CommentCreateResponse'], ParentType, ContextType, RequireFields<MutationCreateCommentArgs, 'content' | 'postId' | 'userId'>>;
+  createDislike?: Resolver<ResolversTypes['DislikeCreateResponse'], ParentType, ContextType, RequireFields<MutationCreateDislikeArgs, 'postId' | 'userId'>>;
+  createLike?: Resolver<ResolversTypes['LikeCreateResponse'], ParentType, ContextType, RequireFields<MutationCreateLikeArgs, 'postId' | 'userId'>>;
   createUser?: Resolver<ResolversTypes['UserCreateResponse'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'email' | 'password' | 'username'>>;
-  deleteComment?: Resolver<Maybe<ResolversTypes['CommentDeleteResponse']>, ParentType, ContextType, RequireFields<MutationDeleteCommentArgs, 'postId' | 'userId'>>;
-  deleteDislike?: Resolver<Maybe<ResolversTypes['DislikeDeleteResponse']>, ParentType, ContextType, RequireFields<MutationDeleteDislikeArgs, 'postId' | 'userId'>>;
-  deleteLike?: Resolver<Maybe<ResolversTypes['LikeDeleteResponse']>, ParentType, ContextType, RequireFields<MutationDeleteLikeArgs, 'postId' | 'userId'>>;
+  deleteComment?: Resolver<ResolversTypes['CommentDeleteResponse'], ParentType, ContextType, RequireFields<MutationDeleteCommentArgs, 'postId' | 'userId'>>;
+  deleteDislike?: Resolver<ResolversTypes['DislikeDeleteResponse'], ParentType, ContextType, RequireFields<MutationDeleteDislikeArgs, 'postId' | 'userId'>>;
+  deleteLike?: Resolver<ResolversTypes['LikeDeleteResponse'], ParentType, ContextType, RequireFields<MutationDeleteLikeArgs, 'postId' | 'userId'>>;
   deleteUser?: Resolver<ResolversTypes['UserDeleteResponse'], ParentType, ContextType, RequireFields<MutationDeleteUserArgs, 'id'>>;
   signInUser?: Resolver<ResolversTypes['UserSignInResponse'], ParentType, ContextType, RequireFields<MutationSignInUserArgs, 'password' | 'username'>>;
-  updateComment?: Resolver<Maybe<ResolversTypes['CommentUpdateResponse']>, ParentType, ContextType, RequireFields<MutationUpdateCommentArgs, 'content' | 'postId' | 'userId'>>;
+  updateComment?: Resolver<ResolversTypes['CommentUpdateResponse'], ParentType, ContextType, RequireFields<MutationUpdateCommentArgs, 'content' | 'postId' | 'userId'>>;
   updateUser?: Resolver<ResolversTypes['UserUpdateResponse'], ParentType, ContextType, RequireFields<MutationUpdateUserArgs, 'id' | 'input'>>;
 };
 
@@ -482,8 +487,8 @@ export type QueryResolvers<ContextType = DataSourceContext, ParentType extends R
   getAllLikes?: Resolver<Array<ResolversTypes['Like']>, ParentType, ContextType>;
   getComment?: Resolver<ResolversTypes['Comment'], ParentType, ContextType>;
   getDislike?: Resolver<ResolversTypes['Dislike'], ParentType, ContextType>;
-  getEmpty?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   getLike?: Resolver<ResolversTypes['Like'], ParentType, ContextType>;
+  getPost?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<QueryGetPostArgs, 'id'>>;
   getUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetUserArgs, 'id'>>;
 };
 

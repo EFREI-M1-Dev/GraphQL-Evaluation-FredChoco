@@ -2,11 +2,11 @@ import { GraphQLError } from "graphql";
 import { Resolvers } from "./types.js";
 
 import { UserMutations, UserQueries } from './models/User';
+import { PostQueries } from './models/Post';
 import { signInUser } from './models/signInUser';
 
 export const resolvers: Resolvers = {
     Query: {
-        getEmpty: (_, __, {dataSources}) => true,
         getLike: (_, __, {dataSources}) => {
             throw new GraphQLError('Not implemented')
         },
@@ -22,7 +22,8 @@ export const resolvers: Resolvers = {
         getAllDislikes: (_, __, {dataSources}) => {
             throw new GraphQLError('Not implemented')
         },
-        ...UserQueries
+        ...UserQueries,
+        ...PostQueries
     },
     Mutation: {
         //    incrementTrackLikes: async (_, {id}, {dataSources}) => {

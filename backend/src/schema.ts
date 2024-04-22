@@ -41,7 +41,8 @@ type Comment {
 
 type Query {
   getUser(id: ID!): User
-  getEmpty: Boolean!
+  getPost(id: ID!): Post
+  
   getLike: Like!
   getDislike: Dislike!
   getComment: Comment!
@@ -56,15 +57,15 @@ type Mutation {
   updateUser(id: ID!, input: UpdateUserInput!): UserUpdateResponse!
   signInUser(username: String!, password: String!): UserSignInResponse!
   
-  createLike(userId: ID!, postId: ID!): LikeCreateResponse
-  createDislike(userId: ID!, postId: ID!): DislikeCreateResponse
-  createComment(userId: ID!, postId: ID!, content: String!): CommentCreateResponse
+  createLike(userId: ID!, postId: ID!): LikeCreateResponse!
+  createDislike(userId: ID!, postId: ID!): DislikeCreateResponse!
+  createComment(userId: ID!, postId: ID!, content: String!): CommentCreateResponse!
   
-  deleteLike(userId: ID!, postId: ID!): LikeDeleteResponse
-  deleteDislike(userId: ID!, postId: ID!): DislikeDeleteResponse
-  deleteComment(userId: ID!, postId: ID!): CommentDeleteResponse
+  deleteLike(userId: ID!, postId: ID!): LikeDeleteResponse!
+  deleteDislike(userId: ID!, postId: ID!): DislikeDeleteResponse!
+  deleteComment(userId: ID!, postId: ID!): CommentDeleteResponse!
   
-  updateComment(userId: ID!, postId: ID!, content: String!): CommentUpdateResponse
+  updateComment(userId: ID!, postId: ID!, content: String!): CommentUpdateResponse!
 }
 
 type UserCreateResponse {
