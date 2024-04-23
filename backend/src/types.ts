@@ -138,20 +138,17 @@ export type MutationCreateUserArgs = {
 
 
 export type MutationDeleteCommentArgs = {
-  postId: Scalars['ID']['input'];
-  userId: Scalars['ID']['input'];
+  id: Scalars['ID']['input'];
 };
 
 
 export type MutationDeleteDislikeArgs = {
-  postId: Scalars['ID']['input'];
-  userId: Scalars['ID']['input'];
+  id: Scalars['ID']['input'];
 };
 
 
 export type MutationDeleteLikeArgs = {
-  postId: Scalars['ID']['input'];
-  userId: Scalars['ID']['input'];
+  id: Scalars['ID']['input'];
 };
 
 
@@ -190,11 +187,26 @@ export type Query = {
   __typename?: 'Query';
   getAllDislikes: Array<Dislike>;
   getAllLikes: Array<Like>;
-  getComment: Comment;
-  getDislike: Dislike;
-  getLike: Like;
+  getComment?: Maybe<Comment>;
+  getDislike?: Maybe<Dislike>;
+  getLike?: Maybe<Like>;
   getPost?: Maybe<Post>;
   getUser?: Maybe<User>;
+};
+
+
+export type QueryGetCommentArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryGetDislikeArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryGetLikeArgs = {
+  id: Scalars['ID']['input'];
 };
 
 
@@ -465,9 +477,9 @@ export type MutationResolvers<ContextType = DataSourceContext, ParentType extend
   createDislike?: Resolver<ResolversTypes['DislikeCreateResponse'], ParentType, ContextType, RequireFields<MutationCreateDislikeArgs, 'postId' | 'userId'>>;
   createLike?: Resolver<ResolversTypes['LikeCreateResponse'], ParentType, ContextType, RequireFields<MutationCreateLikeArgs, 'postId' | 'userId'>>;
   createUser?: Resolver<ResolversTypes['UserCreateResponse'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'email' | 'password' | 'username'>>;
-  deleteComment?: Resolver<ResolversTypes['CommentDeleteResponse'], ParentType, ContextType, RequireFields<MutationDeleteCommentArgs, 'postId' | 'userId'>>;
-  deleteDislike?: Resolver<ResolversTypes['DislikeDeleteResponse'], ParentType, ContextType, RequireFields<MutationDeleteDislikeArgs, 'postId' | 'userId'>>;
-  deleteLike?: Resolver<ResolversTypes['LikeDeleteResponse'], ParentType, ContextType, RequireFields<MutationDeleteLikeArgs, 'postId' | 'userId'>>;
+  deleteComment?: Resolver<ResolversTypes['CommentDeleteResponse'], ParentType, ContextType, RequireFields<MutationDeleteCommentArgs, 'id'>>;
+  deleteDislike?: Resolver<ResolversTypes['DislikeDeleteResponse'], ParentType, ContextType, RequireFields<MutationDeleteDislikeArgs, 'id'>>;
+  deleteLike?: Resolver<ResolversTypes['LikeDeleteResponse'], ParentType, ContextType, RequireFields<MutationDeleteLikeArgs, 'id'>>;
   deleteUser?: Resolver<ResolversTypes['UserDeleteResponse'], ParentType, ContextType, RequireFields<MutationDeleteUserArgs, 'id'>>;
   signInUser?: Resolver<ResolversTypes['UserSignInResponse'], ParentType, ContextType, RequireFields<MutationSignInUserArgs, 'password' | 'username'>>;
   updateComment?: Resolver<ResolversTypes['CommentUpdateResponse'], ParentType, ContextType, RequireFields<MutationUpdateCommentArgs, 'content' | 'postId' | 'userId'>>;
@@ -485,9 +497,9 @@ export type PostResolvers<ContextType = DataSourceContext, ParentType extends Re
 export type QueryResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   getAllDislikes?: Resolver<Array<ResolversTypes['Dislike']>, ParentType, ContextType>;
   getAllLikes?: Resolver<Array<ResolversTypes['Like']>, ParentType, ContextType>;
-  getComment?: Resolver<ResolversTypes['Comment'], ParentType, ContextType>;
-  getDislike?: Resolver<ResolversTypes['Dislike'], ParentType, ContextType>;
-  getLike?: Resolver<ResolversTypes['Like'], ParentType, ContextType>;
+  getComment?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, RequireFields<QueryGetCommentArgs, 'id'>>;
+  getDislike?: Resolver<Maybe<ResolversTypes['Dislike']>, ParentType, ContextType, RequireFields<QueryGetDislikeArgs, 'id'>>;
+  getLike?: Resolver<Maybe<ResolversTypes['Like']>, ParentType, ContextType, RequireFields<QueryGetLikeArgs, 'id'>>;
   getPost?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<QueryGetPostArgs, 'id'>>;
   getUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetUserArgs, 'id'>>;
 };

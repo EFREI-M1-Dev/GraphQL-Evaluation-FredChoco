@@ -43,10 +43,10 @@ type Query {
   getUser(id: ID!): User
   getPost(id: ID!): Post
   
-  getLike: Like!
-  getDislike: Dislike!
-  getComment: Comment!
-  
+  getLike(id: ID!): Like
+  getDislike(id: ID!): Dislike
+  getComment(id: ID!): Comment
+ 
   getAllLikes: [Like!]!
   getAllDislikes: [Dislike!]!
 }
@@ -61,9 +61,9 @@ type Mutation {
   createDislike(userId: ID!, postId: ID!): DislikeCreateResponse!
   createComment(userId: ID!, postId: ID!, content: String!): CommentCreateResponse!
   
-  deleteLike(userId: ID!, postId: ID!): LikeDeleteResponse!
-  deleteDislike(userId: ID!, postId: ID!): DislikeDeleteResponse!
-  deleteComment(userId: ID!, postId: ID!): CommentDeleteResponse!
+  deleteLike(id: ID!): LikeDeleteResponse!
+  deleteDislike(id: ID!): DislikeDeleteResponse!
+  deleteComment(id: ID!): CommentDeleteResponse!
   
   updateComment(userId: ID!, postId: ID!, content: String!): CommentUpdateResponse!
 }
