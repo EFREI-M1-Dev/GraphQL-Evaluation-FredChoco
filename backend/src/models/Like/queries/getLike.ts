@@ -42,7 +42,12 @@ export const getLike: QueryResolvers["getLike"] = async (_, { id }, { dataSource
             post: {
                 id: post.id,
                 title: post.title,
-                content: post.content
+                content: post.content,
+                user: {
+                    id: user.id,
+                    email: user.email,
+                    username: user.username
+                }
             }
         };
     } catch (e) {
