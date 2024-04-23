@@ -60,12 +60,28 @@ type Mutation {
   createLike(userId: ID!, postId: ID!): LikeCreateResponse!
   createDislike(userId: ID!, postId: ID!): DislikeCreateResponse!
   createComment(userId: ID!, postId: ID!, content: String!): CommentCreateResponse!
+  createPost(title: String!, content: String!, userId: ID!): PostCreateResponse!
+  
   
   deleteLike(userId: ID!, postId: ID!): LikeDeleteResponse!
   deleteDislike(userId: ID!, postId: ID!): DislikeDeleteResponse!
   deleteComment(userId: ID!, postId: ID!): CommentDeleteResponse!
+  deletePost(id: ID!): PostDeleteResponse!
   
   updateComment(userId: ID!, postId: ID!, content: String!): CommentUpdateResponse!
+}
+
+type PostDeleteResponse {
+    code: Int!
+    success: Boolean!
+    message: String!
+}
+
+type PostCreateResponse {
+    code: Int!
+    success: Boolean!
+    message: String!
+    post: Post
 }
 
 type UserCreateResponse {
