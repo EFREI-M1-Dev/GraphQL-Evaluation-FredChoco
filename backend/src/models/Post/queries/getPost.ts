@@ -1,38 +1,25 @@
-import { QueryResolvers } from "../../../types";
+import { QueryResolvers,User } from "../../../types";
+import {consola} from "consola";
+import {postSelect} from "../../selectorsPrisma";
 
 export const getPost: QueryResolvers["getPost"] = async (_, { id }, { dataSources }) => {
     try {
+
         const post = await dataSources.db.post.findUnique({
             where: {
                 id: id
-            }
+            },
+            include: postSelect
         });
 
         if (!post) {
             return null;
         }
 
-        const user = await dataSources.db.user.findUnique({
-            where: {
-                id: post.userId
-            }
-        });
+        return post;
 
-        if (!user) {
-            return null;
-        }
-
-        return {
-            id: post.id,
-            title: post.title,
-            content: post.content,
-            user: {
-                id: user.id,
-                username: user.username,
-                email: user.email
-            }
-        };
     } catch (e) {
+        consola.error(e);
         return null;
     }
 };

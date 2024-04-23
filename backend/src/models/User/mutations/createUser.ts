@@ -1,6 +1,7 @@
 import consola from "consola";
 import { MutationResolvers } from "../../../types";
 import { hashPassword } from "../../../modules/auth.js";
+import {userSelect} from "../../selectorsPrisma";
 
 export const createUser: MutationResolvers["createUser"] = async (_, { username, password, email }, { dataSources }) => {
 
@@ -10,18 +11,15 @@ export const createUser: MutationResolvers["createUser"] = async (_, { username,
                 username,
                 email,
                 password: await hashPassword(password)
-            }
+            },
+            select: userSelect
         });
 
         return {
             code: 200,
             success: true,
             message: 'User has been created',
-            user:
-                {
-                    id: createdUser.id,
-                    username: createdUser.username
-                }
+            user: createdUser
         }
     } catch (e) {
         consola.error(e as Error);

@@ -1,5 +1,6 @@
 import {MutationResolvers} from "../../../types";
 import consola from "consola";
+import {dislikeSelect} from "../../selectorsPrisma";
 
 export const createDislike: MutationResolvers["createDislike"] = async (_, {userId, postId}, {dataSources}) => {
 
@@ -17,29 +18,7 @@ export const createDislike: MutationResolvers["createDislike"] = async (_, {user
                     }
                 }
             },
-            include: {
-                user: {
-                    select: {
-                        id: true,
-                        email: true,
-                        username: true
-                    }
-                },
-                post: {
-                    select: {
-                        id: true,
-                        title: true,
-                        content: true,
-                        user: {
-                            select: {
-                                id: true,
-                                email: true,
-                                username: true
-                            }
-                        }
-                    }
-                }
-            }
+            include: dislikeSelect
         });
 
         if (!createdDislike) {
@@ -50,12 +29,7 @@ export const createDislike: MutationResolvers["createDislike"] = async (_, {user
             code: 200,
             success: true,
             message: 'Dislike has been created',
-            dislike:
-                {
-                    id: createdDislike.id,
-                    user: createdDislike.user,
-                    post: createdDislike.post
-                }
+            dislike: createdDislike
         }
     } catch (e) {
         consola.error(e as Error);
@@ -63,7 +37,7 @@ export const createDislike: MutationResolvers["createDislike"] = async (_, {user
             code: 500,
             success: false,
             message: (e as Error).message,
-            user: null
+            dislike: null
         }
     }
 }

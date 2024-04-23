@@ -1,56 +1,20 @@
-import { QueryResolvers } from "../../../types";
+import {QueryResolvers} from "../../../types";
+import {commentSelect} from "../../selectorsPrisma";
 
-export const getComment: QueryResolvers["getComment"] = async (_, { id }, { dataSources }) => {
+export const getComment: QueryResolvers["getComment"] = async (_, {id}, {dataSources}) => {
     try {
         const comment = await dataSources.db.comment.findUnique({
             where: {
                 id: id
-            }
+            },
+            include: commentSelect
         });
 
         if (!comment) {
-            return null;
+            throw new Error('Comment not found')
         }
 
-        const user = await dataSources.db.user.findUnique({
-            where: {
-                id: comment.userId
-            }
-        });
-
-        if (!user) {
-            return null;
-        }
-
-        const post = await dataSources.db.post.findUnique({
-            where: {
-                id: comment.postId
-            }
-        });
-
-        if (!post) {
-            return null;
-        }
-
-        return {
-            id: comment.id,
-            content: comment.content,
-            user: {
-                id: user.id,
-                username: user.username,
-                email: user.email
-            },
-            post: {
-                id: post.id,
-                title: post.title,
-                content: post.content,
-                user: {
-                    id: user.id,
-                    email: user.email,
-                    username: user.username
-                }
-            }
-        };
+        return comment;
     } catch (e) {
         return null;
     }

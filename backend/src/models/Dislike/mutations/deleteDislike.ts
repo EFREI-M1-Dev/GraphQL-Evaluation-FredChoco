@@ -3,12 +3,15 @@ import consola from "consola";
 
 export const deleteDislike: MutationResolvers["deleteDislike"] = async (_, { id }, { dataSources }) => {
     try {
-        // Logique de suppression de dislike
-        await dataSources.db.dislike.delete({
+        const result = await dataSources.db.dislike.delete({
             where: {
                 id: id
             }
         });
+
+        if(!result) {
+            throw new Error('Dislike not found');
+        }
 
         return {
             code: 200,

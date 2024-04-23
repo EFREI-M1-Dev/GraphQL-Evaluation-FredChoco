@@ -1,35 +1,23 @@
-import { createUser } from "./mutations/createUser.js";
-import { signInUser } from "./mutations/signInUser.js";
+import { UserMutations, UserQueries } from './models/User/index.js';
+import { PostQueries, PostMutations } from './models/Post/index.js';
+import { signInUser } from './models/Auth/signInUser.js';
+import { LikeMutations, LikeQueries } from "./models/Like/index.js";
+import { DislikeMutations, DislikeQueries } from "./models/Dislike/index.js";
+import { CommentMutations, CommentQueries } from "./models/Comment/index.js";
 export const resolvers = {
     Query: {
-        getEmpty: (_, __, { dataSources }) => true,
+        ...LikeQueries,
+        ...DislikeQueries,
+        ...CommentQueries,
+        ...UserQueries,
+        ...PostQueries
     },
     Mutation: {
-        //    incrementTrackLikes: async (_, {id}, {dataSources}) => {
-        //     try {
-        //         const track = await dataSources.trackAPI.incrementTrackLike(id);
-        //         return {
-        //             code: 200,
-        //             message: 'Number of likes has been incremented',
-        //             success: Boolean(track),
-        //             track
-        //         }
-        //     } catch(e) {
-        //         return {
-        //             code: 304,
-        //             message: 'Resource not modified',
-        //             success: false,
-        //             track: null,
-        //         }
-        //     }
-        // },
-        createUser: createUser,
-        signInUser: signInUser
+        ...UserMutations,
+        ...LikeMutations,
+        ...DislikeMutations,
+        ...CommentMutations,
+        ...PostMutations,
+        signInUser,
     },
-    // People: {
-    //     eyeColor: ({eye_color}) => eye_color,
-    //     films: ({films}, _, {dataSources}) => {
-    //         return dataSources.ghibliAPI.getFilmsByUrls(films)
-    //     }
-    // },
 };

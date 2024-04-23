@@ -3,12 +3,15 @@ import consola from "consola";
 
 export const deletePost: MutationResolvers["deletePost"] = async (_, { id }, { dataSources }) => {
     try {
-        // Logique de suppression d'un Post
-        await dataSources.db.post.delete({
+        const result = await dataSources.db.post.delete({
             where: {
                 id: id
             }
         });
+
+        if(!result) {
+            throw new Error('Post not found');
+        }
 
         return {
             code: 200,

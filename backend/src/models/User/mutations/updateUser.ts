@@ -3,7 +3,6 @@ import consola from "consola";
 
 export const updateUser: MutationResolvers["updateUser"] = async (_, { id, input }, { dataSources }) => {
     try {
-        // Logique de mise à jour de l'utilisateur
         const updatedUser = await dataSources.db.user.update({
             where: { id },
             data: {

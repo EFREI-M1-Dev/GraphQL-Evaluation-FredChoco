@@ -3,12 +3,15 @@ import consola from "consola";
 
 export const deleteUser: MutationResolvers["deleteUser"] = async (_, { id }, { dataSources }) => {
     try {
-        // Logique de suppression d'utilisateur
-        await dataSources.db.user.delete({
+        const result = await dataSources.db.user.delete({
             where: {
                 id: id
             }
         });
+
+        if(!result) {
+            throw new Error('User not found');
+        }
 
         return {
             code: 200,

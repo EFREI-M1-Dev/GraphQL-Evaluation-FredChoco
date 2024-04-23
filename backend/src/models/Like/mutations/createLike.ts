@@ -1,5 +1,6 @@
 import {MutationResolvers} from "../../../types";
 import consola from "consola";
+import {likeSelect} from "../../selectorsPrisma";
 
 export const createLike: MutationResolvers["createLike"] = async (_, {userId, postId}, {dataSources}) => {
 
@@ -17,29 +18,7 @@ export const createLike: MutationResolvers["createLike"] = async (_, {userId, po
                     }
                 }
             },
-            include: {
-                user: {
-                    select: {
-                        id: true,
-                        email: true,
-                        username: true
-                    }
-                },
-                post: {
-                    select: {
-                        id: true,
-                        title: true,
-                        content: true,
-                        user: {
-                            select: {
-                                id: true,
-                                email: true,
-                                username: true
-                            }
-                        }
-                    }
-                }
-            }
+            include: likeSelect
         });
 
         if (!createdLike) {
@@ -50,12 +29,7 @@ export const createLike: MutationResolvers["createLike"] = async (_, {userId, po
             code: 200,
             success: true,
             message: 'Like has been created',
-            like:
-                {
-                    id: createdLike.id,
-                    user: createdLike.user,
-                    post: createdLike.post
-                }
+            like:createdLike
         }
     } catch (e) {
         consola.error(e as Error);
@@ -63,7 +37,7 @@ export const createLike: MutationResolvers["createLike"] = async (_, {userId, po
             code: 500,
             success: false,
             message: (e as Error).message,
-            user: null
+            like: null
         }
     }
 }

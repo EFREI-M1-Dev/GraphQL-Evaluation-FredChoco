@@ -1,6 +1,7 @@
 import {MutationResolvers} from "../../../types";
 import consola from "consola";
 import {create} from "node:domain";
+import {commentSelect} from "../../selectorsPrisma";
 
 export const createComment: MutationResolvers["createComment"] = async (_, {userId, postId, content}, {dataSources}) => {
 
@@ -19,29 +20,7 @@ export const createComment: MutationResolvers["createComment"] = async (_, {user
                 },
                 content: content
             },
-            include: {
-                user: {
-                    select: {
-                        id: true,
-                        email: true,
-                        username: true
-                    }
-                },
-                post: {
-                    select: {
-                        id: true,
-                        title: true,
-                        content: true,
-                        user: {
-                            select: {
-                                id: true,
-                                email: true,
-                                username: true
-                            }
-                        }
-                    }
-                }
-            }
+            include: commentSelect
         });
 
         if (!createdComment) {
@@ -52,13 +31,7 @@ export const createComment: MutationResolvers["createComment"] = async (_, {user
             code: 200,
             success: true,
             message: 'Comment has been created',
-            comment:
-                {
-                    id: createdComment.id,
-                    user: createdComment.user,
-                    post: createdComment.post,
-                    content: createdComment.content
-                }
+            comment: createdComment
         }
     } catch (e) {
         consola.error(e as Error);
@@ -66,7 +39,7 @@ export const createComment: MutationResolvers["createComment"] = async (_, {user
             code: 500,
             success: false,
             message: (e as Error).message,
-            user: null
+            comment: null
         }
     }
 }

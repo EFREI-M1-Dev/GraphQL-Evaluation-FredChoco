@@ -1,5 +1,6 @@
 import {MutationResolvers} from "../../../types";
 import consola from "consola";
+import {postSelect} from "../../selectorsPrisma";
 
 export const createPost: MutationResolvers["createPost"] = async (_, {title, content, userId}, {dataSources}) => {
     try {
@@ -13,15 +14,7 @@ export const createPost: MutationResolvers["createPost"] = async (_, {title, con
                     }
                 }
             },
-            include: {
-                user: {
-                    select: {
-                        id: true,
-                        email: true,
-                        username: true
-                    }
-                }
-            }
+            include: postSelect
         });
 
         if (!createdPost) {
@@ -32,12 +25,7 @@ export const createPost: MutationResolvers["createPost"] = async (_, {title, con
             code: 200,
             success: true,
             message: 'Post has been created',
-            post: {
-                id: createdPost.id,
-                title: createdPost.title,
-                content: createdPost.content,
-                user: createdPost.user
-            }
+            post: createdPost
         }
     } catch (e) {
         consola.error(e as Error);

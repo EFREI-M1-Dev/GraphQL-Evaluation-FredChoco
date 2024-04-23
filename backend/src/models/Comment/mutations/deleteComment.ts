@@ -3,12 +3,15 @@ import consola from "consola";
 
 export const deleteComment: MutationResolvers["deleteComment"] = async (_, { id }, { dataSources }) => {
     try {
-        // Logique de suppression de comment
-        await dataSources.db.comment.delete({
+        const result = await dataSources.db.comment.delete({
             where: {
                 id: id
             }
         });
+
+        if(!result) {
+            throw new Error('Comment not found');
+        }
 
         return {
             code: 200,

@@ -3,12 +3,15 @@ import consola from "consola";
 
 export const deleteLike: MutationResolvers["deleteLike"] = async (_, { id }, { dataSources }) => {
     try {
-        // Logique de suppression de like
-        await dataSources.db.like.delete({
+        const result = await dataSources.db.like.delete({
             where: {
                 id: id
             }
         });
+
+        if(!result) {
+            throw new Error('Like not found');
+        }
 
         return {
             code: 200,

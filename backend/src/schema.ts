@@ -47,7 +47,7 @@ type Query {
   getDislike(id: ID!): Dislike
   getComment(id: ID!): Comment
  
-  getAllLikes: [Like!]!
+  getAllLikes: [Like]!
   getAllDislikes: [Dislike!]!
 }
 
