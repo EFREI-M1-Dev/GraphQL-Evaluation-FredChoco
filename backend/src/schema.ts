@@ -22,20 +22,20 @@ type Post {
 
 type Like {
   id: ID!
-  userId: ID!
-  postId: ID!
+  user: User!
+  post: Post!
 }
 
 type Dislike {
   id: ID!
-  userId: ID!
-  postId: ID!
+  user: User!
+  post: Post!
 }
 
 type Comment {
     id: ID!
-    userId: ID!
-    postId: ID!
+    user: User!
+    post: Post!
     content: String!
 }
 

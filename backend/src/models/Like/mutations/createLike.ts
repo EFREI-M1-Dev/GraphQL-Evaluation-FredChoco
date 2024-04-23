@@ -6,10 +6,45 @@ export const createLike: MutationResolvers["createLike"] = async (_, {userId, po
     try {
         const createdLike = await dataSources.db.like.create({
             data: {
-                userId,
-                postId
+                user: {
+                    connect: {
+                        id: userId
+                    }
+                },
+                post: {
+                    connect: {
+                        id: postId
+                    }
+                }
+            },
+            include: {
+                user: {
+                    select: {
+                        id: true,
+                        email: true,
+                        username: true
+                    }
+                },
+                post: {
+                    select: {
+                        id: true,
+                        title: true,
+                        content: true,
+                        user: {
+                            select: {
+                                id: true,
+                                email: true,
+                                username: true
+                            }
+                        }
+                    }
+                }
             }
         });
+
+        if (!createdLike) {
+            throw new Error('Failed to create like');
+        }
 
         return {
             code: 200,
@@ -18,8 +53,8 @@ export const createLike: MutationResolvers["createLike"] = async (_, {userId, po
             like:
                 {
                     id: createdLike.id,
-                    postId: createdLike.postId,
-                    userId: createdLike.postId
+                    user: createdLike.user,
+                    post: createdLike.post
                 }
         }
     } catch (e) {
