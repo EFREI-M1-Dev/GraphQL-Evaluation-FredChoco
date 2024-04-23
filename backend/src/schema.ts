@@ -66,6 +66,7 @@ type Mutation {
   deleteLike(id: ID!): LikeDeleteResponse!
   deleteDislike(id: ID!): DislikeDeleteResponse!
   deleteComment(id: ID!): CommentDeleteResponse!
+  deletePost(id: ID!): PostDeleteResponse!
   
   updateComment(userId: ID!, postId: ID!, content: String!): CommentUpdateResponse!
 }

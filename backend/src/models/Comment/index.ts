@@ -1,4 +1,4 @@
-import * as CommentMutations from './mutations/';
-import * as CommentQueries from './queries/';
+import * as CommentMutations from './mutations/index.js';
+import * as CommentQueries from './queries/index.js';
 
 export { CommentMutations, CommentQueries };

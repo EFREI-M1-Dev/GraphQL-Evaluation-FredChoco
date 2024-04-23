@@ -1,4 +1,4 @@
-import * as UserMutations from './mutations/';
-import * as UserQueries from './queries/';
+import * as UserMutations from './mutations/index.js';
+import * as UserQueries from './queries/index.js';
 
 export { UserMutations, UserQueries };

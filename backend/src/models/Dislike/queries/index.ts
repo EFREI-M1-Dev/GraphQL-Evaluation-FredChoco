@@ -1,4 +1,4 @@
-import { getDislike } from './getDislike';
-import { getAllDislikes } from './getAllDislikes'
+import { getDislike } from './getDislike.js';
+// import { getAllDislikes } from './getAllDislikes.js'
 
-export { getDislike, getAllDislikes };
+export { getDislike };

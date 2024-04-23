@@ -1,5 +1,5 @@
-import { createUser } from './createUser';
-import { updateUser } from './updateUser';
-import { deleteUser } from './deleteUser';
+import { createUser } from './createUser.js';
+import { updateUser } from './updateUser.js';
+import { deleteUser } from './deleteUser.js';
 
 export {createUser, updateUser, deleteUser};

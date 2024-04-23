@@ -1,4 +1,4 @@
-import * as PostMutations from './mutations/';
-import * as PostQueries from './queries/';
+import * as PostMutations from './mutations/index.js';
+import * as PostQueries from './queries/index.js';
 
 export { PostQueries, PostMutations };

@@ -1,4 +1,4 @@
-import { createDislike } from './createDislike';
-import { deleteDislike } from './deleteDislike';
+import { createDislike } from './createDislike.js';
+import { deleteDislike } from './deleteDislike.js';
 
 export {createDislike, deleteDislike};

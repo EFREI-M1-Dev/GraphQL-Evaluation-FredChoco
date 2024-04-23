@@ -1,4 +1,4 @@
-import { getComment } from './getComment';
-import { getAllComments } from './getAllComments'
+import { getComment } from './getComment.js';
+// import { getAllComments } from './getAllComments'
 
-export { getDislike, getAllDislikes };
+export { getComment };
