@@ -4,6 +4,11 @@ export const userSelect = {
     email: true
 };
 
+export const userJWTSelect = {
+    id: true,
+    username: true,
+};
+
 export const postSelect = {
     id: true,
     title: true,

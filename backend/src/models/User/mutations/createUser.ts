@@ -1,7 +1,7 @@
 import consola from "consola";
 import { MutationResolvers } from "../../../types";
 import { hashPassword } from "../../../modules/auth.js";
-import {userSelect} from "../../selectorsPrisma";
+import {userJWTSelect} from "../../selectorsPrisma";
 
 export const createUser: MutationResolvers["createUser"] = async (_, { username, password, email }, { dataSources }) => {
 
@@ -12,7 +12,7 @@ export const createUser: MutationResolvers["createUser"] = async (_, { username,
                 email,
                 password: await hashPassword(password)
             },
-            select: userSelect
+            select: userJWTSelect
         });
 
         return {
