@@ -1,5 +1,5 @@
 import {QueryResolvers} from "../../../types";
-import {dislikeSelect} from "../../selectorsPrisma";
+import {dislikeSelect} from "../../selectorsPrisma.js";
 
 export const getDislike: QueryResolvers["getDislike"] = async (_, {id}, {dataSources}) => {
     try {

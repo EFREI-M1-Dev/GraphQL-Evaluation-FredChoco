@@ -1,5 +1,5 @@
 import {QueryResolvers} from "../../../types";
-import {commentSelect} from "../../selectorsPrisma";
+import {commentSelect} from "../../selectorsPrisma.js";
 
 export const getComment: QueryResolvers["getComment"] = async (_, {id}, {dataSources}) => {
     try {

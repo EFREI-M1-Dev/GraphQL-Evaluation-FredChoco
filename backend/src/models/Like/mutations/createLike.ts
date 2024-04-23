@@ -1,6 +1,6 @@
 import {MutationResolvers} from "../../../types";
 import consola from "consola";
-import {likeSelect} from "../../selectorsPrisma";
+import {likeSelect} from "../../selectorsPrisma.js";
 
 export const createLike: MutationResolvers["createLike"] = async (_, {userId, postId}, {dataSources}) => {
 

@@ -1,6 +1,6 @@
 import {Post, QueryResolvers, User} from "../../../types";
 import consola from "consola";
-import {likeSelect} from "../../selectorsPrisma";
+import {likeSelect} from "../../selectorsPrisma.js";
 
 export const getAllLikes: QueryResolvers["getAllLikes"] = async (_, __, {dataSources}) => {
 

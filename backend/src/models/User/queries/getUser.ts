@@ -1,5 +1,5 @@
 import { QueryResolvers } from "../../../types";
-import {userSelect} from "../../selectorsPrisma";
+import {userSelect} from "../../selectorsPrisma.js";
 
 export const getUser: QueryResolvers["getUser"] = async (_, { id }, { dataSources }) => {
     try {
