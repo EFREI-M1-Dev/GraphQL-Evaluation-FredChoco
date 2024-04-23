@@ -42,7 +42,12 @@ export const getDislike: QueryResolvers["getDislike"] = async (_, { id }, { data
             post: {
                 id: post.id,
                 title: post.title,
-                content: post.content
+                content: post.content,
+                user: {
+                    id: user.id,
+                    email: user.email,
+                    username: user.username
+                }
             }
         };
     } catch (e) {
