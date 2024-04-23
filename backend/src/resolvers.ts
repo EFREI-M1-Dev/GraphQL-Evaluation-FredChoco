@@ -17,31 +17,6 @@ export const resolvers: Resolvers = {
         ...PostQueries
     },
     Mutation: {
-        //    incrementTrackLikes: async (_, {id}, {dataSources}) => {
-        //     try {
-        //         const track = await dataSources.trackAPI.incrementTrackLike(id);
-        //         return {
-        //             code: 200,
-        //             message: 'Number of likes has been incremented',
-        //             success: Boolean(track),
-        //             track
-        //         }
-        //     } catch(e) {
-        //         return {
-        //             code: 304,
-        //             message: 'Resource not modified',
-        //             success: false,
-        //             track: null,
-        //         }
-        //     }
-        // },
-        // createLike: createLike,
-        // createDislike: createDislike,
-        // createComment: createComment,
-        // deleteLike: deleteLike,
-        // deleteDislike: deleteDislike,
-        // deleteComment: deleteComment,
-        // updateComment: updateComment
         ...UserMutations,
         ...LikeMutations,
         ...DislikeMutations,

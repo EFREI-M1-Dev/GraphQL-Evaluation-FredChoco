@@ -17,7 +17,7 @@ type Post {
   id: ID!
   title: String!
   content: String!
-  userId: ID!
+  user: User! 
 }
 
 type Like {

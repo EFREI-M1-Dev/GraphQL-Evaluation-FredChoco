@@ -180,7 +180,7 @@ export type Post = {
   content: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   title: Scalars['String']['output'];
-  userId: Scalars['ID']['output'];
+  user: User;
 };
 
 export type Query = {
@@ -490,7 +490,7 @@ export type PostResolvers<ContextType = DataSourceContext, ParentType extends Re
   content?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  userId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
