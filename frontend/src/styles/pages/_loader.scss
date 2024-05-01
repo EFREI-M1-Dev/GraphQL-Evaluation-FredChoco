@@ -1,0 +1,32 @@
+@import "../variables";
+
+#loader {
+  display         : flex;
+  justify-content : center;
+  align-items     : center;
+  height: 100%;
+
+
+  .logo {
+    width           : fit-content;
+    font-size       : 3em;
+    color           : $white;
+    display         : flex;
+    justify-content : center;
+    align-items     : center;
+    flex-direction  : column;
+    user-select     : none;
+    animation       : scale 1.4s infinite;
+
+    h1, h2 {
+      margin : 0;
+    }
+  }
+}
+
+@keyframes scale {
+  50% {
+    transform : scale(1.1);
+  }
+}
+

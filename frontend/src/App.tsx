@@ -1,26 +1,17 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.scss';
+import "./styles/_main.scss";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+// TODO : ROUTER
+
+const App = () => {
+    return (
+        <section id={"loader"}>
+            <div className={"logo"}>
+                <h1 className={"glow"}>케이팝</h1>
+                <h2 className={"glow"}>Paris</h2>
+            </div>
+        </section>
+
+    )
 }
 
-export default App;
+export default App
