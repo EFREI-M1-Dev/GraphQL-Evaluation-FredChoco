@@ -1,5 +1,6 @@
 import gql from "graphql-tag";
 export const typeDefs = gql `
+# =========================================MODELS========================================================
 type UserJWT {
   id: ID!
   username: String!
@@ -10,7 +11,6 @@ type User {
   username: String!
   email: String!
 }
-
 
 type Post {
   id: ID!
@@ -38,10 +38,11 @@ type Comment {
     content: String!
 }
 
+# =========================================QUERIES========================================================
+
 type Query {
   getUser(id: ID!): User
   getPost(id: ID!): Post
-  
   getLike(id: ID!): Like
   getDislike(id: ID!): Dislike
   getComment(id: ID!): Comment
@@ -50,25 +51,28 @@ type Query {
   getAllDislikes: [Dislike!]!
 }
 
+# =========================================MUTATIONS========================================================
+
 type Mutation {
-  createUser(username: String!, password: String!, email: String!): UserCreateResponse!
-  deleteUser(id: ID!): UserDeleteResponse!
-  updateUser(id: ID!, input: UpdateUserInput!): UserUpdateResponse!
   signInUser(username: String!, password: String!): UserSignInResponse!
   
+  createUser(username: String!, password: String!, email: String!): UserCreateResponse!
   createLike(userId: ID!, postId: ID!): LikeCreateResponse!
   createDislike(userId: ID!, postId: ID!): DislikeCreateResponse!
   createComment(userId: ID!, postId: ID!, content: String!): CommentCreateResponse!
   createPost(title: String!, content: String!, userId: ID!): PostCreateResponse!
   
-  
   deleteLike(id: ID!): LikeDeleteResponse!
   deleteDislike(id: ID!): DislikeDeleteResponse!
   deleteComment(id: ID!): CommentDeleteResponse!
   deletePost(id: ID!): PostDeleteResponse!
+  deleteUser(id: ID!): UserDeleteResponse!
   
+  updateUser(id: ID!, input: UpdateUserInput!): UserUpdateResponse!
   updateComment(userId: ID!, postId: ID!, content: String!): CommentUpdateResponse!
 }
+
+# =========================================RESPONSES========================================================
 
 type PostDeleteResponse {
     code: Int!
@@ -108,7 +112,6 @@ type UserUpdateResponse {
   message: String!
   user: User
 }
-
 
 type UserSignInResponse {
   code: Int!
