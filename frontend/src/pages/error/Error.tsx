@@ -1,7 +1,7 @@
 import React from 'react';
-import {useRouteError, isRouteErrorResponse, Link} from 'react-router-dom';
+import {useRouteError, isRouteErrorResponse} from 'react-router-dom';
 import styles from "./_Error.module.scss";
-// import Button from "../../components/Button/Button";
+import Button from "../../components/Button/Button";
 
 const ErrorPage: React.FC = () => {
     const error = useRouteError();
@@ -21,18 +21,16 @@ const ErrorPage: React.FC = () => {
     }
 
     return (
-            <div className={styles.container}>
-                <div className={styles.error} >
-                    <h1>Oops!</h1>
-                    <p>Sorry, an unexpected error has occurred.</p>
-                    <p>
-                        <i>{errorStatus} - {errorMessage}</i>
-                    </p>
-                    <Link to={'/'}>
-                        <button  >Go back to the home page</button>
-                    </Link>
-                </div>
+        <div className={styles.container}>
+            <div className={styles.error}>
+                <h1>Oops!</h1>
+                <p>Sorry, an unexpected error has occurred.</p>
+                <p>
+                    <i>{errorStatus} - {errorMessage}</i>
+                </p>
+                <Button className={"glow"+ " "+styles.goBack} route={"/"} style={"header"}>Go back to the home page</Button>
             </div>
+        </div>
     );
 };
 

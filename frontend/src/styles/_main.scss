@@ -1,9 +1,6 @@
 @import "./fonts/font";
 @import "variables";
 
-// Import all the pages
-@import "pages/loader";
-
 
 // Global styles
 html {
@@ -19,6 +16,11 @@ html, body, #root {
   padding     : 0;
   height      : 100%;
   font-family : "Beon", sans-serif;
+}
+
+#root {
+  display        : flex;
+  flex-direction : column;
 }
 
 .glow {

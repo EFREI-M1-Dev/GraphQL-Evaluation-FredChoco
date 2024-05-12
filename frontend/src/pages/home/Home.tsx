@@ -1,4 +1,5 @@
 import styles from "./_Home.module.scss";
+import Button from "../../components/Button/Button";
 // import {UseMainControllerReturnType} from "../../controller/controllerMain";
 
 const HomePage = (
@@ -10,7 +11,7 @@ const HomePage = (
 
     return (
             <div className={styles.container}>
-                <h1>Home Page</h1>
+                <Button style={"primary"} route={"test"} > Hello World </Button>
             </div>
         );
 };
