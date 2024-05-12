@@ -1,16 +1,22 @@
-import "./styles/_main.scss";
+import './styles/_main.scss'
+import React from "react";
+import useMainController from './controller/controllerMain';
 
-// TODO : ROUTER
+const App = (
+    props:
+        {
+            page: React.ReactElement
+        }) => {
 
-const App = () => {
+    const m_mainController = useMainController();
+
+
     return (
-        <section id={"loader"}>
-            <div className={"logo"}>
-                <h1 className={"glow"}>케이팝</h1>
-                <h2 className={"glow"}>Paris</h2>
-            </div>
-        </section>
-
+        <>
+            {/*<Header/>*/}
+            {React.cloneElement(props.page, { mainController: m_mainController })}
+            {/*<Footer/>*/}
+        </>
     )
 }
 
