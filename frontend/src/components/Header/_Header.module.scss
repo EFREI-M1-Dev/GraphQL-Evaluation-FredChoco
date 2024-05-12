@@ -10,9 +10,14 @@
 }
 
 
-.search {
+.section {
   display         : flex;
   align-items     : center;
   justify-content : center;
   gap             : 1em;
+
+  .link {
+    color      : $white;
+    text-decoration : none;
+  }
 }
