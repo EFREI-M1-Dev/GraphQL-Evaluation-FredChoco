@@ -1,26 +1,30 @@
 import ReactDOM from 'react-dom/client';
-import React from 'react';
+import React, { createContext } from 'react';
 import App from './App';
-import {createBrowserRouter, createRoutesFromElements, Route, RouterProvider} from "react-router-dom";
-import ErrorPage from "./pages/error/Error";
-import HomePage from "./pages/home/Home";
+import useMainController from "./controller/controllerMain";
+import {createBrowserRouter, RouterProvider} from 'react-router-dom';
+import HomePage from './pages/home/Home';
+import ErrorPage from './pages/error/Error';
 
-const routes = [
-    {path: '/', element: <HomePage/>},
-];
+const mainController = useMainController();
+const MainControllerContext = createContext(mainController);
 
-const router = createBrowserRouter(
-    createRoutesFromElements(
-        <Route errorElement={<ErrorPage/>}>
-            {routes.map((route, idx) => (
-                <Route errorElement={<ErrorPage/>} key={window.btoa(idx.toString())} path={route.path} element={<App page={route.element} />} />
-            ))}
-        </Route>
-    )
-);
+
+const router = createBrowserRouter([
+    {
+        path: '/',
+        element: <App />,
+        errorElement: <ErrorPage />,
+        children: [
+        { index: true, element: <HomePage /> }
+    ]},
+]);
+
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
-        <RouterProvider router={router}/>
+        <MainControllerContext.Provider value={mainController}>
+            <RouterProvider router={router} />
+        </MainControllerContext.Provider>
     </React.StrictMode>
 );

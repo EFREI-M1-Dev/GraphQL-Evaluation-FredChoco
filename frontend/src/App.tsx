@@ -1,25 +1,16 @@
-import './styles/_main.scss'
-import React from "react";
-import useMainController from './controller/controllerMain';
-import Header from "./components/Header/Header";
-import Footer from "./components/Footer/Footer";
+import {Outlet} from 'react-router-dom';
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
+import "./styles/_main.scss";
 
-const App = (
-    props:
-        {
-            page: React.ReactElement
-        }) => {
-
-    const m_mainController = useMainController();
-
-
+const App = () => {
     return (
         <>
             <Header/>
-            {React.cloneElement(props.page, { mainController: m_mainController })}
+            <Outlet/>
             <Footer/>
         </>
-    )
+    );
 }
 
-export default App
+export default App;

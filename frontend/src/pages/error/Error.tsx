@@ -1,10 +1,10 @@
-import React from 'react';
 import {useRouteError, isRouteErrorResponse} from 'react-router-dom';
 import styles from "./_Error.module.scss";
 import Button from "../../components/Button/Button";
 
-const ErrorPage: React.FC = () => {
+const ErrorPage = () => {
     const error = useRouteError();
+
     let errorMessage: string;
     let errorStatus: number = 500;
 
