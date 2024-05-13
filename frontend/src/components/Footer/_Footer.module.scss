@@ -1,0 +1,28 @@
+@import "src/styles/variables";
+
+.container {
+  width           : 100%;
+  display         : flex;
+  justify-content : center;
+  align-items     : center;
+  padding         : 0 1em;
+  flex            : inherit;
+  flex-direction: column;
+}
+
+
+.section {
+  display         : flex;
+  align-items     : center;
+  justify-content : center;
+  gap             : 1em;
+
+  .link {
+    color      : $white;
+    text-decoration : underline;
+  }
+
+  p {
+    margin: 0.5em;
+  }
+}
