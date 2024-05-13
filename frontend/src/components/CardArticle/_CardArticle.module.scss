@@ -1,0 +1,41 @@
+@import "src/styles/variables";
+
+.container {
+  width           : 25%;
+  display         : flex;
+  justify-content : flex-end;
+  align-items     : flex-start;
+  padding         : 0 1em;
+  flex            : inherit;
+  flex-direction  : column;
+  background-image: linear-gradient(to bottom, rgba(255, 0, 0, 0), rgb(0, 0, 0)), url('public/images/aespa.jpeg');
+  background-size : cover;
+  height          : 20em;
+  border-radius   : 1em;
+
+}
+
+
+.section {
+  display         : flex;
+  align-items     : baseline;
+  justify-content : center;
+  gap             : 1em;
+  color           : $white;
+
+  .link {
+    color           : $white;
+    text-decoration : none;
+    font-size       : 2em;
+  }
+
+  h2 {
+    margin-bottom: 0em;
+  }
+}
+
+h2 {
+  color: $white;
+  font-size: 3em;
+  font-weight: lighter;
+}
