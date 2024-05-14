@@ -19,6 +19,7 @@
   justify-content : center;
   align-items     : center;
   font-family     : "Beon", sans-serif;
+  width           : 100%;
 }
 
 .header {
@@ -31,6 +32,20 @@
   }
 }
 
+.primary {
+  width      : 100%;
+  background : none;
+  color      : $white;
+  @extend .glow;
+  border     : 2px solid $white;
+
+  &:hover {
+    background  : $white;
+    color       : #000;
+    text-shadow : none;
+    box-shadow: 0 0 10px $color-pink-glow, 0 0 40px  $color-pink-glow, 0 0 80px  $color-pink-glow;
+  }
+}
 
 
 

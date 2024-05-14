@@ -1,0 +1,21 @@
+@import "src/styles/variables";
+
+
+.container {
+  display         : flex;
+  justify-content : center;
+  align-items     : center;
+  flex            : 1 1 auto;
+}
+
+.form {
+  display         : flex;
+  flex-direction  : column;
+  justify-content : center;
+  align-items     : center;
+  width           : 100%;
+  max-width       : 400px;
+  color           : $white;
+  gap             : 2em;
+}
+

@@ -5,6 +5,8 @@ import useMainController from "./controller/controllerMain";
 import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 import HomePage from './pages/home/Home';
 import ErrorPage from './pages/error/Error';
+import LoginPage from './pages/login/Login';
+import RegisterPage from "./pages/register/Register";
 
 const mainController = useMainController();
 const MainControllerContext = createContext(mainController);
@@ -16,7 +18,9 @@ const router = createBrowserRouter([
         element: <App />,
         errorElement: <ErrorPage />,
         children: [
-        { index: true, element: <HomePage /> }
+            { index: true, element: <HomePage /> },
+            { path:'/login', element: <LoginPage /> },
+            { path:'/register', element: <RegisterPage /> }
     ]},
 ]);
 

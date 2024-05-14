@@ -9,11 +9,11 @@ const App = () => {
     const isLoading = navigation.state === 'loading';
 
     return (
-        <div>
+        <>
             <Header/>
             {isLoading ? <div>Loading...</div> : <Outlet />}
             <Footer/>
-        </div>
+        </>
     );
 }
 
