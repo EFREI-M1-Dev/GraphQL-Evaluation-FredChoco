@@ -20,7 +20,7 @@ const Logo = (
             } else {
                 clearInterval(interval);
             }
-        }, props.number/ 1000);
+        }, props.number/ 100);
         return () => clearInterval(interval);
     }, [props.number]);
 
