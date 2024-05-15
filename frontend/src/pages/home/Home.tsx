@@ -9,7 +9,13 @@ const HomePage = () => {
     return (
         <div className={styles.container}>
             <Metrics/>
-            <Carousel type={'line'} />
+            <Carousel type={'line'} >
+                {
+                    Array.from({length: 10}).map((_, index) => (
+                            <CardArticle key={index}/>
+                    ))
+                }
+            </Carousel>
 
             <div style={{
                 width: "70%"
