@@ -1,0 +1,10 @@
+.slider {
+  width: 100%;
+}
+
+.slide{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content !important; // override de la librairie
+}
