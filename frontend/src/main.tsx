@@ -7,6 +7,7 @@ import HomePage from './pages/home/Home';
 import ErrorPage from './pages/error/Error';
 import LoginPage from './pages/login/Login';
 import RegisterPage from "./pages/register/Register";
+import Post from "./pages/post/Post";
 
 const mainController = useMainController();
 const MainControllerContext = createContext(mainController);
@@ -20,7 +21,8 @@ const router = createBrowserRouter([
         children: [
             { index: true, element: <HomePage /> },
             { path:'/login', element: <LoginPage /> },
-            { path:'/register', element: <RegisterPage /> }
+            { path:'/register', element: <RegisterPage /> },
+            { path:'/post', element: <Post /> }
     ]},
 ]);
 
