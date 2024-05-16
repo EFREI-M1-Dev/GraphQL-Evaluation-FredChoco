@@ -17,23 +17,23 @@ html, body, #root {
   font-family : "Beon", sans-serif;
 }
 
-html, body {
-    height : 100%;
+html, body, #root {
+  height : 100%;
 }
 
 #root {
   display        : flex;
   flex-direction : column;
+  padding-top    : 7em; // Height of the header
 }
 
 .glow {
-  color: $white;
-  text-shadow: 0 0 10px $color-pink-glow, 0 0 20px $color-pink-glow, 0 0 40px $color-pink-glow, 0 0 80px $color-pink-glow;
+  color       : $white;
+  text-shadow : 0 0 10px $color-pink-glow, 0 0 20px $color-pink-glow, 0 0 40px $color-pink-glow, 0 0 80px $color-pink-glow;
 }
 
-
 ::-webkit-scrollbar {
-  width: 0;
+  width : 0;
 }
 
 //::-webkit-scrollbar-track {

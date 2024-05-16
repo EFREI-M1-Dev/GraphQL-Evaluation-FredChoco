@@ -13,9 +13,11 @@ const Button = (
         }) => {
 
 
+    const isCurrentPath = props.style === "header" && (window.location.pathname.split("/").pop() === props.route);
+
     const button = (
         <button
-            className={styles.button + " " + styles[props.style]+ " "+(props.className || '')}
+            className={styles.button + " " + styles[props.style]+ " "+(props.className || '')+" "+(isCurrentPath ? 'glow' : '')}
             onClick={props.onClick}
         >
             {props.children}
