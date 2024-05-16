@@ -14,8 +14,11 @@ html {
 html, body, #root {
   margin      : 0;
   padding     : 0;
-  height      : 100%;
   font-family : "Beon", sans-serif;
+}
+
+html, body {
+    height : 100%;
 }
 
 #root {
@@ -27,3 +30,20 @@ html, body, #root {
   color: $white;
   text-shadow: 0 0 10px $color-pink-glow, 0 0 20px $color-pink-glow, 0 0 40px $color-pink-glow, 0 0 80px $color-pink-glow;
 }
+
+
+::-webkit-scrollbar {
+  width: 0;
+}
+
+//::-webkit-scrollbar-track {
+//  background: none;
+//}
+//
+//::-webkit-scrollbar-thumb {
+//  background: $color-pink-glow;
+//}
+//
+//::-webkit-scrollbar-thumb:hover {
+//  background: darken($color-pink-glow, 15%)
+//}

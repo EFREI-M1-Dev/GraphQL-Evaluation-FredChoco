@@ -27,6 +27,17 @@ const HomePage = () => {
                 <CardArticle/>
                 <CardArticle/>
             </div>
+            <CardArticle/>
+            <CardArticle/>
+            <CardArticle/>
+            <CardArticle/>
+            <CardArticle/>
+            <CardArticle/>
+            <CardArticle/>
+            <CardArticle/>
+            <CardArticle/>
+            <CardArticle/>
+            <CardArticle/>
 
             <Comment/>
         </div>

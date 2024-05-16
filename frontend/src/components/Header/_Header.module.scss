@@ -1,14 +1,30 @@
 @import "src/styles/variables";
 
 .container {
-  width           : 100%;
-  display         : flex;
-  justify-content : space-between;
-  align-items     : center;
-  padding         : 0 1em;
-  flex            : inherit;
+  width            : 100%;
+  display          : flex;
+  justify-content  : space-between;
+  align-items      : center;
+  padding          : 0 1em;
+  flex             : inherit;
+  position         : sticky;
+  top              : 0;
+  left             : 0;
+  background-color : $color-bg;
+  z-index          : 100;
 }
 
+.scrollBar {
+  width            : 0%;
+  height           : 4px;
+  background-color : $color-pink-glow;
+  position         : absolute;
+  bottom           : 0;
+  left             : 0;
+  z-index          : 100;
+  box-shadow:  0 0 20px  $color-pink-glow;
+
+}
 
 .section {
   display         : flex;
@@ -17,7 +33,7 @@
   gap             : 1em;
 
   .link {
-    color      : $white;
+    color           : $white;
     text-decoration : none;
   }
 }
