@@ -214,7 +214,8 @@ export type PostDeleteResponse = {
 
 export type Query = {
   __typename?: 'Query';
-  getAllDislikes: Array<Dislike>;
+  getAllComments: Array<Maybe<Comment>>;
+  getAllDislikes: Array<Maybe<Dislike>>;
   getAllLikes: Array<Maybe<Like>>;
   getComment?: Maybe<Comment>;
   getDislike?: Maybe<Dislike>;
@@ -545,7 +546,8 @@ export type PostDeleteResponseResolvers<ContextType = DataSourceContext, ParentT
 };
 
 export type QueryResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  getAllDislikes?: Resolver<Array<ResolversTypes['Dislike']>, ParentType, ContextType>;
+  getAllComments?: Resolver<Array<Maybe<ResolversTypes['Comment']>>, ParentType, ContextType>;
+  getAllDislikes?: Resolver<Array<Maybe<ResolversTypes['Dislike']>>, ParentType, ContextType>;
   getAllLikes?: Resolver<Array<Maybe<ResolversTypes['Like']>>, ParentType, ContextType>;
   getComment?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, RequireFields<QueryGetCommentArgs, 'id'>>;
   getDislike?: Resolver<Maybe<ResolversTypes['Dislike']>, ParentType, ContextType, RequireFields<QueryGetDislikeArgs, 'id'>>;

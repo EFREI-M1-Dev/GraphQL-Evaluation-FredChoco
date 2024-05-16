@@ -7,7 +7,7 @@ export const getDislike: QueryResolvers["getDislike"] = async (_, {id}, {dataSou
             where: {
                 id: id
             },
-            include: dislikeSelect
+            select: dislikeSelect
         });
 
         if (!dislike) throw new Error('Dislike not found');

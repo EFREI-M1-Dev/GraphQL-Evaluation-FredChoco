@@ -1,4 +1,4 @@
 import { getComment } from './getComment.js';
-// import { getAllComments } from './getAllComments'
+import { getAllComments } from './getAllComments.js'
 
-export { getComment };
+export { getComment, getAllComments };

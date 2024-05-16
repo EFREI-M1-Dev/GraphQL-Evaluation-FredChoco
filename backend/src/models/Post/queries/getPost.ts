@@ -9,7 +9,7 @@ export const getPost: QueryResolvers["getPost"] = async (_, { id }, { dataSource
             where: {
                 id: id
             },
-            include: postSelect
+            select: postSelect
         });
 
         if (!post) {

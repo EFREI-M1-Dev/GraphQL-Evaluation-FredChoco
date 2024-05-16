@@ -6,7 +6,7 @@ export const getAllLikes: QueryResolvers["getAllLikes"] = async (_, __, {dataSou
 
     try {
         const likes = await dataSources.db.like.findMany({
-            include: likeSelect
+            select: likeSelect
         });
 
         if (!likes) {

@@ -8,7 +8,7 @@ export const getLike: QueryResolvers["getLike"] = async (_, { id }, { dataSource
             where: {
                 id: id
             },
-            include: likeSelect
+            select: likeSelect
         });
 
         if(!like) {

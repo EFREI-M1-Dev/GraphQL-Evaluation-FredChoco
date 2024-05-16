@@ -7,7 +7,7 @@ export const getComment: QueryResolvers["getComment"] = async (_, {id}, {dataSou
             where: {
                 id: id
             },
-            include: commentSelect
+            select: commentSelect
         });
 
         if (!comment) {

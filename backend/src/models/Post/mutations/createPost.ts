@@ -14,7 +14,12 @@ export const createPost: MutationResolvers["createPost"] = async (_, {title, con
                     }
                 }
             },
-            include: postSelect
+            include: {
+                user: true,
+                Comment: true,
+                Like: true,
+                Dislike: true
+            }
         });
 
         if (!createdPost) {
