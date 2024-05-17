@@ -25,7 +25,6 @@ const Metrics = () => {
             setTotalPostCount(data.getTotalPostCount);
             setTotalCommentCount(data.getTotalCommentCount);
             setAppreciationRate(data.getAppreciationRate);
-            console.log("here")
         }
     }, [data]);
 

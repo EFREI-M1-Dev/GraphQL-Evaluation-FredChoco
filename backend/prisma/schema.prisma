@@ -22,37 +22,41 @@ model User {
 }
 
 model Post {
-  id      String    @id @unique @default(uuid())
-  title   String
-  content String
-  user    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId  String
-  Comment Comment[]
-  Like    Like[]
-  Dislike Dislike[]
+  id        String    @id @unique @default(uuid())
+  title     String
+  content   String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  Comment   Comment[]
+  Like      Like[]
+  Dislike   Dislike[]
+  createdAt DateTime  @default(now())
 }
 
 model Comment {
-  id      String @id @unique @default(uuid())
-  content String
-  post    Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
-  postId  String
-  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId  String
+  id        String   @id @unique @default(uuid())
+  content   String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  createdAt DateTime @default(now())
 }
 
 model Like {
-  id     String @id @unique @default(uuid())
-  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
-  postId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String
+  id        String   @id @unique @default(uuid())
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  createdAt DateTime @default(now())
 }
 
 model Dislike {
-  id     String @id @unique @default(uuid())
-  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
-  postId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String
+  id        String   @id @unique @default(uuid())
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  createdAt DateTime @default(now())
 }

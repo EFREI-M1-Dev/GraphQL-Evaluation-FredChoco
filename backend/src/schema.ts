@@ -3,6 +3,7 @@ import gql from "graphql-tag";
 export const typeDefs = gql`
 
 directive @auth on FIELD_DEFINITION
+scalar Date
 
 # =========================================MODELS========================================================
 type UserJWT {
@@ -21,18 +22,21 @@ type Post {
   title: String!
   content: String!
   user: User! 
+  createdAt: Date!
 }
 
 type Like {
   id: ID!
   user: User!
   post: Post!
+  createdAt: Date!
 }
 
 type Dislike {
   id: ID!
   user: User!
   post: Post!
+  createdAt: Date!
 }
 
 type Comment {
@@ -40,6 +44,7 @@ type Comment {
     user: User!
     post: Post!
     content: String!
+    createdAt: Date!
 }
 
 # =========================================QUERIES========================================================
@@ -54,6 +59,8 @@ type Query {
   getAllLikes: [Like]! @auth
   getAllDislikes: [Dislike]! @auth
   getAllComments: [Comment]! @auth
+  getAllPosts: [Post]! @auth
+  getLatestPosts: [Post]!
   
   getTotalPostCount: Int! 
   getTotalCommentCount: Int! 

@@ -16,6 +16,7 @@ export const postSelect = {
     user: {
         select: userSelect
     },
+    createdAt: true,
 };
 
 export const likeSelect = {
@@ -25,7 +26,8 @@ export const likeSelect = {
     },
     user: {
         select: userSelect
-    }
+    },
+    createdAt: true,
 };
 
 export const dislikeSelect = {
@@ -35,7 +37,8 @@ export const dislikeSelect = {
     },
     user: {
         select: userSelect
-    }
+    },
+    createdAt: true,
 };
 
 export const commentSelect = {
@@ -46,5 +49,6 @@ export const commentSelect = {
     },
     post: {
         select: postSelect
-    }
+    },
+    createdAt: true,
 };

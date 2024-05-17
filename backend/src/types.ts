@@ -1,4 +1,4 @@
-import { GraphQLResolveInfo } from 'graphql';
+import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 import { DataSourceContext } from './context';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -15,11 +15,13 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  Date: { input: any; output: any; }
 };
 
 export type Comment = {
   __typename?: 'Comment';
   content: Scalars['String']['output'];
+  createdAt: Scalars['Date']['output'];
   id: Scalars['ID']['output'];
   post: Post;
   user: User;
@@ -50,6 +52,7 @@ export type CommentUpdateResponse = {
 
 export type Dislike = {
   __typename?: 'Dislike';
+  createdAt: Scalars['Date']['output'];
   id: Scalars['ID']['output'];
   post: Post;
   user: User;
@@ -72,6 +75,7 @@ export type DislikeDeleteResponse = {
 
 export type Like = {
   __typename?: 'Like';
+  createdAt: Scalars['Date']['output'];
   id: Scalars['ID']['output'];
   post: Post;
   user: User;
@@ -189,6 +193,7 @@ export type MutationUpdateUserArgs = {
 export type Post = {
   __typename?: 'Post';
   content: Scalars['String']['output'];
+  createdAt: Scalars['Date']['output'];
   id: Scalars['ID']['output'];
   title: Scalars['String']['output'];
   user: User;
@@ -214,9 +219,11 @@ export type Query = {
   getAllComments: Array<Maybe<Comment>>;
   getAllDislikes: Array<Maybe<Dislike>>;
   getAllLikes: Array<Maybe<Like>>;
+  getAllPosts: Array<Maybe<Post>>;
   getAppreciationRate: Scalars['Float']['output'];
   getComment?: Maybe<Comment>;
   getDislike?: Maybe<Dislike>;
+  getLatestPosts: Array<Maybe<Post>>;
   getLike?: Maybe<Like>;
   getPost?: Maybe<Post>;
   getTotalCommentCount: Scalars['Int']['output'];
@@ -375,6 +382,7 @@ export type ResolversTypes = {
   CommentCreateResponse: ResolverTypeWrapper<CommentCreateResponse>;
   CommentDeleteResponse: ResolverTypeWrapper<CommentDeleteResponse>;
   CommentUpdateResponse: ResolverTypeWrapper<CommentUpdateResponse>;
+  Date: ResolverTypeWrapper<Scalars['Date']['output']>;
   Dislike: ResolverTypeWrapper<Dislike>;
   DislikeCreateResponse: ResolverTypeWrapper<DislikeCreateResponse>;
   DislikeDeleteResponse: ResolverTypeWrapper<DislikeDeleteResponse>;
@@ -406,6 +414,7 @@ export type ResolversParentTypes = {
   CommentCreateResponse: CommentCreateResponse;
   CommentDeleteResponse: CommentDeleteResponse;
   CommentUpdateResponse: CommentUpdateResponse;
+  Date: Scalars['Date']['output'];
   Dislike: Dislike;
   DislikeCreateResponse: DislikeCreateResponse;
   DislikeDeleteResponse: DislikeDeleteResponse;
@@ -436,6 +445,7 @@ export type AuthDirectiveResolver<Result, Parent, ContextType = DataSourceContex
 
 export type CommentResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['Comment'] = ResolversParentTypes['Comment']> = {
   content?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   post?: Resolver<ResolversTypes['Post'], ParentType, ContextType>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
@@ -465,7 +475,12 @@ export type CommentUpdateResponseResolvers<ContextType = DataSourceContext, Pare
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
+  name: 'Date';
+}
+
 export type DislikeResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['Dislike'] = ResolversParentTypes['Dislike']> = {
+  createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   post?: Resolver<ResolversTypes['Post'], ParentType, ContextType>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
@@ -488,6 +503,7 @@ export type DislikeDeleteResponseResolvers<ContextType = DataSourceContext, Pare
 };
 
 export type LikeResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['Like'] = ResolversParentTypes['Like']> = {
+  createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   post?: Resolver<ResolversTypes['Post'], ParentType, ContextType>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
@@ -527,6 +543,7 @@ export type MutationResolvers<ContextType = DataSourceContext, ParentType extend
 
 export type PostResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['Post'] = ResolversParentTypes['Post']> = {
   content?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
@@ -552,9 +569,11 @@ export type QueryResolvers<ContextType = DataSourceContext, ParentType extends R
   getAllComments?: Resolver<Array<Maybe<ResolversTypes['Comment']>>, ParentType, ContextType>;
   getAllDislikes?: Resolver<Array<Maybe<ResolversTypes['Dislike']>>, ParentType, ContextType>;
   getAllLikes?: Resolver<Array<Maybe<ResolversTypes['Like']>>, ParentType, ContextType>;
+  getAllPosts?: Resolver<Array<Maybe<ResolversTypes['Post']>>, ParentType, ContextType>;
   getAppreciationRate?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
   getComment?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, RequireFields<QueryGetCommentArgs, 'id'>>;
   getDislike?: Resolver<Maybe<ResolversTypes['Dislike']>, ParentType, ContextType, RequireFields<QueryGetDislikeArgs, 'id'>>;
+  getLatestPosts?: Resolver<Array<Maybe<ResolversTypes['Post']>>, ParentType, ContextType>;
   getLike?: Resolver<Maybe<ResolversTypes['Like']>, ParentType, ContextType, RequireFields<QueryGetLikeArgs, 'id'>>;
   getPost?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<QueryGetPostArgs, 'id'>>;
   getTotalCommentCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
@@ -611,6 +630,7 @@ export type Resolvers<ContextType = DataSourceContext> = {
   CommentCreateResponse?: CommentCreateResponseResolvers<ContextType>;
   CommentDeleteResponse?: CommentDeleteResponseResolvers<ContextType>;
   CommentUpdateResponse?: CommentUpdateResponseResolvers<ContextType>;
+  Date?: GraphQLScalarType;
   Dislike?: DislikeResolvers<ContextType>;
   DislikeCreateResponse?: DislikeCreateResponseResolvers<ContextType>;
   DislikeDeleteResponse?: DislikeDeleteResponseResolvers<ContextType>;
