@@ -6,7 +6,7 @@
   "scripts": {
     "compile": "tsc",
     "start": "npm run compile && node ./dist/src/index.js",
-    "dev": "node --import ./scripts/register.js --watch src/index.ts",
+    "dev": "tsx watch src",
     "generate": "graphql-codegen",
     "prisma": "prisma"
   },
@@ -31,7 +31,7 @@
     "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20.12.7",
     "prisma": "^5.12.1",
-    "ts-node": "^10.9.2",
+    "tsx": "^4.10.4",
     "typescript": "^5.4.5"
   }
 }

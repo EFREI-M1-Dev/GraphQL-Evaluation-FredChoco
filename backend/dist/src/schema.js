@@ -48,7 +48,8 @@ type Query {
   getComment(id: ID!): Comment
  
   getAllLikes: [Like]!
-  getAllDislikes: [Dislike!]!
+  getAllDislikes: [Dislike]!
+  getAllComments: [Comment]!
 }
 
 # =========================================MUTATIONS========================================================
