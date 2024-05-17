@@ -18,7 +18,7 @@ export const createDislike: MutationResolvers["createDislike"] = async (_, {user
                     }
                 }
             },
-            include: dislikeSelect
+            select: dislikeSelect
         });
 
         if (!createdDislike) {

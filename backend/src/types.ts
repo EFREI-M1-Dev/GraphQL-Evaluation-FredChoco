@@ -36,7 +36,6 @@ export type CommentCreateResponse = {
 export type CommentDeleteResponse = {
   __typename?: 'CommentDeleteResponse';
   code: Scalars['Int']['output'];
-  comment?: Maybe<Comment>;
   message: Scalars['String']['output'];
   success: Scalars['Boolean']['output'];
 };
@@ -67,7 +66,6 @@ export type DislikeCreateResponse = {
 export type DislikeDeleteResponse = {
   __typename?: 'DislikeDeleteResponse';
   code: Scalars['Int']['output'];
-  dislike?: Maybe<Dislike>;
   message: Scalars['String']['output'];
   success: Scalars['Boolean']['output'];
 };
@@ -90,7 +88,6 @@ export type LikeCreateResponse = {
 export type LikeDeleteResponse = {
   __typename?: 'LikeDeleteResponse';
   code: Scalars['Int']['output'];
-  like?: Maybe<Like>;
   message: Scalars['String']['output'];
   success: Scalars['Boolean']['output'];
 };
@@ -446,7 +443,6 @@ export type CommentCreateResponseResolvers<ContextType = DataSourceContext, Pare
 
 export type CommentDeleteResponseResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['CommentDeleteResponse'] = ResolversParentTypes['CommentDeleteResponse']> = {
   code?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  comment?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType>;
   message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -477,7 +473,6 @@ export type DislikeCreateResponseResolvers<ContextType = DataSourceContext, Pare
 
 export type DislikeDeleteResponseResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['DislikeDeleteResponse'] = ResolversParentTypes['DislikeDeleteResponse']> = {
   code?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  dislike?: Resolver<Maybe<ResolversTypes['Dislike']>, ParentType, ContextType>;
   message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -500,7 +495,6 @@ export type LikeCreateResponseResolvers<ContextType = DataSourceContext, ParentT
 
 export type LikeDeleteResponseResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['LikeDeleteResponse'] = ResolversParentTypes['LikeDeleteResponse']> = {
   code?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  like?: Resolver<Maybe<ResolversTypes['Like']>, ParentType, ContextType>;
   message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;

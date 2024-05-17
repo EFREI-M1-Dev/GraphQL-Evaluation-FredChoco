@@ -18,7 +18,7 @@ export const createLike: MutationResolvers["createLike"] = async (_, {userId, po
                     }
                 }
             },
-            include: likeSelect
+            select: likeSelect
         });
 
         if (!createdLike) {

@@ -1,26 +1,22 @@
 import {MutationResolvers} from "../../../types";
 import consola from "consola";
-import {postSelect} from "../../selectorsPrisma.js";
+import {postSelect, userSelect} from "../../selectorsPrisma.js";
 
 export const createPost: MutationResolvers["createPost"] = async (_, {title, content, userId}, {dataSources}) => {
     try {
         const createdPost = await dataSources.db.post.create({
-            data: {
-                title: title,
-                content: content,
-                user: {
-                    connect: {
-                        id: userId
+                data: {
+                    title: title,
+                    content: content,
+                    user: {
+                        connect: {
+                            id: userId
+                        }
                     }
-                }
-            },
-            include: {
-                user: true,
-                Comment: true,
-                Like: true,
-                Dislike: true
+                },
+                select: postSelect
             }
-        });
+        );
 
         if (!createdPost) {
             throw new Error('Failed to create post');

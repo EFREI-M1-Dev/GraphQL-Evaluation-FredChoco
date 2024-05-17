@@ -15,7 +15,7 @@ export const postSelect = {
     content: true,
     user: {
         select: userSelect
-    }
+    },
 };
 
 export const likeSelect = {

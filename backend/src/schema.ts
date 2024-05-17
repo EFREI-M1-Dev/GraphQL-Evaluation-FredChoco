@@ -147,21 +147,18 @@ type LikeDeleteResponse {
   code: Int!
   success: Boolean!
   message: String!
-  like: Like
 }
 
 type DislikeDeleteResponse {
   code: Int!
   success: Boolean!
   message: String!
-  dislike: Dislike
 }
 
 type CommentDeleteResponse {
   code: Int!
   success: Boolean!
   message: String!
-  comment: Comment
 }
 
 type CommentUpdateResponse {

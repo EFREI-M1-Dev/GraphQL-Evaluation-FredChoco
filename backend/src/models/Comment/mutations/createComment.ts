@@ -20,7 +20,7 @@ export const createComment: MutationResolvers["createComment"] = async (_, {user
                 },
                 content: content
             },
-            include: commentSelect
+            select: commentSelect
         });
 
         if (!createdComment) {
