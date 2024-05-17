@@ -214,10 +214,13 @@ export type Query = {
   getAllComments: Array<Maybe<Comment>>;
   getAllDislikes: Array<Maybe<Dislike>>;
   getAllLikes: Array<Maybe<Like>>;
+  getAppreciationRate: Scalars['Float']['output'];
   getComment?: Maybe<Comment>;
   getDislike?: Maybe<Dislike>;
   getLike?: Maybe<Like>;
   getPost?: Maybe<Post>;
+  getTotalCommentCount: Scalars['Int']['output'];
+  getTotalPostCount: Scalars['Int']['output'];
   getUser?: Maybe<User>;
 };
 
@@ -375,6 +378,7 @@ export type ResolversTypes = {
   Dislike: ResolverTypeWrapper<Dislike>;
   DislikeCreateResponse: ResolverTypeWrapper<DislikeCreateResponse>;
   DislikeDeleteResponse: ResolverTypeWrapper<DislikeDeleteResponse>;
+  Float: ResolverTypeWrapper<Scalars['Float']['output']>;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
   Like: ResolverTypeWrapper<Like>;
@@ -405,6 +409,7 @@ export type ResolversParentTypes = {
   Dislike: Dislike;
   DislikeCreateResponse: DislikeCreateResponse;
   DislikeDeleteResponse: DislikeDeleteResponse;
+  Float: Scalars['Float']['output'];
   ID: Scalars['ID']['output'];
   Int: Scalars['Int']['output'];
   Like: Like;
@@ -424,6 +429,10 @@ export type ResolversParentTypes = {
   UserSignInResponse: UserSignInResponse;
   UserUpdateResponse: UserUpdateResponse;
 };
+
+export type AuthDirectiveArgs = { };
+
+export type AuthDirectiveResolver<Result, Parent, ContextType = DataSourceContext, Args = AuthDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
 export type CommentResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['Comment'] = ResolversParentTypes['Comment']> = {
   content?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -543,10 +552,13 @@ export type QueryResolvers<ContextType = DataSourceContext, ParentType extends R
   getAllComments?: Resolver<Array<Maybe<ResolversTypes['Comment']>>, ParentType, ContextType>;
   getAllDislikes?: Resolver<Array<Maybe<ResolversTypes['Dislike']>>, ParentType, ContextType>;
   getAllLikes?: Resolver<Array<Maybe<ResolversTypes['Like']>>, ParentType, ContextType>;
+  getAppreciationRate?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
   getComment?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, RequireFields<QueryGetCommentArgs, 'id'>>;
   getDislike?: Resolver<Maybe<ResolversTypes['Dislike']>, ParentType, ContextType, RequireFields<QueryGetDislikeArgs, 'id'>>;
   getLike?: Resolver<Maybe<ResolversTypes['Like']>, ParentType, ContextType, RequireFields<QueryGetLikeArgs, 'id'>>;
   getPost?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<QueryGetPostArgs, 'id'>>;
+  getTotalCommentCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  getTotalPostCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   getUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetUserArgs, 'id'>>;
 };
 
@@ -618,3 +630,6 @@ export type Resolvers<ContextType = DataSourceContext> = {
   UserUpdateResponse?: UserUpdateResponseResolvers<ContextType>;
 };
 
+export type DirectiveResolvers<ContextType = DataSourceContext> = {
+  auth?: AuthDirectiveResolver<any, any, ContextType>;
+};

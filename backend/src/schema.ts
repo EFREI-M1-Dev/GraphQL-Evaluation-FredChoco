@@ -54,14 +54,18 @@ type Query {
   getAllLikes: [Like]! @auth
   getAllDislikes: [Dislike]! @auth
   getAllComments: [Comment]! @auth
-}
+  
+  getTotalPostCount: Int! 
+  getTotalCommentCount: Int! 
+  getAppreciationRate: Float!
+} 
 
 # =========================================MUTATIONS========================================================
 
 type Mutation {
   signInUser(username: String!, password: String!): UserSignInResponse!
   
-  createUser(username: String!, password: String!, email: String!): UserCreateResponse! @auth
+  createUser(username: String!, password: String!, email: String!): UserCreateResponse!
   createLike(userId: ID!, postId: ID!): LikeCreateResponse! @auth
   createDislike(userId: ID!, postId: ID!): DislikeCreateResponse! @auth
   createComment(userId: ID!, postId: ID!, content: String!): CommentCreateResponse! @auth

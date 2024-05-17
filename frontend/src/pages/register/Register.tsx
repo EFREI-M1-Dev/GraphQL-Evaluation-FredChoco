@@ -2,13 +2,55 @@ import styles from "./_Register.module.scss";
 import TextField from "../../components/TextField/TextField";
 import Button from "../../components/Button/Button";
 import {useState} from "react";
+import {gql, useMutation} from "@apollo/client";
+import { useNavigate } from "react-router-dom";
+
+const CREATE_USER = gql`
+mutation Mutation($username: String!, $password: String!, $email: String!) {
+  createUser(username: $username, password: $password, email: $email) {
+    code
+    message
+    success
+    user {
+      username
+      id
+    }
+  }
+}
+`;
 
 const RegisterPage = () => {
-
     const [UsernameValue, setUsernameValue] = useState<string>('');
     const [EmailValue, setEmailValue] = useState<string>('');
     const [PasswordValue, setPasswordValue] = useState<string>('');
     const [ConfirmPasswordValue, setConfirmPasswordValue] = useState<string>('');
+    const navigate = useNavigate();
+
+    const [createUser] = useMutation(CREATE_USER);
+
+    const handleSignUp = async () => {
+        if (PasswordValue !== ConfirmPasswordValue) {
+            alert("Passwords do not match");
+            return;
+        }
+
+        try {
+            const { data } = await createUser({
+                variables: { username: UsernameValue, password: PasswordValue, email: EmailValue },
+            });
+
+            const { message, success } = data.createUser;
+            if (success) {
+                alert("Account created successfully");
+                navigate('/login');
+            } else {
+                alert(message);
+            }
+        } catch (error) {
+            console.error("Error creating account:", error);
+        }
+    }
+
 
     return (
         <div className={styles.container}>
@@ -40,7 +82,7 @@ const RegisterPage = () => {
                         onChange={(e) => setConfirmPasswordValue(e.target.value)}
                     />
                 </div>
-                <Button style={"primary"}>Create Account</Button>
+                <Button style={"primary"} onClick={handleSignUp} >Create Account</Button>
             </div>
         </div>
     );
