@@ -1,6 +1,9 @@
 import gql from "graphql-tag";
 
 export const typeDefs = gql`
+
+directive @auth on FIELD_DEFINITION
+
 # =========================================MODELS========================================================
 type UserJWT {
   id: ID!
@@ -42,15 +45,15 @@ type Comment {
 # =========================================QUERIES========================================================
 
 type Query {
-  getUser(id: ID!): User
-  getPost(id: ID!): Post
-  getLike(id: ID!): Like
-  getDislike(id: ID!): Dislike
-  getComment(id: ID!): Comment
+  getUser(id: ID!): User @auth
+  getPost(id: ID!): Post @auth
+  getLike(id: ID!): Like @auth
+  getDislike(id: ID!): Dislike @auth
+  getComment(id: ID!): Comment @auth
  
-  getAllLikes: [Like]!
-  getAllDislikes: [Dislike]!
-  getAllComments: [Comment]!
+  getAllLikes: [Like]! @auth
+  getAllDislikes: [Dislike]! @auth
+  getAllComments: [Comment]! @auth
 }
 
 # =========================================MUTATIONS========================================================
@@ -58,20 +61,20 @@ type Query {
 type Mutation {
   signInUser(username: String!, password: String!): UserSignInResponse!
   
-  createUser(username: String!, password: String!, email: String!): UserCreateResponse!
-  createLike(userId: ID!, postId: ID!): LikeCreateResponse!
-  createDislike(userId: ID!, postId: ID!): DislikeCreateResponse!
-  createComment(userId: ID!, postId: ID!, content: String!): CommentCreateResponse!
-  createPost(title: String!, content: String!, userId: ID!): PostCreateResponse!
+  createUser(username: String!, password: String!, email: String!): UserCreateResponse! @auth
+  createLike(userId: ID!, postId: ID!): LikeCreateResponse! @auth
+  createDislike(userId: ID!, postId: ID!): DislikeCreateResponse! @auth
+  createComment(userId: ID!, postId: ID!, content: String!): CommentCreateResponse! @auth
+  createPost(title: String!, content: String!, userId: ID!): PostCreateResponse! @auth
   
-  deleteLike(id: ID!): LikeDeleteResponse!
-  deleteDislike(id: ID!): DislikeDeleteResponse!
-  deleteComment(id: ID!): CommentDeleteResponse!
-  deletePost(id: ID!): PostDeleteResponse!
-  deleteUser(id: ID!): UserDeleteResponse!
+  deleteLike(id: ID!): LikeDeleteResponse! @auth
+  deleteDislike(id: ID!): DislikeDeleteResponse! @auth
+  deleteComment(id: ID!): CommentDeleteResponse! @auth
+  deletePost(id: ID!): PostDeleteResponse! @auth
+  deleteUser(id: ID!): UserDeleteResponse! @auth
   
-  updateUser(id: ID!, input: UpdateUserInput!): UserUpdateResponse!
-  updateComment(userId: ID!, postId: ID!, content: String!): CommentUpdateResponse!
+  updateUser(id: ID!, input: UpdateUserInput!): UserUpdateResponse! @auth
+  updateComment(userId: ID!, postId: ID!, content: String!): CommentUpdateResponse! @auth
 }
 
 # =========================================RESPONSES========================================================

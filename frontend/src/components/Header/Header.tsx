@@ -3,6 +3,7 @@ import Logo from "../Logo/Logo";
 import Button from "../Button/Button";
 import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
+import {useAuth} from "../../provider/AuthContext";
 
 const Header = () => {
 
@@ -21,6 +22,8 @@ const Header = () => {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
+    const { loggedIn,logout } = useAuth();
+
     return (
         <div className={styles.container}>
             <div className={styles.section}>
@@ -31,10 +34,17 @@ const Header = () => {
                 <Button style={"header"} route={"random"}> [RANDOM] </Button>
                 <Button style={"header"} route={"post"}> [POST] </Button>
             </div>
-            <div className={styles.section}>
-                <Button style={"header"} route={"login"}> [LOGIN] </Button>
-                <Button style={"header"} route={"register"}> [SIGN UP] </Button>
-            </div>
+            {!loggedIn ?
+                <div className={styles.section}  >
+                    <Button style={"header"} route={"login"}> [LOGIN] </Button>
+                    <Button style={"header"} route={"register"}> [SIGN UP] </Button>
+                </div>
+                :
+                <div className={styles.section} >
+                    <Button style={"header"} route={"profile"}> [PROFILE] </Button>
+                    <Button style={"header"} onClick={logout} > [LOGOUT] </Button>
+                </div>
+            }
             <div className={styles.scrollBar}  style={{width:`${widthScrollBar}%`}}> </div>
         </div>
     )

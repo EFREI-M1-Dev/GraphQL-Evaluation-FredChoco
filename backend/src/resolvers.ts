@@ -1,4 +1,3 @@
-import { GraphQLError } from "graphql";
 import { Resolvers } from "./types.js";
 
 import { UserMutations, UserQueries } from './models/User/index.js';
