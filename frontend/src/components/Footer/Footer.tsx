@@ -11,9 +11,9 @@ const Footer = () => {
             <div className={styles.section}>
                 <p>
                     Designed & Created by
-                    <Link to={"https://github.com/Fredray-21"} className={styles.link}> Fredray21 </Link>
+                    <Link to={"https://github.com/Fredray-21"} target="_blank" rel="noopener noreferrer" className={styles.link}> Fredray21 </Link>
                     &
-                    <Link to={"https://github.com/Chocolatiines"} className={styles.link}> Chocolatiines </Link>
+                    <Link to={"https://github.com/Chocolatiines"} target="_blank" rel="noopener noreferrer" className={styles.link}> Chocolatiines </Link>
                     | Commit: 2024-06-01
                 </p>
 
