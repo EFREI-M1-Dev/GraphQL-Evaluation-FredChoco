@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import {Post, Like} from "../../types/graphql.ts";
 import {useAuth} from "../../provider/AuthContext";
 import Carousel from "../../components/Carousel/Carousel.tsx";
+import {useParams} from "react-router-dom";
 
 const USER_POST = gql`
 query USER_POST_QUERY($id: ID!) {
@@ -36,12 +37,35 @@ query USER_LIKES_QUERY($id: ID!) {
 }
 `;
 
+const USER_BY_USERNAME = gql`
+query USER__BY_USERNAME_QUERY($username: String!) {
+  getUserByUsername(username: $username){
+    id
+    username
+    email
+  }
+}
+`;
+
 const Profile = () => {
-    const { currentUser } = useAuth();
+    let { currentUser } = useAuth();
+    const { username } = useParams();
+
     const [allUserPosts, setAllUserPosts] = useState<Post[]>([]);
     const [allUserLikes, setAllUserLikes] = useState<Like[]>([]);
 
-    const { data } = useQuery(USER_POST, {
+    const isMyProfile = !username || username == currentUser?.username.toLowerCase();
+
+    if (!isMyProfile) {
+        const { data: userData } = useQuery(USER_BY_USERNAME, {
+            variables: { username },
+            skip: !username
+        });
+
+        currentUser = userData?.getUserByUsername;
+    }
+
+    const { data: postData } = useQuery(USER_POST, {
         variables: { id: currentUser?.id },
         skip: !currentUser
     });
@@ -55,15 +79,12 @@ const Profile = () => {
         if (likesData) {
             setAllUserLikes(likesData.getLikesByUser);
         }
-    }, [likesData]);
 
-    useEffect(() => {
-        if (data) {
-            setAllUserPosts(data.getUserPosts);
+        if (postData) {
+            setAllUserPosts(postData.getUserPosts);
         }
-    }, [data]);
+    }, [likesData, postData]);
 
-    console.log(allUserLikes);
     return (
         <div className={styles.container}>
             <div className={styles.section + " " + styles.profile}>
