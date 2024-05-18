@@ -6,7 +6,7 @@ import {gql, useMutation} from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 
 const CREATE_USER = gql`
-mutation Mutation($username: String!, $password: String!, $email: String!) {
+mutation createUser($username: String!, $password: String!, $email: String!) {
   createUser(username: $username, password: $password, email: $email) {
     code
     message

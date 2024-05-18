@@ -13,9 +13,7 @@ export const getAppreciationRate: QueryResolvers["getAppreciationRate"] = async 
         });
 
         // Appreciation rate
-        const rate = likes.length / (likes.length + dislikes.length);
-        console.log("Appreciation rate: ", rate);
-        return rate * 100;
+        return likes.length / (likes.length + dislikes.length) * 100;
     } catch (e) {
         consola.error(e);
         return 0;

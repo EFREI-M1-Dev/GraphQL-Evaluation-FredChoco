@@ -4,7 +4,7 @@ import {gql, useQuery} from "@apollo/client";
 import {useEffect, useState} from "react";
 
 const STATISTICS = gql`
-query Query {
+query STATISTICS_Query {
   getTotalPostCount
   getTotalCommentCount
   getAppreciationRate

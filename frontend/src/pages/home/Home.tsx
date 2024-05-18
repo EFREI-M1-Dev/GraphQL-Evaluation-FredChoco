@@ -6,25 +6,29 @@ import Metrics from "../../components/Metrics/Metrics";
 import CardArticle from "../../components/CardArticle/CardArticle.tsx";
 import {gql, useQuery} from "@apollo/client";
 import {useEffect, useState} from "react";
-import {Post} from "../../__generated__/graphql";
+import {Post} from "../../types/graphql";
 
-const STATISTICS = gql`
-query Query {
+const LATEST_POST = gql`
+query LATEST_POST_Query {
   getLatestPosts {
     id
     title
+    createdAt
+    user {
+        username
+    }
   }
 }
 `;
 
+
 const HomePage = () => {
     const [allLatestPosts, setAllLatestPosts] = useState<Post[]>([]);
-    const {data} = useQuery(STATISTICS);
+    const {data} = useQuery(LATEST_POST);
 
     useEffect(() => {
         if (data) {
-            console.log("allLatestPosts",data);
-            setAllLatestPosts(data.getAllPosts);
+            setAllLatestPosts(data.getLatestPosts);
         }
     }, [data]);
 
@@ -32,14 +36,16 @@ const HomePage = () => {
         <div className={styles.container}>
             <Metrics/>
             <h1 className={styles.title}>RÉCEMMENT:</h1>
-            <div>
-            {allLatestPosts.map((post) => (
-                <CardArticle
-                    key={post.id}
-                    title={post.title}
-                    image={"https://www.buzzfrance.fr/wp-content/uploads/2022/10/quelle-star-de-kpop-es-tu.jpeg"}
-                />))
-            }
+            <div className={styles.cardContainer}>
+                {allLatestPosts.map((post) => (
+                    <CardArticle
+                        key={post.id}
+                        title={post.title}
+                        image={"https://www.buzzfrance.fr/wp-content/uploads/2022/10/quelle-star-de-kpop-es-tu.jpeg"}
+                        authorUsername={post.user.username}
+                    />
+                ))
+                }
             </div>
 
 
