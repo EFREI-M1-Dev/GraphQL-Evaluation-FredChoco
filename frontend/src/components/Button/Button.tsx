@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./_Button.module.scss";
 import {Link} from "react-router-dom";
+import classNames from "classnames";
 
 const Button = (
     props:
@@ -11,13 +12,18 @@ const Button = (
             className?: string;
             onClick?: React.MouseEventHandler<HTMLButtonElement>
         }) => {
-
-
     const isCurrentPath = props.style === "header" && (window.location.pathname.split("/").pop() === props.route);
+
+    const buttonClassName = classNames(
+        styles.button,
+        props.style && styles[props.style],
+        props.className,
+        isCurrentPath && "glow"
+    );
 
     const button = (
         <button
-            className={styles.button + " " + styles[props.style]+ " "+(props.className || '')+" "+(isCurrentPath ? 'glow' : '')}
+            className={buttonClassName}
             onClick={props.onClick}
         >
             {props.children}

@@ -50,3 +50,10 @@
 .posts {
   width : 100%;
 }
+
+.myPostsTitle {
+  display     : flex;
+  width       : 100%;
+  align-items : center;
+  gap         : 1em;
+}

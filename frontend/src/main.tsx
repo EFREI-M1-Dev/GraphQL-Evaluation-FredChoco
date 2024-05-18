@@ -14,6 +14,7 @@ import Post from "./pages/post/Post";
 import {AuthProvider} from "./provider/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import SearchPage from "./pages/search/Search";
+import CreatePostPage from "./pages/createPost/CreatePost";
 
 const mainController = useMainController();
 const MainControllerContext = createContext(mainController);
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
             {
                 path: '/search',
                 element: <SearchPage/>
+            },
+            {
+                path: '/createPost',
+                element: <CreatePostPage/>
             }
         ]
     },

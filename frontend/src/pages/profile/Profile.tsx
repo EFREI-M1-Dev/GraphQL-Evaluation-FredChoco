@@ -6,6 +6,7 @@ import { Post, Like } from "../../types/graphql.ts";
 import { useAuth } from "../../provider/AuthContext";
 import Carousel from "../../components/Carousel/Carousel.tsx";
 import { useNavigate, useParams } from 'react-router-dom';
+import Button from "../../components/Button/Button";
 
 const USER_POST = gql`
 query USER_POST_QUERY($id: ID!) {
@@ -48,7 +49,7 @@ query USER_BY_USERNAME($username: String!) {
 `;
 
 const Profile = () => {
-    let { currentUser } = useAuth();
+    const { currentUser } = useAuth();
     const { username } = useParams();
     const navigate = useNavigate();
 
@@ -59,9 +60,21 @@ const Profile = () => {
     const isMyProfile = !username || username.toLowerCase() === currentUser?.username.toLowerCase();
 
     const { data: userData } = useQuery(USER_BY_USERNAME, {
-        variables: { username },
-        skip: !username || isMyProfile
+        variables: { username: username?.toLowerCase() },
+        skip: !username || isMyProfile,
     });
+
+    useEffect(() => {
+        if (isMyProfile) {
+            setProfileUser(currentUser);
+        } else if (userData) {
+            if (!userData.getUserByUsername) {
+                navigate('/');
+            } else {
+                setProfileUser(userData.getUserByUsername);
+            }
+        }
+    }, [currentUser, isMyProfile, userData, navigate]);
 
     const { data: postData } = useQuery(USER_POST, {
         variables: { id: profileUser?.id },
@@ -72,14 +85,6 @@ const Profile = () => {
         variables: { id: profileUser?.id },
         skip: !profileUser
     });
-
-    useEffect(() => {
-        if (userData && !userData.getUserByUsername) {
-            navigate('/');
-        } else if (userData && userData.getUserByUsername) {
-            setProfileUser(userData.getUserByUsername);
-        }
-    }, [userData, navigate]);
 
     useEffect(() => {
         if (postData) {
@@ -93,9 +98,6 @@ const Profile = () => {
         }
     }, [likesData]);
 
-    if (!isMyProfile && !userData) {
-        return null;
-    }
 
     return (
         <div className={styles.container}>
@@ -107,7 +109,17 @@ const Profile = () => {
                 </div>
             </div>
 
-            <h2>Posts</h2>
+            {isMyProfile ? (
+                <div className={styles.myPostsTitle}>
+                    <h2>Mes Posts</h2>
+                    <div>
+                        <Button style={"primary"} route={"/createPost"} >Créer un post</Button>
+                    </div>
+                </div>
+            ) : (
+                <h2>Posts de {profileUser?.username}</h2>
+            )}
+
             <div className={styles.posts}>
                 <Carousel type={'line'}>
                     {allUserPosts.map((post) => (
@@ -121,7 +133,7 @@ const Profile = () => {
                 </Carousel>
             </div>
 
-            <h2>Liked</h2>
+            <h2>{isMyProfile ? 'Mes ' : ''}Liked</h2>
             <div className={styles.posts}>
                 <Carousel type={'line'}>
                     {allUserLikes.map((like) => (
