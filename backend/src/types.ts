@@ -226,6 +226,7 @@ export type Query = {
   getLatestPosts: Array<Maybe<Post>>;
   getLike?: Maybe<Like>;
   getLikedPosts: Array<Maybe<Post>>;
+  getLoggedUser?: Maybe<User>;
   getPost?: Maybe<Post>;
   getTotalCommentCount: Scalars['Int']['output'];
   getTotalPostCount: Scalars['Int']['output'];
@@ -286,7 +287,7 @@ export type UserCreateResponse = {
   code: Scalars['Int']['output'];
   message: Scalars['String']['output'];
   success: Scalars['Boolean']['output'];
-  user?: Maybe<UserJwt>;
+  user: User;
 };
 
 export type UserDeleteResponse = {
@@ -294,12 +295,6 @@ export type UserDeleteResponse = {
   code: Scalars['Int']['output'];
   message: Scalars['String']['output'];
   success: Scalars['Boolean']['output'];
-};
-
-export type UserJwt = {
-  __typename?: 'UserJWT';
-  id: Scalars['ID']['output'];
-  username: Scalars['String']['output'];
 };
 
 export type UserSignInResponse = {
@@ -414,7 +409,6 @@ export type ResolversTypes = {
   User: ResolverTypeWrapper<User>;
   UserCreateResponse: ResolverTypeWrapper<UserCreateResponse>;
   UserDeleteResponse: ResolverTypeWrapper<UserDeleteResponse>;
-  UserJWT: ResolverTypeWrapper<UserJwt>;
   UserSignInResponse: ResolverTypeWrapper<UserSignInResponse>;
   UserUpdateResponse: ResolverTypeWrapper<UserUpdateResponse>;
 };
@@ -446,7 +440,6 @@ export type ResolversParentTypes = {
   User: User;
   UserCreateResponse: UserCreateResponse;
   UserDeleteResponse: UserDeleteResponse;
-  UserJWT: UserJwt;
   UserSignInResponse: UserSignInResponse;
   UserUpdateResponse: UserUpdateResponse;
 };
@@ -588,6 +581,7 @@ export type QueryResolvers<ContextType = DataSourceContext, ParentType extends R
   getLatestPosts?: Resolver<Array<Maybe<ResolversTypes['Post']>>, ParentType, ContextType>;
   getLike?: Resolver<Maybe<ResolversTypes['Like']>, ParentType, ContextType, RequireFields<QueryGetLikeArgs, 'id'>>;
   getLikedPosts?: Resolver<Array<Maybe<ResolversTypes['Post']>>, ParentType, ContextType, RequireFields<QueryGetLikedPostsArgs, 'id'>>;
+  getLoggedUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   getPost?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<QueryGetPostArgs, 'id'>>;
   getTotalCommentCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   getTotalPostCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
@@ -606,7 +600,7 @@ export type UserCreateResponseResolvers<ContextType = DataSourceContext, ParentT
   code?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  user?: Resolver<Maybe<ResolversTypes['UserJWT']>, ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -614,12 +608,6 @@ export type UserDeleteResponseResolvers<ContextType = DataSourceContext, ParentT
   code?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type UserJwtResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['UserJWT'] = ResolversParentTypes['UserJWT']> = {
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  username?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -659,7 +647,6 @@ export type Resolvers<ContextType = DataSourceContext> = {
   User?: UserResolvers<ContextType>;
   UserCreateResponse?: UserCreateResponseResolvers<ContextType>;
   UserDeleteResponse?: UserDeleteResponseResolvers<ContextType>;
-  UserJWT?: UserJwtResolvers<ContextType>;
   UserSignInResponse?: UserSignInResponseResolvers<ContextType>;
   UserUpdateResponse?: UserUpdateResponseResolvers<ContextType>;
 };

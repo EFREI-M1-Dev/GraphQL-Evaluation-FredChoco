@@ -6,32 +6,39 @@ import {Post} from "../../types/graphql.ts";
 import {useAuth} from "../../provider/AuthContext";
 
 const USER_POST = gql`
-query USER_POST_Query {
-  getUserPosts {
+query USER_POST_QUERY($id: ID!) {
+  getUserPosts(id: $id) {
+    content
+    createdAt
     id
     title
-    createdAt
     user {
-        username
+      id
     }
   }
 }
 `;
 
 const Profile = () => {
-    const [allUserPosts, setAllUserPosts] = useState<Post[]>([]);
-    const {data} = useQuery(USER_POST);
-
-    // tien c'est comme ça que tu récupères l'utilisateur connecté
     const { currentUser } = useAuth();
-    console.log(currentUser);
+    const [allUserPosts, setAllUserPosts] = useState<Post[]>([]);
+
+    const {data, error} = useQuery(USER_POST, {
+        variables: { id: currentUser?.id },
+        skip: !currentUser
+    });
+
+    if (error) {
+        console.error(error.graphQLErrors[0].message);
+    }
 
     useEffect(() => {
         if (data) {
-            setAllUserPosts(data.getLatestPosts);
+            setAllUserPosts(data.getUserPosts);
         }
     }, [data]);
 
+    console.log(data);
     return (
         <div className={styles.container}>
             <div className={styles.section + " " + styles.profile}>
@@ -44,15 +51,7 @@ const Profile = () => {
 
             <div className={styles.section}>
                 <h2>Posts</h2>
-                {allUserPosts.map((post) => (
-                    <CardArticle
-                        key={post.id}
-                        title={post.title}
-                        image={"https://www.buzzfrance.fr/wp-content/uploads/2022/10/quelle-star-de-kpop-es-tu.jpeg"}
-                        authorUsername={post.user.username}
-                    />
-                ))
-                }
+
             </div>
 
             <div className={styles.section}>

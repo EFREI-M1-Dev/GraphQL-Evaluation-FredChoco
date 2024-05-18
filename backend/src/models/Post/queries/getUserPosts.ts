@@ -12,15 +12,11 @@ export const getUserPosts: QueryResolvers["getUserPosts"] = async (_, {id}, {dat
             },
             select: postSelect,
             where: {
-                id: id
+                userId: id
             }
         });
 
-        if (!posts) {
-            return [];
-        }
-
-        return posts;
+        return posts || [];
     } catch (e) {
         consola.error(e as Error);
         return [];

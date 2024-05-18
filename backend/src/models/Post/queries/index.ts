@@ -1,5 +1,6 @@
 import { getPost } from './getPost.js';
 import { getAllPosts } from './getAllPosts.js';
 import { getLatestPosts } from './getLatestPosts.js';
+import { getUserPosts } from './getUserPosts.js';
 
-export { getPost, getAllPosts, getLatestPosts };
+export { getPost, getAllPosts, getLatestPosts, getUserPosts };
