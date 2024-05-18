@@ -58,6 +58,7 @@ type Query {
   getDislike(id: ID!): Dislike @auth
   getComment(id: ID!): Comment @auth
   getLoggedUser: User @auth
+  getUserByUsername(username: String!): User
  
   getAllLikes: [Like]! @auth
   getAllDislikes: [Dislike]! @auth
