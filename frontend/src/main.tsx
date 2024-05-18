@@ -13,6 +13,7 @@ import ProfilePage from "./pages/profile/Profile";
 import Post from "./pages/post/Post";
 import {AuthProvider} from "./provider/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
+import SearchPage from "./pages/search/Search";
 
 const mainController = useMainController();
 const MainControllerContext = createContext(mainController);
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
             {
                 path: '/profile/:username',
                 element: <ProfilePage/>
+            },
+            {
+                path: '/search',
+                element: <SearchPage/>
             }
         ]
     },

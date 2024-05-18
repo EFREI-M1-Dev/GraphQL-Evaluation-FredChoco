@@ -5,7 +5,7 @@ const TextField = (
     props: {
         placeholder: string;
         type?: string;
-        style?: string;
+        style?: string | "search";
         value?: string;
         onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
         className?: string;
