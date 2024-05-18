@@ -9,6 +9,7 @@ import HomePage from './pages/home/Home';
 import ErrorPage from './pages/error/Error';
 import LoginPage from './pages/login/Login';
 import RegisterPage from "./pages/register/Register";
+import ProfilePage from "./pages/profile/Profile";
 import Post from "./pages/post/Post";
 import {AuthProvider} from "./provider/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
@@ -40,7 +41,19 @@ const router = createBrowserRouter([
                         </ProtectedRoute>
                     )
             },
-            {path: '/post', element: <Post/>}
+            {
+                path: '/post',
+                element: <Post/>
+            },
+            {
+                path: '/profile',
+                element:
+                    (
+                        <ProtectedRoute redirectTo="/login" blockIfLogged={false}>
+                            <ProfilePage/>
+                        </ProtectedRoute>
+                    )
+            }
         ]
     },
 ]);

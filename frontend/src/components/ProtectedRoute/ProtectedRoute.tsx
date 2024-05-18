@@ -5,11 +5,15 @@ import {ReactNode} from "react";
 interface ProtectedRouteProps {
     children: ReactNode;
     redirectTo: string;
+    blockIfLogged?: boolean;
 }
 
-const ProtectedRoute = ({ children, redirectTo }: ProtectedRouteProps) => {
+const ProtectedRoute = ({ children, redirectTo, blockIfLogged = true }: ProtectedRouteProps) => {
     const { loggedIn } = useAuth();
-    return loggedIn ? <Navigate to={redirectTo} /> : children;
+
+    const shouldRedirect = blockIfLogged ? loggedIn : !loggedIn;
+
+    return shouldRedirect ? <Navigate to={redirectTo} /> : children;
 };
 
 export default ProtectedRoute;
