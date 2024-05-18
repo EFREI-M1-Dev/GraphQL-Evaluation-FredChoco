@@ -1,9 +1,9 @@
 import { PrismaClient } from "@prisma/client"
-import { JWTUser } from "./modules/auth"
+import { User } from "./modules/auth"
 
 export type DataSourceContext = {
     dataSources: {
         db: PrismaClient
     },
-    user : JWTUser | null
+    user : User | null
 }

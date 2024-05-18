@@ -34,7 +34,7 @@ export const signInUser: MutationResolvers["signInUser"] = async (_, { username,
             code: 200,
             success: true,
             message: 'User has been signed in',
-            token: createJWT({username: user.username, id: user.id})
+            token: createJWT({username: user.username, id: user.id, email: user.email})
         }
     } catch (e) {
         consola.error(e as Error);

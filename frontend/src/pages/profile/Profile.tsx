@@ -3,6 +3,7 @@ import CardArticle from "../../components/CardArticle/CardArticle.tsx";
 import {gql, useQuery} from "@apollo/client";
 import {useEffect, useState} from "react";
 import {Post} from "../../types/graphql.ts";
+import {useAuth} from "../../provider/AuthContext";
 
 const USER_POST = gql`
 query USER_POST_Query {
@@ -20,6 +21,10 @@ query USER_POST_Query {
 const Profile = () => {
     const [allUserPosts, setAllUserPosts] = useState<Post[]>([]);
     const {data} = useQuery(USER_POST);
+
+    // tien c'est comme ça que tu récupères l'utilisateur connecté
+    const { currentUser } = useAuth();
+    console.log(currentUser);
 
     useEffect(() => {
         if (data) {

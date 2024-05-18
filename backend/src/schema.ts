@@ -6,11 +6,6 @@ directive @auth on FIELD_DEFINITION
 scalar Date
 
 # =========================================MODELS========================================================
-type UserJWT {
-  id: ID!
-  username: String!
-}
-
 type User {
   id: ID!
   username: String!
@@ -55,6 +50,7 @@ type Query {
   getLike(id: ID!): Like @auth
   getDislike(id: ID!): Dislike @auth
   getComment(id: ID!): Comment @auth
+  getLoggedUser: User @auth
  
   getAllLikes: [Like]! @auth
   getAllDislikes: [Dislike]! @auth
@@ -109,7 +105,7 @@ type UserCreateResponse {
   code: Int!
   success: Boolean!
   message: String!
-  user: UserJWT
+  user: User!
 }
 
 type UserDeleteResponse {

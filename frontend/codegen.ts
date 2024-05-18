@@ -9,7 +9,7 @@ const config: CodegenConfig = {
             plugins: ["typescript", "typescript-resolvers"],
             presetConfig: {
                 gqlTagName: 'gql',
-            }
+            },
         }
     },
     ignoreNoDocuments: true,

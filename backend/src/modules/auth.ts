@@ -1,16 +1,16 @@
-import { User } from "@prisma/client";
+import { User as UserPrisma } from "@prisma/client";
 import jwt from "jsonwebtoken";
 import { consola } from "consola";
 import * as bcrypt from "bcrypt";
 
 
-export type JWTUser = Pick<User, "id" | "username">;
+export type User = Pick<UserPrisma, "id" | "username" | "email">;
 
-export const createJWT = (user: JWTUser) => jwt.sign(user, process.env.JWT_SECRET);
+export const createJWT = (user: User) => jwt.sign(user, process.env.JWT_SECRET);
 
-export const verifyJWT = (token: string) => jwt.verify(token, process.env.JWT_SECRET) as JWTUser;
+export const verifyJWT = (token: string) => jwt.verify(token, process.env.JWT_SECRET) as User;
 
-export const getUserFromToken = (token: string) : JWTUser | null => {
+export const getUserFromToken = (token: string) : User | null => {
     try {
         return verifyJWT(token);
     } catch (error) {
