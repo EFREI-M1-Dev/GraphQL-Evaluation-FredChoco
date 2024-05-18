@@ -1,24 +1,23 @@
-import {Post, QueryResolvers, User} from "../../../types";
+import { QueryResolvers } from "../../../types";
 import consola from "consola";
-import {likeSelect, postSelect} from "../../selectorsPrisma.js";
+import {likeSelect } from "../../selectorsPrisma.js";
 
 export const getLikesByUser: QueryResolvers["getLikesByUser"] = async (_, {id}, {dataSources}) => {
 
     try {
-        const posts = await dataSources.db.like.findMany({
+        const likes = await dataSources.db.like.findMany({
             take: 10,
             orderBy: {
                 createdAt: "desc",
             },
-            select: postSelect,
+            select: likeSelect,
+            where: {
+                userId: id,
+            },
 
         });
 
-        if (!posts) {
-            return [];
-        }
-
-        return posts;
+        return likes || [];
     } catch (e) {
         consola.error(e as Error);
         return [];

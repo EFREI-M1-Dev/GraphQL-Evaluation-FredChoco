@@ -65,7 +65,7 @@ type Query {
   getAllPosts: [Post]! @auth
   getLatestPosts: [LatestPost]!
   getUserPosts(id: ID!): [Post]! @auth
-  getLikedPosts(id: ID!): [Post]! @auth
+  getLikesByUser(id: ID!): [Like]! @auth
   
   getTotalPostCount: Int! 
   getTotalCommentCount: Int! 
