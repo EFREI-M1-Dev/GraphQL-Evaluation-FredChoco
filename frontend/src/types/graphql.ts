@@ -74,6 +74,13 @@ export type DislikeDeleteResponse = {
   success: Scalars['Boolean']['output'];
 };
 
+export type LatestPost = {
+  __typename?: 'LatestPost';
+  dislikes: Scalars['Int']['output'];
+  likes: Scalars['Int']['output'];
+  post: Post;
+};
+
 export type Like = {
   __typename?: 'Like';
   createdAt: Scalars['Date']['output'];
@@ -224,12 +231,15 @@ export type Query = {
   getAppreciationRate: Scalars['Float']['output'];
   getComment?: Maybe<Comment>;
   getDislike?: Maybe<Dislike>;
-  getLatestPosts: Array<Maybe<Post>>;
+  getLatestPosts: Array<Maybe<LatestPost>>;
   getLike?: Maybe<Like>;
+  getLikedPosts: Array<Maybe<Post>>;
+  getLoggedUser?: Maybe<User>;
   getPost?: Maybe<Post>;
   getTotalCommentCount: Scalars['Int']['output'];
   getTotalPostCount: Scalars['Int']['output'];
   getUser?: Maybe<User>;
+  getUserPosts: Array<Maybe<Post>>;
 };
 
 
@@ -248,12 +258,22 @@ export type QueryGetLikeArgs = {
 };
 
 
+export type QueryGetLikedPostsArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
 export type QueryGetPostArgs = {
   id: Scalars['ID']['input'];
 };
 
 
 export type QueryGetUserArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryGetUserPostsArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -275,7 +295,7 @@ export type UserCreateResponse = {
   code: Scalars['Int']['output'];
   message: Scalars['String']['output'];
   success: Scalars['Boolean']['output'];
-  user?: Maybe<UserJwt>;
+  user: User;
 };
 
 export type UserDeleteResponse = {
@@ -283,12 +303,6 @@ export type UserDeleteResponse = {
   code: Scalars['Int']['output'];
   message: Scalars['String']['output'];
   success: Scalars['Boolean']['output'];
-};
-
-export type UserJwt = {
-  __typename?: 'UserJWT';
-  id: Scalars['ID']['output'];
-  username: Scalars['String']['output'];
 };
 
 export type UserSignInResponse = {
@@ -315,7 +329,7 @@ export type Statistics_QueryQuery = { __typename?: 'Query', getTotalPostCount: n
 export type Latest_Post_QueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type Latest_Post_QueryQuery = { __typename?: 'Query', getLatestPosts: Array<{ __typename?: 'Post', id: string, title: string, createdAt: any, user: { __typename?: 'User', username: string } } | null> };
+export type Latest_Post_QueryQuery = { __typename?: 'Query', getLatestPosts: Array<{ __typename?: 'LatestPost', likes: number, dislikes: number, post: { __typename?: 'Post', id: string, title: string, createdAt: any, user: { __typename?: 'User', username: string } } } | null> };
 
 export type SignInUserMutationVariables = Exact<{
   username: Scalars['String']['input'];
@@ -325,6 +339,13 @@ export type SignInUserMutationVariables = Exact<{
 
 export type SignInUserMutation = { __typename?: 'Mutation', signInUser: { __typename?: 'UserSignInResponse', message: string, success: boolean, token?: string | null } };
 
+export type User_Post_QueryQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type User_Post_QueryQuery = { __typename?: 'Query', getUserPosts: Array<{ __typename?: 'Post', content: string, createdAt: any, id: string, title: string, user: { __typename?: 'User', id: string } } | null> };
+
 export type CreateUserMutationVariables = Exact<{
   username: Scalars['String']['input'];
   password: Scalars['String']['input'];
@@ -332,13 +353,20 @@ export type CreateUserMutationVariables = Exact<{
 }>;
 
 
-export type CreateUserMutation = { __typename?: 'Mutation', createUser: { __typename?: 'UserCreateResponse', code: number, message: string, success: boolean, user?: { __typename?: 'UserJWT', username: string, id: string } | null } };
+export type CreateUserMutation = { __typename?: 'Mutation', createUser: { __typename?: 'UserCreateResponse', code: number, message: string, success: boolean, user: { __typename?: 'User', username: string, id: string } } };
+
+export type User_Info_QueryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type User_Info_QueryQuery = { __typename?: 'Query', getLoggedUser?: { __typename?: 'User', id: string, email: string, username: string } | null };
 
 
 export const Statistics_QueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"STATISTICS_Query"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getTotalPostCount"}},{"kind":"Field","name":{"kind":"Name","value":"getTotalCommentCount"}},{"kind":"Field","name":{"kind":"Name","value":"getAppreciationRate"}}]}}]} as unknown as DocumentNode<Statistics_QueryQuery, Statistics_QueryQueryVariables>;
-export const Latest_Post_QueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"LATEST_POST_Query"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getLatestPosts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]}}]} as unknown as DocumentNode<Latest_Post_QueryQuery, Latest_Post_QueryQueryVariables>;
+export const Latest_Post_QueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"LATEST_POST_Query"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getLatestPosts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"post"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"likes"}},{"kind":"Field","name":{"kind":"Name","value":"dislikes"}}]}}]}}]} as unknown as DocumentNode<Latest_Post_QueryQuery, Latest_Post_QueryQueryVariables>;
 export const SignInUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SignInUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"username"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signInUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"username"},"value":{"kind":"Variable","name":{"kind":"Name","value":"username"}}},{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"success"}},{"kind":"Field","name":{"kind":"Name","value":"token"}}]}}]}}]} as unknown as DocumentNode<SignInUserMutation, SignInUserMutationVariables>;
+export const User_Post_QueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"USER_POST_QUERY"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getUserPosts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<User_Post_QueryQuery, User_Post_QueryQueryVariables>;
 export const CreateUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"username"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"username"},"value":{"kind":"Variable","name":{"kind":"Name","value":"username"}}},{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}},{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"success"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<CreateUserMutation, CreateUserMutationVariables>;
+export const User_Info_QueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"USER_INFO_Query"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getLoggedUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]} as unknown as DocumentNode<User_Info_QueryQuery, User_Info_QueryQueryVariables>;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: { input: string; output: string; }
@@ -404,6 +432,13 @@ export type DislikeDeleteResponse = {
   success: Scalars['Boolean']['output'];
 };
 
+export type LatestPost = {
+  __typename?: 'LatestPost';
+  dislikes: Scalars['Int']['output'];
+  likes: Scalars['Int']['output'];
+  post: Post;
+};
+
 export type Like = {
   __typename?: 'Like';
   createdAt: Scalars['Date']['output'];
@@ -554,12 +589,15 @@ export type Query = {
   getAppreciationRate: Scalars['Float']['output'];
   getComment?: Maybe<Comment>;
   getDislike?: Maybe<Dislike>;
-  getLatestPosts: Array<Maybe<Post>>;
+  getLatestPosts: Array<Maybe<LatestPost>>;
   getLike?: Maybe<Like>;
+  getLikedPosts: Array<Maybe<Post>>;
+  getLoggedUser?: Maybe<User>;
   getPost?: Maybe<Post>;
   getTotalCommentCount: Scalars['Int']['output'];
   getTotalPostCount: Scalars['Int']['output'];
   getUser?: Maybe<User>;
+  getUserPosts: Array<Maybe<Post>>;
 };
 
 
@@ -578,12 +616,22 @@ export type QueryGetLikeArgs = {
 };
 
 
+export type QueryGetLikedPostsArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
 export type QueryGetPostArgs = {
   id: Scalars['ID']['input'];
 };
 
 
 export type QueryGetUserArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryGetUserPostsArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -605,7 +653,7 @@ export type UserCreateResponse = {
   code: Scalars['Int']['output'];
   message: Scalars['String']['output'];
   success: Scalars['Boolean']['output'];
-  user?: Maybe<UserJwt>;
+  user: User;
 };
 
 export type UserDeleteResponse = {
@@ -613,12 +661,6 @@ export type UserDeleteResponse = {
   code: Scalars['Int']['output'];
   message: Scalars['String']['output'];
   success: Scalars['Boolean']['output'];
-};
-
-export type UserJwt = {
-  __typename?: 'UserJWT';
-  id: Scalars['ID']['output'];
-  username: Scalars['String']['output'];
 };
 
 export type UserSignInResponse = {
@@ -720,6 +762,7 @@ export type ResolversTypes = {
   Dislike: ResolverTypeWrapper<Dislike>;
   DislikeCreateResponse: ResolverTypeWrapper<DislikeCreateResponse>;
   DislikeDeleteResponse: ResolverTypeWrapper<DislikeDeleteResponse>;
+  LatestPost: ResolverTypeWrapper<LatestPost>;
   Like: ResolverTypeWrapper<Like>;
   LikeCreateResponse: ResolverTypeWrapper<LikeCreateResponse>;
   LikeDeleteResponse: ResolverTypeWrapper<LikeDeleteResponse>;
@@ -733,7 +776,6 @@ export type ResolversTypes = {
   User: ResolverTypeWrapper<User>;
   UserCreateResponse: ResolverTypeWrapper<UserCreateResponse>;
   UserDeleteResponse: ResolverTypeWrapper<UserDeleteResponse>;
-  UserJWT: ResolverTypeWrapper<UserJwt>;
   UserSignInResponse: ResolverTypeWrapper<UserSignInResponse>;
   UserUpdateResponse: ResolverTypeWrapper<UserUpdateResponse>;
 };
@@ -752,6 +794,7 @@ export type ResolversParentTypes = {
   Dislike: Dislike;
   DislikeCreateResponse: DislikeCreateResponse;
   DislikeDeleteResponse: DislikeDeleteResponse;
+  LatestPost: LatestPost;
   Like: Like;
   LikeCreateResponse: LikeCreateResponse;
   LikeDeleteResponse: LikeDeleteResponse;
@@ -765,7 +808,6 @@ export type ResolversParentTypes = {
   User: User;
   UserCreateResponse: UserCreateResponse;
   UserDeleteResponse: UserDeleteResponse;
-  UserJWT: UserJwt;
   UserSignInResponse: UserSignInResponse;
   UserUpdateResponse: UserUpdateResponse;
 };
@@ -830,6 +872,13 @@ export type DislikeDeleteResponseResolvers<ContextType = any, ParentType extends
   code?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type LatestPostResolvers<ContextType = any, ParentType extends ResolversParentTypes['LatestPost'] = ResolversParentTypes['LatestPost']> = {
+  dislikes?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  likes?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  post?: Resolver<ResolversTypes['Post'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -904,12 +953,15 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getAppreciationRate?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
   getComment?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, RequireFields<QueryGetCommentArgs, 'id'>>;
   getDislike?: Resolver<Maybe<ResolversTypes['Dislike']>, ParentType, ContextType, RequireFields<QueryGetDislikeArgs, 'id'>>;
-  getLatestPosts?: Resolver<Array<Maybe<ResolversTypes['Post']>>, ParentType, ContextType>;
+  getLatestPosts?: Resolver<Array<Maybe<ResolversTypes['LatestPost']>>, ParentType, ContextType>;
   getLike?: Resolver<Maybe<ResolversTypes['Like']>, ParentType, ContextType, RequireFields<QueryGetLikeArgs, 'id'>>;
+  getLikedPosts?: Resolver<Array<Maybe<ResolversTypes['Post']>>, ParentType, ContextType, RequireFields<QueryGetLikedPostsArgs, 'id'>>;
+  getLoggedUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   getPost?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<QueryGetPostArgs, 'id'>>;
   getTotalCommentCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   getTotalPostCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   getUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetUserArgs, 'id'>>;
+  getUserPosts?: Resolver<Array<Maybe<ResolversTypes['Post']>>, ParentType, ContextType, RequireFields<QueryGetUserPostsArgs, 'id'>>;
 };
 
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
@@ -923,7 +975,7 @@ export type UserCreateResponseResolvers<ContextType = any, ParentType extends Re
   code?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  user?: Resolver<Maybe<ResolversTypes['UserJWT']>, ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -931,12 +983,6 @@ export type UserDeleteResponseResolvers<ContextType = any, ParentType extends Re
   code?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type UserJwtResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserJWT'] = ResolversParentTypes['UserJWT']> = {
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  username?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -965,6 +1011,7 @@ export type Resolvers<ContextType = any> = {
   Dislike?: DislikeResolvers<ContextType>;
   DislikeCreateResponse?: DislikeCreateResponseResolvers<ContextType>;
   DislikeDeleteResponse?: DislikeDeleteResponseResolvers<ContextType>;
+  LatestPost?: LatestPostResolvers<ContextType>;
   Like?: LikeResolvers<ContextType>;
   LikeCreateResponse?: LikeCreateResponseResolvers<ContextType>;
   LikeDeleteResponse?: LikeDeleteResponseResolvers<ContextType>;
@@ -976,7 +1023,6 @@ export type Resolvers<ContextType = any> = {
   User?: UserResolvers<ContextType>;
   UserCreateResponse?: UserCreateResponseResolvers<ContextType>;
   UserDeleteResponse?: UserDeleteResponseResolvers<ContextType>;
-  UserJWT?: UserJwtResolvers<ContextType>;
   UserSignInResponse?: UserSignInResponseResolvers<ContextType>;
   UserUpdateResponse?: UserUpdateResponseResolvers<ContextType>;
 };

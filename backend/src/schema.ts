@@ -42,6 +42,13 @@ type Comment {
     createdAt: Date!
 }
 
+type LatestPost {
+    post: Post!
+    likes: Int!
+    dislikes: Int!
+}
+
+
 # =========================================QUERIES========================================================
 
 type Query {
@@ -56,7 +63,7 @@ type Query {
   getAllDislikes: [Dislike]! @auth
   getAllComments: [Comment]! @auth
   getAllPosts: [Post]! @auth
-  getLatestPosts: [Post]!
+  getLatestPosts: [LatestPost]!
   getUserPosts(id: ID!): [Post]! @auth
   getLikedPosts(id: ID!): [Post]! @auth
   

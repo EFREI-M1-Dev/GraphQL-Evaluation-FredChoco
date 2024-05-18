@@ -6,24 +6,27 @@ import Metrics from "../../components/Metrics/Metrics";
 import CardArticle from "../../components/CardArticle/CardArticle.tsx";
 import {gql, useQuery} from "@apollo/client";
 import {useEffect, useState} from "react";
-import {Post} from "../../types/graphql";
+import {LatestPost} from "../../types/graphql";
 
 const LATEST_POST = gql`
 query LATEST_POST_Query {
   getLatestPosts {
+  post {
     id
     title
     createdAt
     user {
         username
     }
+    }
+   likes 
+   dislikes
   }
 }
 `;
 
-
 const HomePage = () => {
-    const [allLatestPosts, setAllLatestPosts] = useState<Post[]>([]);
+    const [allLatestPosts, setAllLatestPosts] = useState<LatestPost[]>([]);
     const {data} = useQuery(LATEST_POST);
 
     useEffect(() => {
@@ -39,10 +42,12 @@ const HomePage = () => {
             <div className={styles.cardContainer}>
                 {allLatestPosts.map((post) => (
                     <CardArticle
-                        key={post.id}
-                        title={post.title}
+                        key={post.post.id}
+                        title={post.post.title}
                         image={"https://www.buzzfrance.fr/wp-content/uploads/2022/10/quelle-star-de-kpop-es-tu.jpeg"}
-                        authorUsername={post.user.username}
+                        authorUsername={post.post.user.username}
+                        likes={post.likes}
+                        dislikes={post.dislikes}
                     />
                 ))
                 }

@@ -73,6 +73,13 @@ export type DislikeDeleteResponse = {
   success: Scalars['Boolean']['output'];
 };
 
+export type LatestPost = {
+  __typename?: 'LatestPost';
+  dislikes: Scalars['Int']['output'];
+  likes: Scalars['Int']['output'];
+  post: Post;
+};
+
 export type Like = {
   __typename?: 'Like';
   createdAt: Scalars['Date']['output'];
@@ -223,7 +230,7 @@ export type Query = {
   getAppreciationRate: Scalars['Float']['output'];
   getComment?: Maybe<Comment>;
   getDislike?: Maybe<Dislike>;
-  getLatestPosts: Array<Maybe<Post>>;
+  getLatestPosts: Array<Maybe<LatestPost>>;
   getLike?: Maybe<Like>;
   getLikedPosts: Array<Maybe<Post>>;
   getLoggedUser?: Maybe<User>;
@@ -396,6 +403,7 @@ export type ResolversTypes = {
   Float: ResolverTypeWrapper<Scalars['Float']['output']>;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
+  LatestPost: ResolverTypeWrapper<LatestPost>;
   Like: ResolverTypeWrapper<Like>;
   LikeCreateResponse: ResolverTypeWrapper<LikeCreateResponse>;
   LikeDeleteResponse: ResolverTypeWrapper<LikeDeleteResponse>;
@@ -427,6 +435,7 @@ export type ResolversParentTypes = {
   Float: Scalars['Float']['output'];
   ID: Scalars['ID']['output'];
   Int: Scalars['Int']['output'];
+  LatestPost: LatestPost;
   Like: Like;
   LikeCreateResponse: LikeCreateResponse;
   LikeDeleteResponse: LikeDeleteResponse;
@@ -507,6 +516,13 @@ export type DislikeDeleteResponseResolvers<ContextType = DataSourceContext, Pare
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type LatestPostResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['LatestPost'] = ResolversParentTypes['LatestPost']> = {
+  dislikes?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  likes?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  post?: Resolver<ResolversTypes['Post'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type LikeResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['Like'] = ResolversParentTypes['Like']> = {
   createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
@@ -578,7 +594,7 @@ export type QueryResolvers<ContextType = DataSourceContext, ParentType extends R
   getAppreciationRate?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
   getComment?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, RequireFields<QueryGetCommentArgs, 'id'>>;
   getDislike?: Resolver<Maybe<ResolversTypes['Dislike']>, ParentType, ContextType, RequireFields<QueryGetDislikeArgs, 'id'>>;
-  getLatestPosts?: Resolver<Array<Maybe<ResolversTypes['Post']>>, ParentType, ContextType>;
+  getLatestPosts?: Resolver<Array<Maybe<ResolversTypes['LatestPost']>>, ParentType, ContextType>;
   getLike?: Resolver<Maybe<ResolversTypes['Like']>, ParentType, ContextType, RequireFields<QueryGetLikeArgs, 'id'>>;
   getLikedPosts?: Resolver<Array<Maybe<ResolversTypes['Post']>>, ParentType, ContextType, RequireFields<QueryGetLikedPostsArgs, 'id'>>;
   getLoggedUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
@@ -636,6 +652,7 @@ export type Resolvers<ContextType = DataSourceContext> = {
   Dislike?: DislikeResolvers<ContextType>;
   DislikeCreateResponse?: DislikeCreateResponseResolvers<ContextType>;
   DislikeDeleteResponse?: DislikeDeleteResponseResolvers<ContextType>;
+  LatestPost?: LatestPostResolvers<ContextType>;
   Like?: LikeResolvers<ContextType>;
   LikeCreateResponse?: LikeCreateResponseResolvers<ContextType>;
   LikeDeleteResponse?: LikeDeleteResponseResolvers<ContextType>;

@@ -9,6 +9,8 @@ const CardArticle = (
         image: string;
         authorUsername: string;
         onclick?: () => void;
+        likes?: number;
+        dislikes?: number;
     }) => {
     const {className, title, image, onclick} = props;
     const [isHovered, setIsHovered] = useState(false);
@@ -36,6 +38,16 @@ const CardArticle = (
                 <h2>{capitalize(title)}</h2>
                 <div className={styles.author}>
                     <Link to={`author/${props.authorUsername}`}>Par <i>{capitalize(props.authorUsername)}</i></Link>
+                    <div className={styles.containerStat}>
+                        <div className={styles.stat} >
+                            <img className={styles.icon} src={'/pictograms/like.svg'}/>
+                            <span>{props.likes || 0}</span>
+                        </div>
+                        <div className={styles.stat}>
+                            <img className={styles.icon} src={'/pictograms/dislike.svg'}/>
+                            <span>{props.dislikes || 0}</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
