@@ -96,32 +96,28 @@ const Profile = () => {
             </div>
 
             <h2>Posts</h2>
-            <div className={styles.posts}>
-                <Carousel type={'line'}>
-                    {allUserPosts.map((post) => (
-                        <CardArticle
-                            key={post.id}
-                            title={post.title}
-                            image={"https://upload.wikimedia.org/wikipedia/commons/5/5a/Aespa%27s_Winter_7.jpg"}
-                            authorUsername={post.user.username}
-                        />
-                    ))}
-                </Carousel>
-            </div>
+            <Carousel type={'line'}>
+                {allUserPosts.map((post) => (
+                    <CardArticle
+                        key={post.id}
+                        title={post.title}
+                        image={"https://upload.wikimedia.org/wikipedia/commons/5/5a/Aespa%27s_Winter_7.jpg"}
+                        authorUsername={post.user.username}
+                    />
+                ))}
+            </Carousel>
 
             <h2>Liked</h2>
-            <div className={styles.posts}>
-                <Carousel type={'line'}>
-                    {allUserLikes.map((like) => (
-                        <CardArticle
-                            key={like.post.id}
-                            title={like.post.title}
-                            image={"https://upload.wikimedia.org/wikipedia/commons/5/5a/Aespa%27s_Winter_7.jpg"}
-                            authorUsername={like.post.user.username}
-                        />
-                    ))}
-                </Carousel>
-            </div>
+            <Carousel type={'line'}>
+                {allUserLikes.map((like) => (
+                    <CardArticle
+                        key={like.post.id}
+                        title={like.post.title}
+                        image={"https://upload.wikimedia.org/wikipedia/commons/5/5a/Aespa%27s_Winter_7.jpg"}
+                        authorUsername={like.post.user.username}
+                    />
+                ))}
+            </Carousel>
         </div>
     );
 };
