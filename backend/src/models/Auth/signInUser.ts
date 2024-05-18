@@ -6,7 +6,10 @@ export const signInUser: MutationResolvers["signInUser"] = async (_, { username,
     try {
         const user = await dataSources.db.user.findFirst({
             where: {
-                username
+                username: {
+                    equals: username.toLowerCase(),
+                    // mode: 'insensitive',
+            }
             }
         });
 

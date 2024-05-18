@@ -48,7 +48,13 @@ const Post = () => {
             </div>
 
             <div className={styles.side__right}>
-                <CardArticle/>
+                <CardArticle
+                    title={"Aespa - Karina dans la sauce"}
+                    image={"https://www.buzzfrance.fr/wp-content/uploads/2022/10/quelle-star-de-kpop-es-tu.jpeg"}
+                    authorUsername={"user"}
+                    likes={12}
+                    dislikes={3}
+                />
                 <div>
                     <img src={'/pictograms/like.svg'}/>
                     <img src={'/pictograms/dislike.svg'}/>
