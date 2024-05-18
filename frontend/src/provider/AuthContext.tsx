@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const [authToken, setAuthToken] = useState<string | null>(localStorage.getItem('token_케이팝_Paris'));
     const [loggedIn, setLoggedIn] = useState<boolean>(!!authToken);
     const [user, setUser] = useState<User | null>(null);
-    const { data: userInfoData } = useQuery(USER_INFO, {
+    const { data: userInfoData, refetch  } = useQuery(USER_INFO, {
         skip: !authToken // Skip the query if there's no auth token
     });
 
@@ -41,20 +41,24 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }, [userInfoData]);
 
 
-
-    useEffect(() => {
-        setLoggedIn(!!authToken);
-    }, [authToken]);
-
     const login = (token: string) => {
         setAuthToken(token);
         localStorage.setItem('token_케이팝_Paris', token);
+        refetch().then(() => {
+            setLoggedIn(true);
+        }).catch(() => {
+            setAuthToken(null);
+            localStorage.removeItem('token_케이팝_Paris');
+            setLoggedIn(false);
+            setUser(null);
+        });
     };
 
     const logout = () => {
         setAuthToken(null);
         localStorage.removeItem('token_케이팝_Paris');
-        // setUser(null);
+        setLoggedIn(false);
+        setUser(null);
     };
 
     return (
