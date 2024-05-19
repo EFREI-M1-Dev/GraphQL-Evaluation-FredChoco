@@ -8,6 +8,7 @@ import {DislikeMutations, DislikeQueries} from "./models/Dislike/index.js";
 import {CommentMutations, CommentQueries} from "./models/Comment/index.js";
 import {StatisticsQueries} from "./models/Statistics/index.js";
 import { GraphQLScalarType } from 'graphql';
+import {GraphQLUpload} from "graphql-upload-ts";
 
 const dateScalar = new GraphQLScalarType({
     name: 'Date',
@@ -45,5 +46,6 @@ export const resolvers: Resolvers = {
         ...PostMutations,
         signInUser,
     },
-    Date: dateScalar
+    Date: dateScalar,
+    Upload: GraphQLUpload,
 }

@@ -17,6 +17,7 @@ export const postSelect = {
         select: userSelect
     },
     createdAt: true,
+    imagePath: true,
 };
 
 export const likeSelect = {

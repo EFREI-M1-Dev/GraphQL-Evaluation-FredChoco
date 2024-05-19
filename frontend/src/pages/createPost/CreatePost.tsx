@@ -1,52 +1,71 @@
 import styles from "./_CreatePost.module.scss";
 import TextField from "../../components/TextField/TextField";
 import Button from "../../components/Button/Button";
-import {useState} from "react";
+import React, { useState } from "react";
 import {useMutation, gql} from '@apollo/client';
 import { useNavigate } from "react-router-dom";
-import {useAuth} from "../../provider/AuthContext";
+import { useAuth } from "../../provider/AuthContext";
 
 const CREATE_POST = gql`
-mutation CreatePost($title: String!, $content: String!, $userId: ID!) {
-  createPost(title: $title, content: $content, userId: $userId) {
+mutation CreatePost($title: String!, $content: String!, $userId: ID!, $file: Upload!) {
+  createPost(title: $title, content: $content, userId: $userId, file: $file) {
     code
     message
     success
   }
 }
-
 `;
 
 const CreatePostPage = () => {
     const [TitleValue, setTitleValue] = useState<string>('');
     const [ContentValue, setContentValue] = useState<string>('');
+    const [FileValue, setFileValue] = useState<File | null>(null);
     const navigate = useNavigate();
-    const {currentUser} = useAuth();
+    const { currentUser } = useAuth();
 
     const [createPost] = useMutation(CREATE_POST);
 
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files ? e.target.files[0] : null;
+        setFileValue(file);
+    };
+
     const handleCreatePost = async () => {
         try {
-            if(!currentUser) {
+            if (!currentUser) {
                 alert("Vous devez être connecté pour créer un article");
                 return;
             }
-            const {data} = await createPost({
-                variables: {title: TitleValue, content: ContentValue, userId: currentUser.id},
+            if (!FileValue) {
+                alert("Vous devez sélectionner un fichier à télécharger");
+                return;
+            }
+
+            const fileSize = FileValue.size / 1024 / 1024;
+            console.log("File size:", fileSize);
+            console.log("File:", FileValue);
+
+            const { data } = await createPost({
+                variables: {
+                    title: TitleValue,
+                    content: ContentValue,
+                    userId: currentUser.id,
+                    file: FileValue
+                },
             });
-            const {message, success} = data.createPost;
+
+            const { message, success } = data.createPost;
             if (success) {
                 navigate('/');
             } else {
                 alert(message);
             }
         } catch (error) {
-            console.error("Error creating post:", error);
+            console.error(error);
         }
-    }
+    };
 
     return (
-
         <div className={styles.container}>
             <div className={styles.form}>
                 <div>
@@ -61,13 +80,12 @@ const CreatePostPage = () => {
                         placeholder={"Contenu de l'article"}
                         type={"area"}
                         value={ContentValue}
-                        // onChange={(e) => {
-                        //     console.log(ContentValue);
-                        //     setContentValue(e.target.value);
-                        // }}
                         onChange={(e) => setContentValue(e.target.value)}
-
                         defaultNumberOfRows={10}
+                    />
+                    <input
+                        type="file"
+                        onChange={handleFileChange}
                     />
                 </div>
                 <Button style={"primary"} onClick={handleCreatePost}>Créer l'article</Button>

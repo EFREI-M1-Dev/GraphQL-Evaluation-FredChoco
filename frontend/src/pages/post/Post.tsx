@@ -30,7 +30,7 @@ query POST_QUERY($id: ID!) {
 
 const POST_COMMENTS = gql`
 query POST_COMMENTS_QUERY($postId: ID!) {
-  getAllCommentsByPost(id: $postId) {
+  getAllCommentsByPost(postId: $postId) {
     content
     createdAt
     user {

@@ -4,6 +4,7 @@ export const typeDefs = gql`
 
 directive @auth on FIELD_DEFINITION
 scalar Date
+scalar Upload
 
 # =========================================MODELS========================================================
 type User {
@@ -49,7 +50,6 @@ type LatestPost {
     comments: Int!
 }
 
-
 # =========================================QUERIES========================================================
 
 type Query {
@@ -86,7 +86,7 @@ type Mutation {
   createLike(userId: ID!, postId: ID!): LikeCreateResponse! @auth
   createDislike(userId: ID!, postId: ID!): DislikeCreateResponse! @auth
   createComment(userId: ID!, postId: ID!, content: String!): CommentCreateResponse! @auth
-  createPost(title: String!, content: String!, userId: ID!): PostCreateResponse! @auth
+  createPost(title: String!, content: String!, userId: ID!, file: Upload!): PostCreateResponse! @auth
   
   deleteLike(id: ID!): LikeDeleteResponse! @auth
   deleteDislike(id: ID!): DislikeDeleteResponse! @auth
@@ -96,6 +96,7 @@ type Mutation {
   
   updateUser(id: ID!, input: UpdateUserInput!): UserUpdateResponse! @auth
   updateComment(userId: ID!, postId: ID!, content: String!): CommentUpdateResponse! @auth
+ 
 }
 
 # =========================================RESPONSES========================================================

@@ -27,13 +27,15 @@ query LATEST_POST_Query {
 
 const HomePage = () => {
     const [allLatestPosts, setAllLatestPosts] = useState<LatestPost[]>([]);
-    const {data} = useQuery(LATEST_POST);
+    const {data, error} = useQuery(LATEST_POST);
 
     useEffect(() => {
         if (data) {
             setAllLatestPosts(data.getLatestPosts);
         }
     }, [data]);
+
+    console.log(error?.networkError)
 
     return (
         <div className={styles.container}>

@@ -16,6 +16,7 @@ export type Scalars = {
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
   Date: { input: any; output: any; }
+  Upload: { input: any; output: any; }
 };
 
 export type Comment = {
@@ -143,6 +144,7 @@ export type MutationCreateLikeArgs = {
 
 export type MutationCreatePostArgs = {
   content: Scalars['String']['input'];
+  file: Scalars['Upload']['input'];
   title: Scalars['String']['input'];
   userId: Scalars['ID']['input'];
 };
@@ -434,6 +436,7 @@ export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
   UpdateUserInput: UpdateUserInput;
+  Upload: ResolverTypeWrapper<Scalars['Upload']['output']>;
   User: ResolverTypeWrapper<User>;
   UserCreateResponse: ResolverTypeWrapper<UserCreateResponse>;
   UserDeleteResponse: ResolverTypeWrapper<UserDeleteResponse>;
@@ -466,6 +469,7 @@ export type ResolversParentTypes = {
   Query: {};
   String: Scalars['String']['output'];
   UpdateUserInput: UpdateUserInput;
+  Upload: Scalars['Upload']['output'];
   User: User;
   UserCreateResponse: UserCreateResponse;
   UserDeleteResponse: UserDeleteResponse;
@@ -571,7 +575,7 @@ export type MutationResolvers<ContextType = DataSourceContext, ParentType extend
   createComment?: Resolver<ResolversTypes['CommentCreateResponse'], ParentType, ContextType, RequireFields<MutationCreateCommentArgs, 'content' | 'postId' | 'userId'>>;
   createDislike?: Resolver<ResolversTypes['DislikeCreateResponse'], ParentType, ContextType, RequireFields<MutationCreateDislikeArgs, 'postId' | 'userId'>>;
   createLike?: Resolver<ResolversTypes['LikeCreateResponse'], ParentType, ContextType, RequireFields<MutationCreateLikeArgs, 'postId' | 'userId'>>;
-  createPost?: Resolver<ResolversTypes['PostCreateResponse'], ParentType, ContextType, RequireFields<MutationCreatePostArgs, 'content' | 'title' | 'userId'>>;
+  createPost?: Resolver<ResolversTypes['PostCreateResponse'], ParentType, ContextType, RequireFields<MutationCreatePostArgs, 'content' | 'file' | 'title' | 'userId'>>;
   createUser?: Resolver<ResolversTypes['UserCreateResponse'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'email' | 'password' | 'username'>>;
   deleteComment?: Resolver<ResolversTypes['CommentDeleteResponse'], ParentType, ContextType, RequireFields<MutationDeleteCommentArgs, 'id'>>;
   deleteDislike?: Resolver<ResolversTypes['DislikeDeleteResponse'], ParentType, ContextType, RequireFields<MutationDeleteDislikeArgs, 'id'>>;
@@ -630,6 +634,10 @@ export type QueryResolvers<ContextType = DataSourceContext, ParentType extends R
   getUserPosts?: Resolver<Array<Maybe<ResolversTypes['Post']>>, ParentType, ContextType, RequireFields<QueryGetUserPostsArgs, 'id'>>;
 };
 
+export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Upload'], any> {
+  name: 'Upload';
+}
+
 export type UserResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
@@ -686,6 +694,7 @@ export type Resolvers<ContextType = DataSourceContext> = {
   PostCreateResponse?: PostCreateResponseResolvers<ContextType>;
   PostDeleteResponse?: PostDeleteResponseResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  Upload?: GraphQLScalarType;
   User?: UserResolvers<ContextType>;
   UserCreateResponse?: UserCreateResponseResolvers<ContextType>;
   UserDeleteResponse?: UserDeleteResponseResolvers<ContextType>;
