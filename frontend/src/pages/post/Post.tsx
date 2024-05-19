@@ -3,7 +3,7 @@ import Comment from "../../components/Comment/Comment.tsx";
 import TextField from "../../components/TextField/TextField";
 import CardArticle from "../../components/CardArticle/CardArticle.tsx";
 import {gql, useQuery} from "@apollo/client";
-import { LatestPost } from "../../types/graphql.ts";
+import { LatestPost, Comment as CommentType } from "../../types/graphql.ts";
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 
@@ -28,21 +28,45 @@ query POST_QUERY($id: ID!) {
 }
 `;
 
+const POST_COMMENTS = gql`
+query POST_COMMENTS_QUERY($postId: ID!) {
+  getAllCommentsByPost(id: $postId) {
+    content
+    createdAt
+    user {
+      username
+    }
+  }
+}
+`;
+
 const Post = () => {
     const { id } = useParams();
     const [richPost, setRichPost] = useState<LatestPost | null>(null);
+    const [comments, setComments] = useState<CommentType[]>([]);
 
     const { data, loading } = useQuery(POST, {
         variables: { id },
     });
 
+    const { data: commentsData } = useQuery(POST_COMMENTS, {
+        variables: { postId: richPost ? richPost.post.id : '' },
+    });
+
     useEffect(() => {
         if (data) {
             setRichPost(data?.getPost);
+            if (commentsData) {
+                setComments(commentsData?.getAllCommentsByPost);
+            }
         }
-    }, [data]);
+
+    }, [data, commentsData]);
+
 
     if(!richPost || loading) return <></>
+
+    console.log(comments);
     return (
         <div className={styles.container}>
             <div className={styles.side__left}>
@@ -52,9 +76,13 @@ const Post = () => {
 
                 <p>{richPost.comments} commentaire{richPost.comments > 1 ? 's' : ''}</p>
                 <TextField placeholder={"Ajouter un commentaire..."} type={"text"} style={"search"}/>
-                <Comment/>
-                <Comment/>
-                <Comment/>
+                {comments.map((comment) => (
+                    <Comment
+                        username={comment.user.username}
+                        content={comment.content}
+                        createdAt={comment.createdAt}
+                    />
+                ))}
             </div>
 
             <div className={styles.side__right}>

@@ -69,6 +69,7 @@ type Query {
   getUserPosts(id: ID!): [Post]! @auth
   getLikesByUser(id: ID!): [Like]! @auth
   getSearchPost(input: String!): [Post]! 
+  getAllCommentsByPost(postId: ID!): [Comment]!
   
   getTotalPostCount: Int! 
   getTotalCommentCount: Int! 

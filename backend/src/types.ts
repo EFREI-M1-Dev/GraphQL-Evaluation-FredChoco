@@ -225,6 +225,7 @@ export type PostDeleteResponse = {
 export type Query = {
   __typename?: 'Query';
   getAllComments: Array<Maybe<Comment>>;
+  getAllCommentsByPost: Array<Maybe<Comment>>;
   getAllDislikes: Array<Maybe<Dislike>>;
   getAllLikes: Array<Maybe<Like>>;
   getAllPosts: Array<Maybe<Post>>;
@@ -243,6 +244,11 @@ export type Query = {
   getUserByUsername?: Maybe<User>;
   getUserCount: Scalars['Int']['output'];
   getUserPosts: Array<Maybe<Post>>;
+};
+
+
+export type QueryGetAllCommentsByPostArgs = {
+  postId: Scalars['ID']['input'];
 };
 
 
@@ -603,6 +609,7 @@ export type PostDeleteResponseResolvers<ContextType = DataSourceContext, ParentT
 
 export type QueryResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   getAllComments?: Resolver<Array<Maybe<ResolversTypes['Comment']>>, ParentType, ContextType>;
+  getAllCommentsByPost?: Resolver<Array<Maybe<ResolversTypes['Comment']>>, ParentType, ContextType, RequireFields<QueryGetAllCommentsByPostArgs, 'postId'>>;
   getAllDislikes?: Resolver<Array<Maybe<ResolversTypes['Dislike']>>, ParentType, ContextType>;
   getAllLikes?: Resolver<Array<Maybe<ResolversTypes['Like']>>, ParentType, ContextType>;
   getAllPosts?: Resolver<Array<Maybe<ResolversTypes['Post']>>, ParentType, ContextType>;

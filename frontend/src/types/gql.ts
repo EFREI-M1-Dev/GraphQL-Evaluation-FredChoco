@@ -17,7 +17,6 @@ const documents = {
     "\nmutation CreatePost($title: String!, $content: String!, $userId: ID!) {\n  createPost(title: $title, content: $content, userId: $userId) {\n    code\n    message\n    success\n  }\n}\n\n": types.CreatePostDocument,
     "\nquery LATEST_POST_Query {\n  getLatestPosts {\n  post {\n    id\n    title\n    createdAt\n    user {\n        username\n    }\n    }\n   likes \n   dislikes\n  }\n}\n": types.Latest_Post_QueryDocument,
     "\nmutation SignInUser($username: String!, $password: String!) {\n  signInUser(username: $username, password: $password) {\n    message\n    success\n    token\n  }\n}\n": types.SignInUserDocument,
-    "\nquery POST_QUERY($id: ID!) {\n  getPost(id: $id) {\n    comments\n    dislikes\n    likes\n    post {\n      content\n      createdAt\n      id\n      title\n      user {\n        email\n        id\n        username\n      }\n    }\n  }\n}\n": types.Post_QueryDocument,
     "\nquery USER_POST_QUERY($id: ID!) {\n  getUserPosts(id: $id) {\n    content\n    createdAt\n    id\n    title\n    user {\n      id\n      username\n    }\n  }\n}\n": types.User_Post_QueryDocument,
     "\nquery USER_LIKES_QUERY($id: ID!) {\n  getLikesByUser(id: $id) {\n    post {\n      id\n      title\n      content\n      user {\n        username\n      }\n    }\n  }\n}\n": types.User_Likes_QueryDocument,
     "\nquery USER_BY_USERNAME($username: String!) {\n  getUserByUsername(username: $username) {\n    id\n    username\n    email\n  }\n}\n": types.User_By_UsernameDocument,
@@ -56,10 +55,6 @@ export function gql(source: "\nquery LATEST_POST_Query {\n  getLatestPosts {\n  
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\nmutation SignInUser($username: String!, $password: String!) {\n  signInUser(username: $username, password: $password) {\n    message\n    success\n    token\n  }\n}\n"): (typeof documents)["\nmutation SignInUser($username: String!, $password: String!) {\n  signInUser(username: $username, password: $password) {\n    message\n    success\n    token\n  }\n}\n"];
-/**
- * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function gql(source: "\nquery POST_QUERY($id: ID!) {\n  getPost(id: $id) {\n    comments\n    dislikes\n    likes\n    post {\n      content\n      createdAt\n      id\n      title\n      user {\n        email\n        id\n        username\n      }\n    }\n  }\n}\n"): (typeof documents)["\nquery POST_QUERY($id: ID!) {\n  getPost(id: $id) {\n    comments\n    dislikes\n    likes\n    post {\n      content\n      createdAt\n      id\n      title\n      user {\n        email\n        id\n        username\n      }\n    }\n  }\n}\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
