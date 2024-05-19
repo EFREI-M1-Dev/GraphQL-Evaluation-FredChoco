@@ -69,7 +69,7 @@ const Profile = () => {
             setProfileUser(currentUser);
         } else if (userData) {
             if (!userData.getUserByUsername) {
-                navigate('/');
+                navigate('/profile');
             } else {
                 setProfileUser(userData.getUserByUsername);
             }

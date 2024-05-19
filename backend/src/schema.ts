@@ -72,6 +72,7 @@ type Query {
   getTotalPostCount: Int! 
   getTotalCommentCount: Int! 
   getAppreciationRate: Float!
+  getUserCount: Int!
 } 
 
 # =========================================MUTATIONS========================================================

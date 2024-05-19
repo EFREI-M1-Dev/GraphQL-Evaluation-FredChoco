@@ -240,6 +240,7 @@ export type Query = {
   getTotalPostCount: Scalars['Int']['output'];
   getUser?: Maybe<User>;
   getUserByUsername?: Maybe<User>;
+  getUserCount: Scalars['Int']['output'];
   getUserPosts: Array<Maybe<Post>>;
 };
 
@@ -616,6 +617,7 @@ export type QueryResolvers<ContextType = DataSourceContext, ParentType extends R
   getTotalPostCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   getUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetUserArgs, 'id'>>;
   getUserByUsername?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetUserByUsernameArgs, 'username'>>;
+  getUserCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   getUserPosts?: Resolver<Array<Maybe<ResolversTypes['Post']>>, ParentType, ContextType, RequireFields<QueryGetUserPostsArgs, 'id'>>;
 };
 
