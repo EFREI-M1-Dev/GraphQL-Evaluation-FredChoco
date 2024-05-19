@@ -75,6 +75,7 @@ export type DislikeDeleteResponse = {
 
 export type LatestPost = {
   __typename?: 'LatestPost';
+  comments: Scalars['Int']['output'];
   dislikes: Scalars['Int']['output'];
   likes: Scalars['Int']['output'];
   post: Post;
@@ -234,7 +235,7 @@ export type Query = {
   getLike?: Maybe<Like>;
   getLikesByUser: Array<Maybe<Like>>;
   getLoggedUser?: Maybe<User>;
-  getPost?: Maybe<Post>;
+  getPost?: Maybe<LatestPost>;
   getSearchPost: Array<Maybe<Post>>;
   getTotalCommentCount: Scalars['Int']['output'];
   getTotalPostCount: Scalars['Int']['output'];
@@ -530,6 +531,7 @@ export type DislikeDeleteResponseResolvers<ContextType = DataSourceContext, Pare
 };
 
 export type LatestPostResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['LatestPost'] = ResolversParentTypes['LatestPost']> = {
+  comments?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   dislikes?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   likes?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   post?: Resolver<ResolversTypes['Post'], ParentType, ContextType>;
@@ -611,7 +613,7 @@ export type QueryResolvers<ContextType = DataSourceContext, ParentType extends R
   getLike?: Resolver<Maybe<ResolversTypes['Like']>, ParentType, ContextType, RequireFields<QueryGetLikeArgs, 'id'>>;
   getLikesByUser?: Resolver<Array<Maybe<ResolversTypes['Like']>>, ParentType, ContextType, RequireFields<QueryGetLikesByUserArgs, 'id'>>;
   getLoggedUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
-  getPost?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<QueryGetPostArgs, 'id'>>;
+  getPost?: Resolver<Maybe<ResolversTypes['LatestPost']>, ParentType, ContextType, RequireFields<QueryGetPostArgs, 'id'>>;
   getSearchPost?: Resolver<Array<Maybe<ResolversTypes['Post']>>, ParentType, ContextType, RequireFields<QueryGetSearchPostArgs, 'input'>>;
   getTotalCommentCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   getTotalPostCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;

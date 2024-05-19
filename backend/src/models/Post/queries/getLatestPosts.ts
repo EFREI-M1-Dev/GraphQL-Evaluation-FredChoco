@@ -1,6 +1,6 @@
-import {Post, QueryResolvers, User} from "../../../types";
+import { QueryResolvers } from "../../../types";
 import consola from "consola";
-import {dislikeSelect, likeSelect, postSelect} from "../../selectorsPrisma.js";
+import {postSelect} from "../../selectorsPrisma.js";
 
 export const getLatestPosts: QueryResolvers["getLatestPosts"] = async (_, __, {dataSources}) => {
 
@@ -13,14 +13,16 @@ export const getLatestPosts: QueryResolvers["getLatestPosts"] = async (_, __, {d
             select: {
                 ...postSelect,
                 Like: true,
-                Dislike: true
+                Dislike: true,
+                Comment: true,
             }
         });
 
         const transformedPosts = postsWithLikesAndDislikes.map((post) => ({
             post,
             likes: post.Like.length, // Comptez le nombre de likes
-            dislikes: post.Dislike.length // Comptez le nombre de dislikes
+            dislikes: post.Dislike.length, // Comptez le nombre de dislikes
+            comments: post.Comment.length // Comptez le nombre de commentaires
         }));
 
         console.log(transformedPosts);

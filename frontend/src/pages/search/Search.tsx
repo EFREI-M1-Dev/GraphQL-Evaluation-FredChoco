@@ -62,6 +62,7 @@ const SearchPage = () => {
                         title={post.title}
                         image={"https://www.buzzfrance.fr/wp-content/uploads/2022/10/quelle-star-de-kpop-es-tu.jpeg"}
                         authorUsername={post.user.username}
+                        id={post.id}
                     />
                 ))}
             </div>

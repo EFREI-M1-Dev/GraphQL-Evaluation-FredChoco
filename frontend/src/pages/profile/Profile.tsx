@@ -128,6 +128,7 @@ const Profile = () => {
                             title={post.title}
                             image={"https://www.buzzfrance.fr/wp-content/uploads/2022/10/quelle-star-de-kpop-es-tu.jpeg"}
                             authorUsername={post.user.username}
+                            id={post.id}
                         />
                     ))}
                 </Carousel>
@@ -142,6 +143,7 @@ const Profile = () => {
                             title={like.post.title}
                             image={"https://upload.wikimedia.org/wikipedia/commons/5/5a/Aespa%27s_Winter_7.jpg"}
                             authorUsername={like.post.user.username}
+                            id={like.post.id}
                         />
                     ))}
                 </Carousel>

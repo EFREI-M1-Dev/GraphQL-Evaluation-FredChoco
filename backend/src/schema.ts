@@ -46,6 +46,7 @@ type LatestPost {
     post: Post!
     likes: Int!
     dislikes: Int!
+    comments: Int!
 }
 
 
@@ -53,7 +54,7 @@ type LatestPost {
 
 type Query {
   getUser(id: ID!): User @auth
-  getPost(id: ID!): Post @auth
+  getPost(id: ID!): LatestPost
   getLike(id: ID!): Like @auth
   getDislike(id: ID!): Dislike @auth
   getComment(id: ID!): Comment @auth

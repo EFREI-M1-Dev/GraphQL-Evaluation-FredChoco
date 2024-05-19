@@ -48,6 +48,7 @@ const HomePage = () => {
                         authorUsername={post.post.user.username}
                         likes={post.likes}
                         dislikes={post.dislikes}
+                        id={post.post.id}
                     />
                 ))
                 }
