@@ -59,6 +59,7 @@ const Profile = () => {
     const [allUserPosts, setAllUserPosts] = useState<Post[]>([]);
     const [allUserLikes, setAllUserLikes] = useState<Like[]>([]);
     const [profileUser, setProfileUser] = useState(currentUser);
+    const [imagePath, setImagePath] = useState<string>("");
 
     const isMyProfile = !username || username.toLowerCase() === currentUser?.username.toLowerCase();
 
@@ -102,11 +103,21 @@ const Profile = () => {
     }, [likesData]);
 
 
+    useEffect(() => {
+        if (profileUser) {
+            let path = "https://via.placeholder.com/150";
+            if (profileUser.imagePath !== "https://via.placeholder.com/150") {
+                path = "http://localhost:4000/" + profileUser.imagePath;
+            }
+            setImagePath(path);
+        }
+    }, [profileUser]);
+
     return (
         <div className={styles.container}>
             <div className={styles.containerProfile}>
                 <div className={styles.section + " " + styles.profile}>
-                    <img src={"http://localhost:4000/"+profileUser?.imagePath} alt="profile" className={styles.profileImage}/>
+                    <img src={imagePath} alt="profile" className={styles.profileImage}/>
                     <div className={styles.profileInfo}>
                         <p className={styles.username}>{profileUser?.username}</p>
                         <p>{profileUser?.email}</p>
