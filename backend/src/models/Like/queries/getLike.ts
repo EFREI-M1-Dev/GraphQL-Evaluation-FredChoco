@@ -2,20 +2,17 @@ import { QueryResolvers } from "../../../types";
 import {consola} from "consola";
 import {likeSelect} from "../../selectorsPrisma.js";
 
-export const getLike: QueryResolvers["getLike"] = async (_, { id }, { dataSources }) => {
+export const getLike: QueryResolvers["getLike"] = async (_, { userId, postId}, { dataSources }) => {
     try {
-        const like = await dataSources.db.like.findUnique({
+        const like = await dataSources.db.like.findFirst({
             where: {
-                id: id
+                userId : userId,
+                postId: postId
             },
             select: likeSelect
         });
 
-        if(!like) {
-            return null;
-        }
-
-        return like;
+        return like || null;
     } catch (e) {
         return null;
     }

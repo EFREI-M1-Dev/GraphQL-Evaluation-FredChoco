@@ -276,12 +276,14 @@ export type QueryGetCommentArgs = {
 
 
 export type QueryGetDislikeArgs = {
-  id: Scalars['ID']['input'];
+  postId: Scalars['ID']['input'];
+  userId: Scalars['ID']['input'];
 };
 
 
 export type QueryGetLikeArgs = {
-  id: Scalars['ID']['input'];
+  postId: Scalars['ID']['input'];
+  userId: Scalars['ID']['input'];
 };
 
 
@@ -657,9 +659,9 @@ export type QueryResolvers<ContextType = DataSourceContext, ParentType extends R
   getAllPosts?: Resolver<Array<Maybe<ResolversTypes['Post']>>, ParentType, ContextType>;
   getAppreciationRate?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
   getComment?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, RequireFields<QueryGetCommentArgs, 'id'>>;
-  getDislike?: Resolver<Maybe<ResolversTypes['Dislike']>, ParentType, ContextType, RequireFields<QueryGetDislikeArgs, 'id'>>;
+  getDislike?: Resolver<Maybe<ResolversTypes['Dislike']>, ParentType, ContextType, RequireFields<QueryGetDislikeArgs, 'postId' | 'userId'>>;
   getLatestPosts?: Resolver<Array<Maybe<ResolversTypes['LatestPost']>>, ParentType, ContextType>;
-  getLike?: Resolver<Maybe<ResolversTypes['Like']>, ParentType, ContextType, RequireFields<QueryGetLikeArgs, 'id'>>;
+  getLike?: Resolver<Maybe<ResolversTypes['Like']>, ParentType, ContextType, RequireFields<QueryGetLikeArgs, 'postId' | 'userId'>>;
   getLikesByUser?: Resolver<Array<Maybe<ResolversTypes['Like']>>, ParentType, ContextType, RequireFields<QueryGetLikesByUserArgs, 'id'>>;
   getLoggedUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   getPost?: Resolver<Maybe<ResolversTypes['LatestPost']>, ParentType, ContextType, RequireFields<QueryGetPostArgs, 'id'>>;

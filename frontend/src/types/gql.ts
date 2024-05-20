@@ -24,6 +24,13 @@ const documents = {
     "\nquery POST_COMMENTS_QUERY($postId: ID!) {\n  getAllCommentsByPost(postId: $postId) {\n    content\n    createdAt\n    id\n    user {\n      username\n      id\n    }\n  }\n}\n": types.Post_Comments_QueryDocument,
     "\nmutation createComment($userId: ID!, $postId: ID!, $content: String!) {\n    createComment(userId: $userId, postId: $postId, content: $content) {\n        code\n        message\n        success\n        comment {\n            content\n            createdAt\n            user {\n                username\n            }\n        }\n    }\n}\n": types.CreateCommentDocument,
     "\nmutation updateComment($id: ID!, $content: String!) {\n    updateComment(id: $id, content: $content) {\n        code\n        message\n        success\n        comment {\n            content\n            createdAt\n            user {\n                username\n            }\n        }\n    }\n}\n": types.UpdateCommentDocument,
+    "\nmutation deleteComment($id: ID!) {\n    deleteComment(id: $id) {\n        code\n        message\n        success\n    }\n}\n": types.DeleteCommentDocument,
+    "\nmutation createLike($userId: ID!, $postId: ID!) {\n    createLike(userId: $userId, postId: $postId) {\n        code\n        message\n        success\n    }\n}\n": types.CreateLikeDocument,
+    "\nmutation deleteLike($id: ID!) {\n    deleteLike(id: $id) {\n        code\n        message\n        success\n    }\n}\n": types.DeleteLikeDocument,
+    "\nquery getLike($userId: ID!, $postId: ID!) {\n    getLike(userId: $userId, postId: $postId) {\n        id\n    }\n}\n": types.GetLikeDocument,
+    "\nmutation createDislike($userId: ID!, $postId: ID!) {\n    createDislike(userId: $userId, postId: $postId) {\n        code\n        message\n        success\n    }\n}\n": types.CreateDislikeDocument,
+    "\nmutation deleteDislike($id: ID!) {\n    deleteDislike(id: $id) {\n        code\n        message\n        success\n    }\n}\n": types.DeleteDislikeDocument,
+    "\nquery getDislike($userId: ID!, $postId: ID!) {\n    getDislike(userId: $userId, postId: $postId) {\n        id\n    }\n}\n": types.GetDislikeDocument,
     "\nquery USER_POST_QUERY($id: ID!) {\n  getUserPosts(id: $id) {\n    content\n    createdAt\n    id\n    title\n    imagePath\n    user {\n      id\n      username\n    }\n  }\n}\n": types.User_Post_QueryDocument,
     "\nquery USER_LIKES_QUERY($id: ID!) {\n  getLikesByUser(id: $id) {\n    post {\n      id\n      title\n      content\n      imagePath\n      user {\n        username\n      }\n    }\n  }\n}\n": types.User_Likes_QueryDocument,
     "\nquery USER_BY_USERNAME($username: String!) {\n  getUserByUsername(username: $username) {\n    id\n    username\n    email\n    imagePath\n  }\n}\n": types.User_By_UsernameDocument,
@@ -91,6 +98,34 @@ export function gql(source: "\nmutation createComment($userId: ID!, $postId: ID!
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\nmutation updateComment($id: ID!, $content: String!) {\n    updateComment(id: $id, content: $content) {\n        code\n        message\n        success\n        comment {\n            content\n            createdAt\n            user {\n                username\n            }\n        }\n    }\n}\n"): (typeof documents)["\nmutation updateComment($id: ID!, $content: String!) {\n    updateComment(id: $id, content: $content) {\n        code\n        message\n        success\n        comment {\n            content\n            createdAt\n            user {\n                username\n            }\n        }\n    }\n}\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\nmutation deleteComment($id: ID!) {\n    deleteComment(id: $id) {\n        code\n        message\n        success\n    }\n}\n"): (typeof documents)["\nmutation deleteComment($id: ID!) {\n    deleteComment(id: $id) {\n        code\n        message\n        success\n    }\n}\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\nmutation createLike($userId: ID!, $postId: ID!) {\n    createLike(userId: $userId, postId: $postId) {\n        code\n        message\n        success\n    }\n}\n"): (typeof documents)["\nmutation createLike($userId: ID!, $postId: ID!) {\n    createLike(userId: $userId, postId: $postId) {\n        code\n        message\n        success\n    }\n}\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\nmutation deleteLike($id: ID!) {\n    deleteLike(id: $id) {\n        code\n        message\n        success\n    }\n}\n"): (typeof documents)["\nmutation deleteLike($id: ID!) {\n    deleteLike(id: $id) {\n        code\n        message\n        success\n    }\n}\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\nquery getLike($userId: ID!, $postId: ID!) {\n    getLike(userId: $userId, postId: $postId) {\n        id\n    }\n}\n"): (typeof documents)["\nquery getLike($userId: ID!, $postId: ID!) {\n    getLike(userId: $userId, postId: $postId) {\n        id\n    }\n}\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\nmutation createDislike($userId: ID!, $postId: ID!) {\n    createDislike(userId: $userId, postId: $postId) {\n        code\n        message\n        success\n    }\n}\n"): (typeof documents)["\nmutation createDislike($userId: ID!, $postId: ID!) {\n    createDislike(userId: $userId, postId: $postId) {\n        code\n        message\n        success\n    }\n}\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\nmutation deleteDislike($id: ID!) {\n    deleteDislike(id: $id) {\n        code\n        message\n        success\n    }\n}\n"): (typeof documents)["\nmutation deleteDislike($id: ID!) {\n    deleteDislike(id: $id) {\n        code\n        message\n        success\n    }\n}\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\nquery getDislike($userId: ID!, $postId: ID!) {\n    getDislike(userId: $userId, postId: $postId) {\n        id\n    }\n}\n"): (typeof documents)["\nquery getDislike($userId: ID!, $postId: ID!) {\n    getDislike(userId: $userId, postId: $postId) {\n        id\n    }\n}\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

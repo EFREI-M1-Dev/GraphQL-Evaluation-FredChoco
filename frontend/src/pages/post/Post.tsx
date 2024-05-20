@@ -8,6 +8,9 @@ import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import Button from "../../components/Button/Button.tsx";
 import {useAuth} from "../../provider/AuthContext.tsx";
+import Like from "../../components/Like/Like.tsx";
+import Dislike from "../../components/Dislike/Dislike.tsx";
+
 
 export const POST = gql`
 query POST_QUERY($id: ID!) {
@@ -89,6 +92,62 @@ mutation deleteComment($id: ID!) {
 }
 `;
 
+const LIKE_POST = gql`
+mutation createLike($userId: ID!, $postId: ID!) {
+    createLike(userId: $userId, postId: $postId) {
+        code
+        message
+        success
+    }
+}
+`;
+
+const DELETE_LIKE_POST = gql`
+mutation deleteLike($id: ID!) {
+    deleteLike(id: $id) {
+        code
+        message
+        success
+    }
+}
+`;
+
+const GET_LIKE_POST = gql`
+query getLike($userId: ID!, $postId: ID!) {
+    getLike(userId: $userId, postId: $postId) {
+        id
+    }
+}
+`;
+
+const DISLIKE_POST = gql`
+mutation createDislike($userId: ID!, $postId: ID!) {
+    createDislike(userId: $userId, postId: $postId) {
+        code
+        message
+        success
+    }
+}
+`;
+
+const DELETE_DISLIKE_POST = gql`
+mutation deleteDislike($id: ID!) {
+    deleteDislike(id: $id) {
+        code
+        message
+        success
+    }
+}
+`;
+
+const GET_DISLIKE_POST = gql`
+query getDislike($userId: ID!, $postId: ID!) {
+    getDislike(userId: $userId, postId: $postId) {
+        id
+    }
+}
+`;
+
 const Post = () => {
     const {id} = useParams();
     const [richPost, setRichPost] = useState<LatestPost | null>(null);
@@ -96,8 +155,15 @@ const Post = () => {
     const [commentContent, setCommentContent] = useState<string>('');
     const [editCommentId, setEditCommentId] = useState<string | null>(null);
     const [editCommentContent, setEditCommentContent] = useState<string>('');
+    const [liked, setLiked] = useState<boolean>(false);
+    const [disliked, setDisliked] = useState<boolean>(false);
+
     const {currentUser} = useAuth();
 
+    const [likePost] = useMutation(LIKE_POST);
+    const [deleteLike] = useMutation(DELETE_LIKE_POST);
+    const [dislikePost] = useMutation(DISLIKE_POST);
+    const [deleteDislike] = useMutation(DELETE_DISLIKE_POST);
     const [deleteComment] = useMutation(DELETE_COMMENT);
     const [createComment] = useMutation(CREATE_COMMENT);
     const [editComment] = useMutation(EDIT_COMMENT);
@@ -111,6 +177,19 @@ const Post = () => {
         variables: {postId: richPost ? richPost.post.id : ''},
     });
 
+    const {data: userLikedPost} = useQuery(GET_LIKE_POST, {
+        variables: {
+            userId: currentUser?.id,
+            postId: richPost?.post.id,
+        }
+    });
+
+    const {data: userDislikedPost} = useQuery(GET_DISLIKE_POST, {
+        variables: {
+            userId: currentUser?.id,
+            postId: richPost?.post.id,
+        }
+    });
 
     useEffect(() => {
         if (data) {
@@ -124,6 +203,18 @@ const Post = () => {
             setComments(commentsData?.getAllCommentsByPost);
         }
     }, [commentsData]);
+
+    useEffect(() => {
+        if (userLikedPost) {
+            setLiked(userLikedPost.getLike !== null);
+        }
+    }, [userLikedPost]);
+
+    useEffect(() => {
+        if (userDislikedPost) {
+            setDisliked(userDislikedPost.getDislike !== null);
+        }
+    }, [userDislikedPost]);
 
     const handleAddComment = async () => {
         if (!commentContent.trim()) return;
@@ -192,10 +283,79 @@ const Post = () => {
             } else {
                 alert(data.deleteComment.message);
             }
+
         } catch (error) {
             console.error(error);
         }
     }
+
+    const handleLikePost = async () => {
+        try {
+            if (liked) {
+                const {data} = await deleteLike({
+                    variables: {
+                        id: userLikedPost?.getLike.id,
+                    },
+                });
+
+                if (data.deleteLike.success) {
+                    setLiked(false);
+                } else {
+                    alert(data.deleteLike.message);
+                }
+            } else {
+                const {data} = await likePost({
+                    variables: {
+                        userId: currentUser?.id,
+                        postId: richPost?.post.id,
+                    },
+                });
+
+                if (data.createLike.success) {
+                    setLiked(true);
+                } else {
+                    alert(data.createLike.message);
+                }
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const handleDislikePost = async () => {
+        try {
+            if (disliked) {
+                const {data} = await deleteDislike({
+                    variables: {
+                        id: userDislikedPost?.getDislike.id,
+                    },
+                });
+
+                if (data.deleteDislike.success) {
+                    setDisliked(false);
+                } else {
+                    alert(data.deleteDislike.message);
+                }
+            } else {
+                const {data} = await dislikePost({
+                    variables: {
+                        userId: currentUser?.id,
+                        postId: richPost?.post.id,
+                    },
+                });
+
+                if (data.createDislike.success) {
+                    setDisliked(true);
+                } else {
+                    alert(data.createDislike.message);
+                }
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+
     if (!richPost || loading) return <></>
 
     return (
@@ -261,9 +421,17 @@ const Post = () => {
                     dislikes={richPost.dislikes}
                     id={richPost.post.id}
                 />
-                <div>
-                    <img src={'/pictograms/like.svg'} alt={"like"}/>
-                    <img src={'/pictograms/dislike.svg'} alt={"dislike"}/>
+                <div className={styles.container}>
+                    {liked ? (
+                        <div onClick={handleLikePost}><Like color={"#F221EB"} /></div>
+                    ) : (
+                        <div onClick={handleLikePost}><Like color={"white"} /></div>
+                    )}
+                    {disliked ? (
+                        <div onClick={handleDislikePost}><Dislike color={"#F221EB"} /></div>
+                    ) : (
+                        <div onClick={handleDislikePost}><Dislike color={"white"} /></div>
+                    )}
                 </div>
                 <p>Show comments</p>
             </div>

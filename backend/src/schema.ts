@@ -57,8 +57,8 @@ type LatestPost {
 type Query {
   getUser(id: ID!): User @auth
   getPost(id: ID!): LatestPost
-  getLike(id: ID!): Like @auth
-  getDislike(id: ID!): Dislike @auth
+  getLike(userId: ID!, postId: ID!): Like @auth
+  getDislike(userId: ID!, postId: ID!): Dislike @auth
   getComment(id: ID!): Comment @auth
   getLoggedUser: User @auth
   getUserByUsername(username: String!): User
