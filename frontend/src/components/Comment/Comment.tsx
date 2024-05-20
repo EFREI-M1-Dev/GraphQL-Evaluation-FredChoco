@@ -8,7 +8,7 @@ const Comment = (
         createdAt: string;
     }) => {
 
-    const {username, content} = props;
+    const {username, content, createdAt} = props;
 
     return (
         <div className={styles.container}>
@@ -16,7 +16,7 @@ const Comment = (
             <div className={styles.section}>
 
                 <p><Link to={"/profile/"+username} className={styles.link}>{username}</Link></p>
-                <p className={"glow"}>Il y a 2 jours</p>
+                <p className={"glow"}>{createdAt}</p>
             </div>
             <div className={styles.section}>
                 <p>{content}</p>

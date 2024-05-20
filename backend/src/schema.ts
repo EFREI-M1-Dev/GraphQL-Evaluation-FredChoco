@@ -98,7 +98,7 @@ type Mutation {
   deleteUser(id: ID!): UserDeleteResponse! @auth
   
   updateUser(id: ID!, input: UpdateUserInput!): UserUpdateResponse! @auth
-  updateComment(userId: ID!, postId: ID!, content: String!): CommentUpdateResponse! @auth
+  updateComment(id: ID!, content: String!): CommentUpdateResponse! @auth
   updatePost(id: ID!, input: UpdatePostInput!): PostUpdateResponse! @auth
  
 }

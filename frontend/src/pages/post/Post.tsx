@@ -5,8 +5,9 @@ import CardArticle from "../../components/CardArticle/CardArticle.tsx";
 import {gql, useMutation, useQuery} from "@apollo/client";
 import {LatestPost, Comment as CommentType} from "../../types/graphql.ts";
 import {useParams} from "react-router-dom";
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import Button from "../../components/Button/Button.tsx";
+import {useAuth} from "../../provider/AuthContext.tsx";
 
 export const POST = gql`
 query POST_QUERY($id: ID!) {
@@ -35,8 +36,10 @@ query POST_COMMENTS_QUERY($postId: ID!) {
   getAllCommentsByPost(postId: $postId) {
     content
     createdAt
+    id
     user {
       username
+      id
     }
   }
 }
@@ -59,14 +62,46 @@ mutation createComment($userId: ID!, $postId: ID!, $content: String!) {
 }
 `;
 
+const EDIT_COMMENT = gql`
+mutation updateComment($id: ID!, $content: String!) {
+    updateComment(id: $id, content: $content) {
+        code
+        message
+        success
+        comment {
+            content
+            createdAt
+            user {
+                username
+            }
+        }
+    }
+}
+`;
+
+const DELETE_COMMENT = gql`
+mutation deleteComment($id: ID!) {
+    deleteComment(id: $id) {
+        code
+        message
+        success
+    }
+}
+`;
 
 const Post = () => {
     const {id} = useParams();
     const [richPost, setRichPost] = useState<LatestPost | null>(null);
     const [comments, setComments] = useState<CommentType[]>([]);
     const [commentContent, setCommentContent] = useState<string>('');
+    const [editCommentId, setEditCommentId] = useState<string | null>(null);
+    const [editCommentContent, setEditCommentContent] = useState<string>('');
+    const {currentUser} = useAuth();
 
+    const [deleteComment] = useMutation(DELETE_COMMENT);
     const [createComment] = useMutation(CREATE_COMMENT);
+    const [editComment] = useMutation(EDIT_COMMENT);
+
 
     const {data, loading} = useQuery(POST, {
         variables: {id},
@@ -75,7 +110,6 @@ const Post = () => {
     const {data: commentsData, refetch} = useQuery(POST_COMMENTS, {
         variables: {postId: richPost ? richPost.post.id : ''},
     });
-
 
 
     useEffect(() => {
@@ -96,14 +130,18 @@ const Post = () => {
         try {
             const {data} = await createComment({
                 variables: {
-                    userId: richPost?.post.user.id,
+                    userId: currentUser?.id,
                     postId: richPost?.post.id,
                     content: commentContent,
                 },
             });
 
             if (data.createComment.success) {
-                //setComments([...comments, data.createComment.comment]);
+                setComments([...comments, data.createComment.comment]);
+                setRichPost((prev) => ({
+                    ...prev,
+                    comments: prev ? prev.comments + 1 : 1,
+                }))
                 setCommentContent('');
                 refetch();
             } else {
@@ -114,10 +152,52 @@ const Post = () => {
         }
     };
 
+    const handleEditComment = async (commentId: string) => {
+        if (!editCommentContent.trim()) return;
+        try {
+            const {data} = await editComment({
+                variables: {
+                    id: commentId,
+                    content: editCommentContent,
+                },
+            });
 
+            if (data.updateComment.success) {
+                setEditCommentId(null);
+                setEditCommentContent('');
+                refetch();
+            } else {
+                alert(data.updateComment.message);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const handleDeleteComment = async (commentId: string) => {
+        try {
+            const {data} = await deleteComment({
+                variables: {
+                    id: commentId,
+                },
+            });
+
+            if (data.deleteComment.success) {
+                setComments(comments.filter((comment) => comment.id !== commentId));
+                setRichPost((prev) => ({
+                    ...prev,
+                    comments: prev ? prev.comments - 1 : 0,
+                }))
+                refetch();
+            } else {
+                alert(data.deleteComment.message);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
     if (!richPost || loading) return <></>
 
-    console.log(comments);
     return (
         <div className={styles.container}>
             <div className={styles.side__left}>
@@ -137,11 +217,38 @@ const Post = () => {
                 <Button onClick={handleAddComment}>Ajouter un commentaire</Button>
 
                 {comments.map((comment) => (
-                    <Comment
-                        username={comment.user.username}
-                        content={comment.content}
-                        createdAt={comment.createdAt}
-                    />
+                    <div>
+                        {editCommentId === comment.id ? (
+                            <>
+                                <TextField
+                                    placeholder={"Modifier le commentaire..."}
+                                    type={"text"}
+                                    value={editCommentContent}
+                                    onChange={(e) => setEditCommentContent(e.target.value)}
+                                    style={"search"}
+                                />
+                                <Button onClick={() => handleEditComment(comment.id)}>Enregistrer</Button>
+                                <Button onClick={() => setEditCommentId(null)}>Annuler</Button>
+                            </>
+                        ) : (
+                            <>
+                                <Comment
+                                    username={comment.user.username}
+                                    content={comment.content}
+                                    createdAt={comment.createdAt}
+                                />
+                                {comment.user.id === currentUser?.id && (
+                                    <>
+                                        <Button onClick={() => {
+                                            setEditCommentId(comment.id);
+                                            setEditCommentContent(comment.content);
+                                        }}>Modifier</Button>
+                                        <Button onClick={() => handleDeleteComment(comment.id)}>Supprimer</Button>
+                                    </>
+                                )}
+                            </>
+                        )}
+                    </div>
                 ))}
             </div>
 
