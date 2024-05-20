@@ -11,6 +11,7 @@ type User {
   id: ID!
   username: String!
   email: String!
+  imagePath: String!
 }
 
 type Post {
@@ -121,7 +122,7 @@ type UserCreateResponse {
   code: Int!
   success: Boolean!
   message: String!
-  user: User!
+  user: User
 }
 
 type UserDeleteResponse {
@@ -133,6 +134,7 @@ type UserDeleteResponse {
 input UpdateUserInput {
   username: String!
   email: String!
+  file: Upload
 }
 
 input UpdatePostInput {

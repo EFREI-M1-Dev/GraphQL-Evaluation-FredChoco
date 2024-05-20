@@ -4,7 +4,7 @@ import { consola } from "consola";
 import * as bcrypt from "bcrypt";
 
 
-export type User = Pick<UserPrisma, "id" | "username" | "email">;
+export type User = Pick<UserPrisma, "id" | "username" | "email" | "imagePath">;
 
 export const createJWT = (user: User) => jwt.sign(user, process.env.JWT_SECRET);
 

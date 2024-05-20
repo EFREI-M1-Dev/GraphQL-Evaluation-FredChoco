@@ -22,6 +22,7 @@ const USER_INFO = gql`
       id
       email
       username
+      imagePath
     }
   }
 `;

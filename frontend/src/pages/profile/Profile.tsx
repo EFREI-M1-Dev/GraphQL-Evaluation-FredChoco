@@ -46,6 +46,7 @@ query USER_BY_USERNAME($username: String!) {
     id
     username
     email
+    imagePath
   }
 }
 `;
@@ -60,9 +61,6 @@ const Profile = () => {
     const [profileUser, setProfileUser] = useState(currentUser);
 
     const isMyProfile = !username || username.toLowerCase() === currentUser?.username.toLowerCase();
-
-
-
 
     const {data: userData} = useQuery(USER_BY_USERNAME, {
         variables: {username: username?.toLowerCase()},
@@ -108,7 +106,7 @@ const Profile = () => {
         <div className={styles.container}>
             <div className={styles.containerProfile}>
                 <div className={styles.section + " " + styles.profile}>
-                    <img src="https://via.placeholder.com/150" alt="profile" className={styles.profileImage}/>
+                    <img src={"http://localhost:4000/"+profileUser?.imagePath} alt="profile" className={styles.profileImage}/>
                     <div className={styles.profileInfo}>
                         <p className={styles.username}>{profileUser?.username}</p>
                         <p>{profileUser?.email}</p>

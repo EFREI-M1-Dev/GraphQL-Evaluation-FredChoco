@@ -30,3 +30,14 @@
     margin-bottom : 1em;
   }
 }
+
+.postImage {
+  width         : 20em;
+  height        : 20em;
+  object-fit    : cover;
+  border-radius : 1em;
+}
+
+.fileInput {
+  display : none;
+}
