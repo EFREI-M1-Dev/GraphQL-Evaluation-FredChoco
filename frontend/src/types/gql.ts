@@ -21,7 +21,9 @@ const documents = {
     "\nquery LATEST_POST_Query {\n  getLatestPosts {\n  post {\n    id\n    title\n    createdAt\n    imagePath\n    user {\n        username\n    }\n  }\n  likes \n  dislikes\n  }\n}\n": types.Latest_Post_QueryDocument,
     "\nmutation SignInUser($username: String!, $password: String!) {\n  signInUser(username: $username, password: $password) {\n    message\n    success\n    token\n  }\n}\n": types.SignInUserDocument,
     "\nquery POST_QUERY($id: ID!) {\n  getPost(id: $id) {\n    comments\n    dislikes\n    likes\n    post {\n      content\n      createdAt\n      id\n      title\n      imagePath\n      user {\n        email\n        id\n        username\n      }\n    }\n  }\n}\n": types.Post_QueryDocument,
-    "\nquery POST_COMMENTS_QUERY($postId: ID!) {\n  getAllCommentsByPost(postId: $postId) {\n    content\n    createdAt\n    user {\n      username\n    }\n  }\n}\n": types.Post_Comments_QueryDocument,
+    "\nquery POST_COMMENTS_QUERY($postId: ID!) {\n  getAllCommentsByPost(postId: $postId) {\n    content\n    createdAt\n    id\n    user {\n      username\n      id\n    }\n  }\n}\n": types.Post_Comments_QueryDocument,
+    "\nmutation createComment($userId: ID!, $postId: ID!, $content: String!) {\n    createComment(userId: $userId, postId: $postId, content: $content) {\n        code\n        message\n        success\n        comment {\n            content\n            createdAt\n            user {\n                username\n            }\n        }\n    }\n}\n": types.CreateCommentDocument,
+    "\nmutation updateComment($id: ID!, $content: String!) {\n    updateComment(id: $id, content: $content) {\n        code\n        message\n        success\n        comment {\n            content\n            createdAt\n            user {\n                username\n            }\n        }\n    }\n}\n": types.UpdateCommentDocument,
     "\nquery USER_POST_QUERY($id: ID!) {\n  getUserPosts(id: $id) {\n    content\n    createdAt\n    id\n    title\n    imagePath\n    user {\n      id\n      username\n    }\n  }\n}\n": types.User_Post_QueryDocument,
     "\nquery USER_LIKES_QUERY($id: ID!) {\n  getLikesByUser(id: $id) {\n    post {\n      id\n      title\n      content\n      imagePath\n      user {\n        username\n      }\n    }\n  }\n}\n": types.User_Likes_QueryDocument,
     "\nquery USER_BY_USERNAME($username: String!) {\n  getUserByUsername(username: $username) {\n    id\n    username\n    email\n  }\n}\n": types.User_By_UsernameDocument,
@@ -80,7 +82,15 @@ export function gql(source: "\nquery POST_QUERY($id: ID!) {\n  getPost(id: $id) 
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\nquery POST_COMMENTS_QUERY($postId: ID!) {\n  getAllCommentsByPost(postId: $postId) {\n    content\n    createdAt\n    user {\n      username\n    }\n  }\n}\n"): (typeof documents)["\nquery POST_COMMENTS_QUERY($postId: ID!) {\n  getAllCommentsByPost(postId: $postId) {\n    content\n    createdAt\n    user {\n      username\n    }\n  }\n}\n"];
+export function gql(source: "\nquery POST_COMMENTS_QUERY($postId: ID!) {\n  getAllCommentsByPost(postId: $postId) {\n    content\n    createdAt\n    id\n    user {\n      username\n      id\n    }\n  }\n}\n"): (typeof documents)["\nquery POST_COMMENTS_QUERY($postId: ID!) {\n  getAllCommentsByPost(postId: $postId) {\n    content\n    createdAt\n    id\n    user {\n      username\n      id\n    }\n  }\n}\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\nmutation createComment($userId: ID!, $postId: ID!, $content: String!) {\n    createComment(userId: $userId, postId: $postId, content: $content) {\n        code\n        message\n        success\n        comment {\n            content\n            createdAt\n            user {\n                username\n            }\n        }\n    }\n}\n"): (typeof documents)["\nmutation createComment($userId: ID!, $postId: ID!, $content: String!) {\n    createComment(userId: $userId, postId: $postId, content: $content) {\n        code\n        message\n        success\n        comment {\n            content\n            createdAt\n            user {\n                username\n            }\n        }\n    }\n}\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\nmutation updateComment($id: ID!, $content: String!) {\n    updateComment(id: $id, content: $content) {\n        code\n        message\n        success\n        comment {\n            content\n            createdAt\n            user {\n                username\n            }\n        }\n    }\n}\n"): (typeof documents)["\nmutation updateComment($id: ID!, $content: String!) {\n    updateComment(id: $id, content: $content) {\n        code\n        message\n        success\n        comment {\n            content\n            createdAt\n            user {\n                username\n            }\n        }\n    }\n}\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
