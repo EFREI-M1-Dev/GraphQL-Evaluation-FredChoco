@@ -148,7 +148,7 @@ const CreatePostPage = () => {
         >
             <div className={styles.form}>
                 <div>
-                    <h1>Créer un article</h1>
+                    <h1>{loggedIn && idPost ? 'Modifier un article' : 'Créer un article'}</h1>
                     <TextField
                         placeholder={'Titre de l\'article'}
                         type={"text"}
@@ -177,7 +177,7 @@ const CreatePostPage = () => {
                         onChange={handleFileChange}
                     />
                 </div>
-                <Button style={"primary"} onClick={handleSubmit}>Créer l'article</Button>
+                <Button style={"primary"} onClick={handleSubmit}>{loggedIn && idPost ? 'Modifier l\'article' : 'Créer l\'article'}</Button>
             </div>
         </div>
     );
