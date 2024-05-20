@@ -5,7 +5,7 @@ import CardArticle from "../../components/CardArticle/CardArticle.tsx";
 import {gql, useMutation, useQuery} from "@apollo/client";
 import {LatestPost, Comment as CommentType} from "../../types/graphql.ts";
 import {useParams} from "react-router-dom";
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import Button from "../../components/Button/Button.tsx";
 import {useAuth} from "../../provider/AuthContext.tsx";
 
@@ -79,6 +79,15 @@ mutation updateComment($id: ID!, $content: String!) {
 }
 `;
 
+const DELETE_COMMENT = gql`
+mutation deleteComment($id: ID!) {
+    deleteComment(id: $id) {
+        code
+        message
+        success
+    }
+}
+`;
 
 const Post = () => {
     const {id} = useParams();
@@ -89,6 +98,7 @@ const Post = () => {
     const [editCommentContent, setEditCommentContent] = useState<string>('');
     const {currentUser} = useAuth();
 
+    const [deleteComment] = useMutation(DELETE_COMMENT);
     const [createComment] = useMutation(CREATE_COMMENT);
     const [editComment] = useMutation(EDIT_COMMENT);
 
@@ -164,6 +174,28 @@ const Post = () => {
         }
     }
 
+    const handleDeleteComment = async (commentId: string) => {
+        try {
+            const {data} = await deleteComment({
+                variables: {
+                    id: commentId,
+                },
+            });
+
+            if (data.deleteComment.success) {
+                setComments(comments.filter((comment) => comment.id !== commentId));
+                setRichPost((prev) => ({
+                    ...prev,
+                    comments: prev ? prev.comments - 1 : 0,
+                }))
+                refetch();
+            } else {
+                alert(data.deleteComment.message);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
     if (!richPost || loading) return <></>
 
     return (
@@ -205,7 +237,7 @@ const Post = () => {
                                     content={comment.content}
                                     createdAt={comment.createdAt}
                                 />
-                                {comment.user.id === currentUser.id && (
+                                {comment.user.id === currentUser?.id && (
                                     <>
                                         <Button onClick={() => {
                                             setEditCommentId(comment.id);
