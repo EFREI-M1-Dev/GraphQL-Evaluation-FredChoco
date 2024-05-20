@@ -1,13 +1,25 @@
-import { MutationResolvers } from "../../../types";
+import {MutationResolvers} from "../../../types";
 import consola from "consola";
 import {createJWT} from "../../../modules/auth";
+import {deleteFile, uploadFile} from "../../utils/fileUtils";
 
-export const updateUser: MutationResolvers["updateUser"] = async (_, { id, input }, { dataSources }) => {
+export const updateUser: MutationResolvers["updateUser"] = async (_, {id, input}, {dataSources, user}) => {
     try {
+
+        const hasFile = !!input.file;
+        let imagePath = "";
+        if (hasFile && user) {
+            imagePath = await uploadFile(input.file);
+            if (user.imagePath && user.imagePath !== "") await deleteFile(user.imagePath);
+        }
+
+
         const updatedUser = await dataSources.db.user.update({
-            where: { id },
+            where: {id},
             data: {
-              ...input
+                username: input.username,
+                email: input.email,
+                ...(hasFile && {imagePath: imagePath})
             }
         });
 

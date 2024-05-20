@@ -322,6 +322,7 @@ export type UpdatePostInput = {
 
 export type UpdateUserInput = {
   email: Scalars['String']['input'];
+  file?: InputMaybe<Scalars['Upload']['input']>;
   username: Scalars['String']['input'];
 };
 
@@ -329,6 +330,7 @@ export type User = {
   __typename?: 'User';
   email: Scalars['String']['output'];
   id: Scalars['ID']['output'];
+  imagePath: Scalars['String']['output'];
   username: Scalars['String']['output'];
 };
 
@@ -337,7 +339,7 @@ export type UserCreateResponse = {
   code: Scalars['Int']['output'];
   message: Scalars['String']['output'];
   success: Scalars['Boolean']['output'];
-  user: User;
+  user?: Maybe<User>;
 };
 
 export type UserDeleteResponse = {
@@ -678,6 +680,7 @@ export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTyp
 export type UserResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  imagePath?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   username?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -686,7 +689,7 @@ export type UserCreateResponseResolvers<ContextType = DataSourceContext, ParentT
   code?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

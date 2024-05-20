@@ -1,7 +1,7 @@
 import styles from "./_Register.module.scss";
 import TextField from "../../components/TextField/TextField";
 import Button from "../../components/Button/Button";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {gql, useMutation} from "@apollo/client";
 import {useNavigate} from "react-router-dom";
 import {useAuth} from "../../provider/AuthContext";
@@ -42,6 +42,9 @@ const RegisterPage = () => {
     const [createUser] = useMutation(CREATE_USER);
     const [editUser] = useMutation(UPDATE_USER);
 
+    const [FileValue, setFileValue] = useState<File | null>(null);
+    const [ImagePath, setImagePath] = useState<string>('');
+
     const handleSignUp = async () => {
         if (PasswordValue !== ConfirmPasswordValue) {
             alert("Passwords do not match");
@@ -73,6 +76,7 @@ const RegisterPage = () => {
                     input: {
                         username: UsernameValue,
                         email: EmailValue,
+                        file: FileValue
                     }
                 }
             });
@@ -98,10 +102,18 @@ const RegisterPage = () => {
         }
     }
 
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files ? e.target.files[0] : null;
+        setFileValue(file);
+        if (!file) return;
+        setImagePath(URL.createObjectURL(file));
+    };
+
     useEffect(() => {
         if (loggedIn && currentUser) {
             setUsernameValue(currentUser.username);
             setEmailValue(currentUser.email);
+            setImagePath("http://localhost:4000/"+currentUser.imagePath);
         }
     }, [currentUser, loggedIn]);
 
@@ -119,12 +131,25 @@ const RegisterPage = () => {
                 <div>
                     <h1>{loggedIn ? "Edit Account" : "Create Account"}</h1>
                     {loggedIn && (
-                        <Button className={styles.profileImage} style={"header"}
-                                onClick={() => navigate('/edit/profile')}>
-                            <img src="https://via.placeholder.com/150" alt="profile"
+                        <>
+                            <Button className={styles.profileImage} style={"header"}>
+                                <label htmlFor={"file"}>
+                                    <img
+                                        className={styles.postImage}
+                                        src={ImagePath}
+                                        alt={"image"}
+                                    />
+                                </label>
+                            </Button>
+                            <input
+                                type="file"
+                                onChange={handleFileChange}
+                                id={"file"}
+                                className={styles.fileInput}
                             />
-                        </Button>
+                        </>
                     )}
+
                     <TextField
                         placeholder={"Username"}
                         type={"text"}

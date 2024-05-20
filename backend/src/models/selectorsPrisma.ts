@@ -1,12 +1,8 @@
 export const userSelect = {
     id: true,
     username: true,
-    email: true
-};
-
-export const userJWTSelect = {
-    id: true,
-    username: true,
+    email: true,
+    imagePath: true,
 };
 
 export const postSelect = {

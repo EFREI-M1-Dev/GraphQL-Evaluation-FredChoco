@@ -31,7 +31,6 @@ export const deleteFile = async (filePath: string) => {
     if (nameFile) {
         const uploadDir = path.join(__dirname, '../../../uploads');
         const filePath = `${uploadDir}/${nameFile}`;
-        console.log(filePath);
         if (existsSync(filePath)) {
             await unlinkSync(filePath);
         }

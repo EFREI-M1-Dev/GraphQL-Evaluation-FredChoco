@@ -19,7 +19,7 @@ model User {
   Like      Like[]
   Dislike   Dislike[]
   Comment   Comment[]
-  imagePath String    @default("")
+  imagePath String    @default("https://via.placeholder.com/150")
 }
 
 model Post {
