@@ -41,10 +41,6 @@ const CreatePostPage = () => {
                 return;
             }
 
-            const fileSize = FileValue.size / 1024 / 1024;
-            console.log("File size:", fileSize);
-            console.log("File:", FileValue);
-
             const { data } = await createPost({
                 variables: {
                     title: TitleValue,

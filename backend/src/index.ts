@@ -12,8 +12,12 @@ import { typeDefs } from './schema.js';
 import { getUserFromToken } from './modules/auth.js';
 import db from './datasources/db.js';
 import authDirective from './modules/authDirective.js';
-
+import {fileURLToPath} from "url";
+import path, {dirname} from "path";
 const { authDirectiveTypeDefs, authDirectiveTransformer } = authDirective();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 let schema = makeExecutableSchema({
     typeDefs: [authDirectiveTypeDefs, typeDefs],
@@ -31,13 +35,15 @@ const app = express();
 app.use(cors({
     origin: 'http://localhost:5173',
 }));
+
 app.use(bodyParser.json());
 
-// Add file upload middleware before the GraphQL middleware
+app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
+
 app.use(
     '/graphql',
     graphqlUploadExpress({
-        maxFileSize: 10000000, // 10 MB
+        maxFileSize: 100000000, //100 MB
         maxFiles: 10,
     })
 );

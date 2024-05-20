@@ -1,8 +1,5 @@
 import styles from "./_Home.module.scss";
-// import Comment from "../../components/Comment/Comment.tsx";
 import Metrics from "../../components/Metrics/Metrics";
-// import TextField from "../../components/TextField/TextField";
-// import Carousel from "../../components/Carousel/Carousel";
 import CardArticle from "../../components/CardArticle/CardArticle.tsx";
 import {gql, useQuery} from "@apollo/client";
 import {useEffect, useState} from "react";
@@ -18,24 +15,22 @@ query LATEST_POST_Query {
     user {
         username
     }
-    }
-   likes 
-   dislikes
+  }
+  likes 
+  dislikes
   }
 }
 `;
 
 const HomePage = () => {
     const [allLatestPosts, setAllLatestPosts] = useState<LatestPost[]>([]);
-    const {data, error} = useQuery(LATEST_POST);
+    const {data} = useQuery(LATEST_POST);
 
     useEffect(() => {
         if (data) {
             setAllLatestPosts(data.getLatestPosts);
         }
     }, [data]);
-
-    console.log(error?.networkError)
 
     return (
         <div className={styles.container}>
@@ -55,29 +50,6 @@ const HomePage = () => {
                 ))
                 }
             </div>
-
-
-            {/*<Carousel type={'line'} >*/}
-            {/*    {*/}
-            {/*        Array.from({length: 10}).map((_, index) => (*/}
-            {/*                <CardArticle key={index}/>*/}
-            {/*        ))*/}
-            {/*    }*/}
-            {/*</Carousel>*/}
-
-            {/*<div style={{*/}
-            {/*    width: "70%"*/}
-            {/*}}>*/}
-            {/*    <TextField placeholder={"Rechercher un article"} type={"text"} style={"search"}/>*/}
-            {/*</div>*/}
-
-            {/*<div className={styles.section}>*/}
-            {/*    <CardArticle/>*/}
-            {/*    <CardArticle/>*/}
-            {/*</div>*/}
-
-
-            {/*<Comment/>*/}
         </div>
     );
 };

@@ -25,8 +25,6 @@ export const getLatestPosts: QueryResolvers["getLatestPosts"] = async (_, __, {d
             comments: post.Comment.length // Comptez le nombre de commentaires
         }));
 
-        console.log(transformedPosts);
-
         if (!transformedPosts) {
             return [];
         }

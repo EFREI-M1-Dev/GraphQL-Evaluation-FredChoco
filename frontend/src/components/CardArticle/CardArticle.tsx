@@ -45,7 +45,7 @@ const CardArticle = (
             <div className={styles.section}>
                 <h2>{capitalize(title)}</h2>
                 <div className={styles.author}>
-                    <Link to={`/profile/${props.authorUsername}`}>Par <i>{capitalize(props.authorUsername)}</i></Link>
+                    <Link onClick={e => e.stopPropagation()} to={`/profile/${props.authorUsername}`}>Par <i>{capitalize(props.authorUsername)}</i></Link>
                     <div className={styles.containerStat}>
                         <div className={styles.stat} >
                             <img className={styles.icon} src={'/pictograms/like.svg'} alt={"like"}/>
