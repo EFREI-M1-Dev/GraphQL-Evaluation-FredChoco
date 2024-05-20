@@ -1,9 +1,9 @@
 import ReactDOM from 'react-dom/client';
-import React, {createContext} from 'react';
+import React, {createContext, ReactNode, useContext} from 'react';
 import {client} from './provider/ApolloClient';
 import {ApolloProvider} from '@apollo/client';
 import App from './App';
-import useMainController from "./controller/controllerMain";
+import useMainController, {UseMainControllerReturnType} from "./controller/controllerMain";
 import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 import HomePage from './pages/home/Home';
 import ErrorPage from './pages/error/Error';
@@ -16,8 +16,24 @@ import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import SearchPage from "./pages/search/Search";
 import CreatePostPage from "./pages/createPost/CreatePost";
 
-const mainController = useMainController();
-const MainControllerContext = createContext(mainController);
+const MainControllerContext = createContext<UseMainControllerReturnType | undefined>(undefined);
+
+export const useMainControllerContext = () => {
+    const context = useContext(MainControllerContext);
+    if (!context) {
+        throw new Error('useMainControllerContext must be used within a MainControllerProvider');
+    }
+    return context;
+};
+
+export const MainControllerProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+    const mainController = useMainController();
+    return (
+        <MainControllerContext.Provider value={mainController}>
+            {children}
+        </MainControllerContext.Provider>
+    );
+};
 
 const router = createBrowserRouter([
     {
@@ -84,12 +100,11 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
         <ApolloProvider client={client}>
-            <AuthProvider>
-                <MainControllerContext.Provider value={mainController}>
+            <MainControllerProvider>
+                <AuthProvider>
                     <RouterProvider router={router}/>
-                </MainControllerContext.Provider>
-            </AuthProvider>
+                </AuthProvider>
+            </MainControllerProvider>
         </ApolloProvider>
-
     </React.StrictMode>
 );

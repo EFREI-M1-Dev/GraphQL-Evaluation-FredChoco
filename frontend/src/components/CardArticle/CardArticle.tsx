@@ -5,6 +5,7 @@ import Button from "../Button/Button";
 import {gql, useMutation} from "@apollo/client";
 import {LATEST_POST} from "../../pages/home/Home";
 import {STATISTICS} from "../Metrics/Metrics";
+import {useMainControllerContext} from "../../main";
 
 const CardArticle = (
     props: {
@@ -22,6 +23,8 @@ const CardArticle = (
     const {className, title, image, onclick} = props;
     const [isHovered, setIsHovered] = useState(false);
     const navigate = useNavigate();
+
+    const { m_notificationController } = useMainControllerContext();
 
     const backgroundImage = isHovered
         ? `linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, .8), rgba(0, 0, 0, 0)), url(${image})`
@@ -59,9 +62,10 @@ const CardArticle = (
                 deletePostId: props.id
             }
         }).then(() => {
+            m_notificationController.setNotification({ message: "Post deleted", type: "success" });
             navigate('/');
         }).catch((error) => {
-            console.log(error);
+            m_notificationController.setNotification({ message: error, type: "error" });
         });
     }
 

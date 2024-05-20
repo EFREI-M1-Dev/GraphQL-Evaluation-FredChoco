@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { gql, useQuery } from "@apollo/client";
 import { User } from "../types/graphql";
+import {useMainControllerContext} from "../main";
 
 interface AuthContextType {
     authToken: string | null;
@@ -31,8 +32,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const [authToken, setAuthToken] = useState<string | null>(localStorage.getItem('token_케이팝_Paris'));
     const [loggedIn, setLoggedIn] = useState<boolean>(!!authToken);
     const [user, setUser] = useState<User | null>(null);
+
+    const {m_notificationController} = useMainControllerContext();
+
     const { data: userInfoData, refetch  } = useQuery(USER_INFO, {
-        skip: !authToken // Skip the query if there's no auth token
+        skip: !authToken
     });
 
     useEffect(() => {
@@ -60,7 +64,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         localStorage.removeItem('token_케이팝_Paris');
         setLoggedIn(false);
         setUser(null);
-
+        m_notificationController.setNotification({ message: "Logged out", type: "success" });
     };
 
     return (
