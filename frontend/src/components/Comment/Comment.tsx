@@ -15,7 +15,7 @@ const Comment = (
             <hr />
             <div className={styles.section}>
 
-                <p><Link to={"/"} className={styles.link}>{username}</Link></p>
+                <p><Link to={"/profile/"+username} className={styles.link}>{username}</Link></p>
                 <p className={"glow"}>Il y a 2 jours</p>
             </div>
             <div className={styles.section}>
