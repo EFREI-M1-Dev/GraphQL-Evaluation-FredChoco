@@ -7,7 +7,7 @@ import {LatestPost, Comment as CommentType} from "../../types/graphql.ts";
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 
-const POST = gql`
+export const POST = gql`
 query POST_QUERY($id: ID!) {
   getPost(id: $id) {
     comments

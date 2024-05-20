@@ -1,7 +1,7 @@
 import styles from "./_Header.module.scss";
 import Logo from "../Logo/Logo";
 import Button from "../Button/Button";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {useAuth} from "../../provider/AuthContext";
 import {gql, useLazyQuery} from "@apollo/client";
@@ -18,6 +18,7 @@ const Header = () => {
 
     const [widthScrollBar, setWidthScrollBar] = useState(0);
     const [randomPostId, seRandomPostId] = useState(0);
+    const navigate = useNavigate();
 
     const handleScroll = () => {
         const scrollBar = document.querySelector(`.${styles.scrollBar}`);
@@ -70,7 +71,12 @@ const Header = () => {
                 :
                 <div className={styles.section}>
                     <Button style={"header"} route={"profile"}> [PROFILE] </Button>
-                    <Button style={"header"} onClick={logout}> [LOGOUT] </Button>
+                    <Button style={"header"} onClick={() =>
+                    {
+                        logout();
+                        navigate("/");
+                    }
+                    }> [LOGOUT] </Button>
                 </div>
             }
             <div className={styles.scrollBar} style={{width: `${widthScrollBar}%`}}></div>

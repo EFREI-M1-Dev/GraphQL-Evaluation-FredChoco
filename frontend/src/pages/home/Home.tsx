@@ -5,7 +5,7 @@ import {gql, useQuery} from "@apollo/client";
 import {useEffect, useState} from "react";
 import {LatestPost} from "../../types/graphql";
 
-const LATEST_POST = gql`
+export const LATEST_POST = gql`
 query LATEST_POST_Query {
   getLatestPosts {
   post {

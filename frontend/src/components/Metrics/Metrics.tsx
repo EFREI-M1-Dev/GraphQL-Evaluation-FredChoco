@@ -3,7 +3,7 @@ import Metric from "../Metric/Metric";
 import {gql, useQuery} from "@apollo/client";
 import {useEffect, useState} from "react";
 
-const STATISTICS = gql`
+export const STATISTICS = gql`
 query STATISTICS_Query {
   getTotalPostCount
   getTotalCommentCount

@@ -59,6 +59,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         localStorage.removeItem('token_케이팝_Paris');
         setLoggedIn(false);
         setUser(null);
+
     };
 
     return (

@@ -119,6 +119,7 @@ export type Mutation = {
   deleteUser: UserDeleteResponse;
   signInUser: UserSignInResponse;
   updateComment: CommentUpdateResponse;
+  updatePost: PostUpdateResponse;
   updateUser: UserUpdateResponse;
 };
 
@@ -195,6 +196,12 @@ export type MutationUpdateCommentArgs = {
 };
 
 
+export type MutationUpdatePostArgs = {
+  id: Scalars['ID']['input'];
+  input: UpdatePostInput;
+};
+
+
 export type MutationUpdateUserArgs = {
   id: Scalars['ID']['input'];
   input: UpdateUserInput;
@@ -222,6 +229,14 @@ export type PostDeleteResponse = {
   __typename?: 'PostDeleteResponse';
   code: Scalars['Int']['output'];
   message: Scalars['String']['output'];
+  success: Scalars['Boolean']['output'];
+};
+
+export type PostUpdateResponse = {
+  __typename?: 'PostUpdateResponse';
+  code: Scalars['Int']['output'];
+  message: Scalars['String']['output'];
+  post?: Maybe<Post>;
   success: Scalars['Boolean']['output'];
 };
 
@@ -300,9 +315,14 @@ export type QueryGetUserPostsArgs = {
   id: Scalars['ID']['input'];
 };
 
+export type UpdatePostInput = {
+  content: Scalars['String']['input'];
+  file?: InputMaybe<Scalars['Upload']['input']>;
+  title: Scalars['String']['input'];
+};
+
 export type UpdateUserInput = {
   email: Scalars['String']['input'];
-  password: Scalars['String']['input'];
   username: Scalars['String']['input'];
 };
 
@@ -341,6 +361,7 @@ export type UserUpdateResponse = {
   code: Scalars['Int']['output'];
   message: Scalars['String']['output'];
   success: Scalars['Boolean']['output'];
+  token?: Maybe<Scalars['String']['output']>;
   user?: Maybe<User>;
 };
 
@@ -435,8 +456,10 @@ export type ResolversTypes = {
   Post: ResolverTypeWrapper<Post>;
   PostCreateResponse: ResolverTypeWrapper<PostCreateResponse>;
   PostDeleteResponse: ResolverTypeWrapper<PostDeleteResponse>;
+  PostUpdateResponse: ResolverTypeWrapper<PostUpdateResponse>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
+  UpdatePostInput: UpdatePostInput;
   UpdateUserInput: UpdateUserInput;
   Upload: ResolverTypeWrapper<Scalars['Upload']['output']>;
   User: ResolverTypeWrapper<User>;
@@ -468,8 +491,10 @@ export type ResolversParentTypes = {
   Post: Post;
   PostCreateResponse: PostCreateResponse;
   PostDeleteResponse: PostDeleteResponse;
+  PostUpdateResponse: PostUpdateResponse;
   Query: {};
   String: Scalars['String']['output'];
+  UpdatePostInput: UpdatePostInput;
   UpdateUserInput: UpdateUserInput;
   Upload: Scalars['Upload']['output'];
   User: User;
@@ -586,6 +611,7 @@ export type MutationResolvers<ContextType = DataSourceContext, ParentType extend
   deleteUser?: Resolver<ResolversTypes['UserDeleteResponse'], ParentType, ContextType, RequireFields<MutationDeleteUserArgs, 'id'>>;
   signInUser?: Resolver<ResolversTypes['UserSignInResponse'], ParentType, ContextType, RequireFields<MutationSignInUserArgs, 'password' | 'username'>>;
   updateComment?: Resolver<ResolversTypes['CommentUpdateResponse'], ParentType, ContextType, RequireFields<MutationUpdateCommentArgs, 'content' | 'postId' | 'userId'>>;
+  updatePost?: Resolver<ResolversTypes['PostUpdateResponse'], ParentType, ContextType, RequireFields<MutationUpdatePostArgs, 'id' | 'input'>>;
   updateUser?: Resolver<ResolversTypes['UserUpdateResponse'], ParentType, ContextType, RequireFields<MutationUpdateUserArgs, 'id' | 'input'>>;
 };
 
@@ -610,6 +636,14 @@ export type PostCreateResponseResolvers<ContextType = DataSourceContext, ParentT
 export type PostDeleteResponseResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['PostDeleteResponse'] = ResolversParentTypes['PostDeleteResponse']> = {
   code?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type PostUpdateResponseResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['PostUpdateResponse'] = ResolversParentTypes['PostUpdateResponse']> = {
+  code?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  post?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType>;
   success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -676,6 +710,7 @@ export type UserUpdateResponseResolvers<ContextType = DataSourceContext, ParentT
   code?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  token?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -697,6 +732,7 @@ export type Resolvers<ContextType = DataSourceContext> = {
   Post?: PostResolvers<ContextType>;
   PostCreateResponse?: PostCreateResponseResolvers<ContextType>;
   PostDeleteResponse?: PostDeleteResponseResolvers<ContextType>;
+  PostUpdateResponse?: PostUpdateResponseResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Upload?: GraphQLScalarType;
   User?: UserResolvers<ContextType>;

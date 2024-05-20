@@ -98,6 +98,7 @@ type Mutation {
   
   updateUser(id: ID!, input: UpdateUserInput!): UserUpdateResponse! @auth
   updateComment(userId: ID!, postId: ID!, content: String!): CommentUpdateResponse! @auth
+  updatePost(id: ID!, input: UpdatePostInput!): PostUpdateResponse! @auth
  
 }
 
@@ -132,7 +133,19 @@ type UserDeleteResponse {
 input UpdateUserInput {
   username: String!
   email: String!
-  password: String!
+}
+
+input UpdatePostInput {
+  title: String!
+  content: String!
+  file: Upload
+}
+
+type PostUpdateResponse {
+  code: Int!
+  success: Boolean!
+  message: String!
+  post: Post
 }
 
 type UserUpdateResponse {
@@ -140,6 +153,7 @@ type UserUpdateResponse {
   success: Boolean!
   message: String!
   user: User
+  token: String
 }
 
 type UserSignInResponse {

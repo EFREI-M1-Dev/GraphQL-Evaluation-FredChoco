@@ -1,6 +1,10 @@
-import {useState} from 'react';
+import React, {useState} from 'react';
 import styles from "./_CardArticle.module.scss";
 import {Link, useNavigate} from "react-router-dom";
+import Button from "../Button/Button";
+import {gql, useMutation} from "@apollo/client";
+import {LATEST_POST} from "../../pages/home/Home";
+import {STATISTICS} from "../Metrics/Metrics";
 
 const CardArticle = (
     props: {
@@ -13,6 +17,7 @@ const CardArticle = (
         likes?: number;
         dislikes?: number;
         comments?: number;
+        actionBar?: string;
     }) => {
     const {className, title, image, onclick} = props;
     const [isHovered, setIsHovered] = useState(false);
@@ -28,8 +33,36 @@ const CardArticle = (
     }
 
     const handleOnClick = () => {
-        if(onclick) onclick();
+        if (onclick) onclick();
         navigate(`/post/${props.id}`);
+    }
+
+    const DELETE_POST = gql`
+    mutation DELETE_POST_Mutation($deletePostId: ID!) {
+      deletePost(id: $deletePostId) {
+        code
+        message
+        success
+      }
+    }
+    `;
+    const [deletePostAction] = useMutation(DELETE_POST, {
+        refetchQueries: [{query: LATEST_POST}, {query: STATISTICS}]
+    });
+
+
+    const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation();
+
+        deletePostAction({
+            variables: {
+                deletePostId: props.id
+            }
+        }).then(() => {
+            navigate('/');
+        }).catch((error) => {
+            console.log(error);
+        });
     }
 
     return (
@@ -45,19 +78,39 @@ const CardArticle = (
             <div className={styles.section}>
                 <h2>{capitalize(title)}</h2>
                 <div className={styles.author}>
-                    <Link onClick={e => e.stopPropagation()} to={`/profile/${props.authorUsername}`}>Par <i>{capitalize(props.authorUsername)}</i></Link>
+                    <Link onClick={e => e.stopPropagation()}
+                          to={`/profile/${props.authorUsername}`}>Par <i>{capitalize(props.authorUsername)}</i></Link>
                     <div className={styles.containerStat}>
-                        <div className={styles.stat} >
+                        <div className={styles.stat}>
                             <img className={styles.icon} src={'/pictograms/like.svg'} alt={"like"}/>
                             <img className={styles.icon} src={'/pictograms/dislike.svg'} alt={"dislike"}/>
                         </div>
-                        <div className={styles.stat+" "+styles.number}>
+                        <div className={styles.stat + " " + styles.number}>
                             <span>{props.likes || 0}</span>
                             <span>{props.dislikes || 0}</span>
                         </div>
                     </div>
                 </div>
             </div>
+            {props.actionBar && (
+                <div className={styles.actions}>
+                    <div className={styles.btns}>
+                        <Button
+                            style={"header"}
+                            route={"/edit/post/" + props.actionBar}
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            Edit
+                        </Button>
+                        <Button style={"header"}
+                                onClick={handleDelete}
+                        >
+                            Delete
+                        </Button>
+                    </div>
+
+                </div>
+            )}
         </div>
     );
 };

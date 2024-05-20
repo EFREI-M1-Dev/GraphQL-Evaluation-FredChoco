@@ -11,14 +11,15 @@ datasource db {
 }
 
 model User {
-  id       String    @id @unique @default(uuid())
-  email    String    @unique
-  username String    @unique
-  posts    Post[]
-  password String
-  Like     Like[]
-  Dislike  Dislike[]
-  Comment  Comment[]
+  id        String    @id @unique @default(uuid())
+  email     String    @unique
+  username  String    @unique
+  posts     Post[]
+  password  String
+  Like      Like[]
+  Dislike   Dislike[]
+  Comment   Comment[]
+  imagePath String    @default("")
 }
 
 model Post {
