@@ -5,6 +5,7 @@ import {useState} from "react";
 import {useMutation, gql} from '@apollo/client';
 import {useNavigate} from "react-router-dom";
 import {useAuth} from "../../provider/AuthContext";
+import {useMainControllerContext} from "../../main";
 
 const SIGN_IN_USER = gql`
 mutation SignInUser($username: String!, $password: String!) {
@@ -21,6 +22,7 @@ const LoginPage = () => {
     const [PasswordValue, setPasswordValue] = useState<string>('');
     const navigate = useNavigate();
     const {login} = useAuth();
+    const {m_notificationController} = useMainControllerContext();
 
     const [signInUser] = useMutation(SIGN_IN_USER);
     const handleSignIn = async () => {
@@ -32,12 +34,13 @@ const LoginPage = () => {
             if (success) {
                 login(token)
                 navigate('/');
+                m_notificationController.setNotification({message: "Vous êtes connecté", type: "success"});
             } else {
-                alert(message);
+                m_notificationController.setNotification({message, type: "error"});
             }
 
         } catch (error) {
-            console.error("Error signing in:", error);
+            m_notificationController.setNotification({message: "Une erreur est survenue", type: "error"});
         }
     };
 

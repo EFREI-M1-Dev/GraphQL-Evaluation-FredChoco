@@ -5,6 +5,7 @@ import React, {useEffect, useState} from "react";
 import {gql, useMutation} from "@apollo/client";
 import {useNavigate} from "react-router-dom";
 import {useAuth} from "../../provider/AuthContext";
+import {useMainControllerContext} from "../../main";
 
 const CREATE_USER = gql`
 mutation createUser($username: String!, $password: String!, $email: String!) {
@@ -37,6 +38,7 @@ const RegisterPage = () => {
     const [PasswordValue, setPasswordValue] = useState<string>('');
     const [ConfirmPasswordValue, setConfirmPasswordValue] = useState<string>('');
     const navigate = useNavigate();
+    const {m_notificationController} = useMainControllerContext();
     const {currentUser, loggedIn, login} = useAuth();
 
     const [createUser] = useMutation(CREATE_USER);
@@ -47,7 +49,7 @@ const RegisterPage = () => {
 
     const handleSignUp = async () => {
         if (PasswordValue !== ConfirmPasswordValue) {
-            alert("Passwords do not match");
+            m_notificationController.setNotification({message: "Passwords do not match", type: "warning"});
             return;
         }
 
@@ -58,13 +60,13 @@ const RegisterPage = () => {
 
             const {message, success} = data.createUser;
             if (success) {
-                alert("Account created successfully");
+                m_notificationController.setNotification({message: "Account created successfully", type: "success"});
                 navigate('/login');
             } else {
-                alert(message);
+                m_notificationController.setNotification({message, type: "error"});
             }
         } catch (error) {
-            console.error("Error creating account:", error);
+            m_notificationController.setNotification({message: "Une erreur est survenue", type: "error"});
         }
     }
 
@@ -84,13 +86,13 @@ const RegisterPage = () => {
             const {message, success, token} = data.updateUser;
             if (success) {
                 login(token);
-                alert("Account updated successfully");
+                m_notificationController.setNotification({message: "Account updated successfully", type: "success"});
                 navigate('/profile');
             } else {
-                alert(message);
+                m_notificationController.setNotification({message, type: "error"});
             }
         } catch (error) {
-            console.error("Error creating account:", error);
+            m_notificationController.setNotification({message: "Une erreur est survenue", type: "error"});
         }
     }
 
@@ -113,7 +115,7 @@ const RegisterPage = () => {
         if (loggedIn && currentUser) {
             setUsernameValue(currentUser.username);
             setEmailValue(currentUser.email);
-            setImagePath("http://localhost:4000/"+currentUser.imagePath);
+            setImagePath("http://localhost:4000/" + currentUser.imagePath);
         }
     }, [currentUser, loggedIn]);
 

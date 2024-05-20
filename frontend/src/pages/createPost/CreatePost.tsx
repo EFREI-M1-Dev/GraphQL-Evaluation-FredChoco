@@ -6,6 +6,7 @@ import {useMutation, gql, useLazyQuery} from '@apollo/client';
 import {useNavigate, useParams} from "react-router-dom";
 import {useAuth} from "../../provider/AuthContext";
 import {POST} from "../post/Post";
+import {useMainControllerContext} from "../../main";
 
 const CREATE_POST = gql`
 mutation CreatePost($title: String!, $content: String!, $userId: ID!, $file: Upload!) {
@@ -41,10 +42,12 @@ const CreatePostPage = () => {
     const [createPost] = useMutation(CREATE_POST);
     const [editPost] = useMutation(EDIT_POST);
 
+    const {m_notificationController} = useMainControllerContext();
+
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files ? e.target.files[0] : null;
         setFileValue(file);
-        if(!file) return;
+        if (!file) return;
         setImagePath(URL.createObjectURL(file));
     };
 
@@ -52,11 +55,20 @@ const CreatePostPage = () => {
     const handleCreatePost = async () => {
         try {
             if (!currentUser) {
-                alert("Vous devez être connecté pour créer un article");
+                m_notificationController.setNotification({
+                    message: "Vous devez être connecté pour créer un article",
+                    type: "error"
+                });
                 return;
             }
+
+            if (!TitleValue || !ContentValue) {
+                m_notificationController.setNotification({message: "Veuillez remplir tous les champs", type: "error"});
+                return;
+            }
+
             if (!FileValue) {
-                alert("Vous devez sélectionner un fichier à télécharger");
+                m_notificationController.setNotification({message: "Vous devez ajouter une image", type: "error"});
                 return;
             }
 
@@ -72,18 +84,27 @@ const CreatePostPage = () => {
             const {message, success} = data.createPost;
             if (success) {
                 navigate('/');
+                m_notificationController.setNotification({message: "Article créé", type: "success"});
             } else {
-                alert(message);
+                m_notificationController.setNotification({message, type: "error"});
             }
         } catch (error) {
-            console.error(error);
+            m_notificationController.setNotification({message: "Une erreur est survenue", type: "error"});
         }
     };
 
     const handleEditPost = async () => {
         try {
             if (!currentUser) {
-                alert("Vous devez être connecté pour modifier un article");
+                m_notificationController.setNotification({
+                    message: "Vous devez être connecté pour modifier un article",
+                    type: "error"
+                });
+                return;
+            }
+
+            if (!TitleValue || !ContentValue || TitleValue === "" || ContentValue === "") {
+                m_notificationController.setNotification({message: "Veuillez remplir tous les champs", type: "error"});
                 return;
             }
 
@@ -101,11 +122,12 @@ const CreatePostPage = () => {
             const {message, success} = data.updatePost;
             if (success) {
                 navigate('/');
+                m_notificationController.setNotification({message: "Article modifié", type: "success"});
             } else {
-                alert(message);
+                m_notificationController.setNotification({message, type: "error"});
             }
         } catch (error) {
-            console.error(error);
+            m_notificationController.setNotification({message: "Une erreur est survenue", type: "error"});
         }
     }
 
@@ -121,17 +143,14 @@ const CreatePostPage = () => {
 
     useEffect(() => {
         if (idPost) {
-            // Fetch post
             fetchPost({
                 variables: {id: idPost}
             }).then().catch((e) => console.error(e));
 
-            // Set values
             if (data) {
                 setTitleValue(data.getPost.post.title);
                 setContentValue(data.getPost.post.content);
                 setImagePath("http://localhost:4000/" + data.getPost.post.imagePath);
-                console.log(data.getPost.post);
             }
         }
     }, [idPost, data]);
@@ -177,7 +196,8 @@ const CreatePostPage = () => {
                         onChange={handleFileChange}
                     />
                 </div>
-                <Button style={"primary"} onClick={handleSubmit}>{loggedIn && idPost ? 'Modifier l\'article' : 'Créer l\'article'}</Button>
+                <Button style={"primary"}
+                        onClick={handleSubmit}>{loggedIn && idPost ? 'Modifier l\'article' : 'Créer l\'article'}</Button>
             </div>
         </div>
     );
