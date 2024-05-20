@@ -255,7 +255,7 @@ export type Query = {
   getLoggedUser?: Maybe<User>;
   getPost?: Maybe<LatestPost>;
   getRandomPost: Post;
-  getSearchPost: Array<Maybe<Post>>;
+  getSearchPost: Array<Maybe<LatestPost>>;
   getTotalCommentCount: Scalars['Int']['output'];
   getTotalPostCount: Scalars['Int']['output'];
   getUser?: Maybe<User>;
@@ -666,7 +666,7 @@ export type QueryResolvers<ContextType = DataSourceContext, ParentType extends R
   getLoggedUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   getPost?: Resolver<Maybe<ResolversTypes['LatestPost']>, ParentType, ContextType, RequireFields<QueryGetPostArgs, 'id'>>;
   getRandomPost?: Resolver<ResolversTypes['Post'], ParentType, ContextType>;
-  getSearchPost?: Resolver<Array<Maybe<ResolversTypes['Post']>>, ParentType, ContextType, RequireFields<QueryGetSearchPostArgs, 'input'>>;
+  getSearchPost?: Resolver<Array<Maybe<ResolversTypes['LatestPost']>>, ParentType, ContextType, RequireFields<QueryGetSearchPostArgs, 'input'>>;
   getTotalCommentCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   getTotalPostCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   getUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetUserArgs, 'id'>>;

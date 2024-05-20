@@ -3,25 +3,32 @@ import TextField from "../../components/TextField/TextField";
 import CardArticle from "../../components/CardArticle/CardArticle.tsx";
 import {useEffect, useState} from "react";
 import {useQuery, gql} from "@apollo/client";
-import {Post} from "../../types/graphql";
+import {LatestPost, Post} from "../../types/graphql";
+import Button from "../../components/Button/Button.tsx";
 
 const SEARCH_POST = gql`
 query SEARCH_POST_QUERY($input: String!) {
   getSearchPost(input: $input) {
-    id
-    title
-    imagePath
-    user {
-      username
+    post {
       id
+      title
+      imagePath
+      user {
+        username
+        id
+      }
     }
+    likes
+    dislikes
+    comments
   }
 }
 `;
 
 const SearchPage = () => {
     const [search, setSearch] = useState<string>("");
-    const [allSearchPosts, setAllSearchPosts] = useState<Post[]>([]);
+    const [allSearchPosts, setAllSearchPosts] = useState<LatestPost[]>([]);
+    const [popularityOn, setPopularityOn] = useState<boolean>(false);
 
     const {data} = useQuery(SEARCH_POST, {
         variables: {
@@ -36,6 +43,13 @@ const SearchPage = () => {
         }
     }, [data]);
 
+    const handlePopularity = () => {
+        const sortedPosts = [...allSearchPosts].sort((a, b) => {
+            return b.likes - a.likes;
+        });
+        setAllSearchPosts(popularityOn ? sortedPosts.reverse() : sortedPosts);
+        setPopularityOn(!popularityOn);
+    };
 
     return (
         <div className={styles.container}>
@@ -49,6 +63,10 @@ const SearchPage = () => {
                 />
             </div>
 
+            <Button onClick={handlePopularity} style={popularityOn ? "activated" : "primary"}>
+                Popularity
+            </Button>
+
             <h1 className={styles.title}>RÉSULTATS DE LA RECHERCHE:</h1>
             <div className={styles.cardContainer}>
 
@@ -57,11 +75,13 @@ const SearchPage = () => {
                 )}
                 {allSearchPosts.map((post) => (
                     <CardArticle
-                        key={post.id}
-                        title={post.title}
-                        image={`http://localhost:4000/${post.imagePath}`}
-                        authorUsername={post.user.username}
-                        id={post.id}
+                        key={post.post.id}
+                        title={post.post.title}
+                        image={`http://localhost:4000/${post.post.imagePath}`}
+                        authorUsername={post.post.user.username}
+                        id={post.post.id}
+                        likes={post.likes}
+                        dislikes={post.dislikes}
                     />
                 ))}
             </div>

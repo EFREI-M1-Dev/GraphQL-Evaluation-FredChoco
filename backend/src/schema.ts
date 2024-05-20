@@ -70,7 +70,7 @@ type Query {
   getLatestPosts: [LatestPost]!
   getUserPosts(id: ID!): [Post]! @auth
   getLikesByUser(id: ID!): [Like]! @auth
-  getSearchPost(input: String!): [Post]! 
+  getSearchPost(input: String!): [LatestPost]! 
   getAllCommentsByPost(postId: ID!): [Comment]!
   getRandomPost: Post!
   

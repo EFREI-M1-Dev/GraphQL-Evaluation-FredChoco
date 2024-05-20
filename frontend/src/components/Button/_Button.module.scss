@@ -47,5 +47,11 @@
   }
 }
 
+.activated {
+  background  : $white;
+  color       : #000;
+  text-shadow : none;
+  box-shadow: 0 0 10px $color-pink-glow, 0 0 40px  $color-pink-glow, 0 0 80px  $color-pink-glow;
+}
 
 
