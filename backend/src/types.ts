@@ -205,6 +205,7 @@ export type Post = {
   content: Scalars['String']['output'];
   createdAt: Scalars['Date']['output'];
   id: Scalars['ID']['output'];
+  imagePath: Scalars['String']['output'];
   title: Scalars['String']['output'];
   user: User;
 };
@@ -239,6 +240,7 @@ export type Query = {
   getLikesByUser: Array<Maybe<Like>>;
   getLoggedUser?: Maybe<User>;
   getPost?: Maybe<LatestPost>;
+  getRandomPost: Post;
   getSearchPost: Array<Maybe<Post>>;
   getTotalCommentCount: Scalars['Int']['output'];
   getTotalPostCount: Scalars['Int']['output'];
@@ -591,6 +593,7 @@ export type PostResolvers<ContextType = DataSourceContext, ParentType extends Re
   content?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  imagePath?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -625,6 +628,7 @@ export type QueryResolvers<ContextType = DataSourceContext, ParentType extends R
   getLikesByUser?: Resolver<Array<Maybe<ResolversTypes['Like']>>, ParentType, ContextType, RequireFields<QueryGetLikesByUserArgs, 'id'>>;
   getLoggedUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   getPost?: Resolver<Maybe<ResolversTypes['LatestPost']>, ParentType, ContextType, RequireFields<QueryGetPostArgs, 'id'>>;
+  getRandomPost?: Resolver<ResolversTypes['Post'], ParentType, ContextType>;
   getSearchPost?: Resolver<Array<Maybe<ResolversTypes['Post']>>, ParentType, ContextType, RequireFields<QueryGetSearchPostArgs, 'input'>>;
   getTotalCommentCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   getTotalPostCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;

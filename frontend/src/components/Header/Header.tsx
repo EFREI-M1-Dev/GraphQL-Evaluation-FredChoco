@@ -4,10 +4,21 @@ import Button from "../Button/Button";
 import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {useAuth} from "../../provider/AuthContext";
+import {gql, useLazyQuery} from "@apollo/client";
+
+const RANDOM_POST = gql`
+query RANDOM_POST_QUERY {
+  getRandomPost {
+    id
+  }
+}
+`;
 
 const Header = () => {
 
     const [widthScrollBar, setWidthScrollBar] = useState(0);
+    const [randomPostId, seRandomPostId] = useState(0);
+
     const handleScroll = () => {
         const scrollBar = document.querySelector(`.${styles.scrollBar}`);
         if (scrollBar) {
@@ -17,12 +28,30 @@ const Header = () => {
         }
     }
 
+    const [fetchRandomPost, {data}] = useLazyQuery(RANDOM_POST);
+
     useEffect(() => {
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
-    const { loggedIn,logout } = useAuth();
+    useEffect(() => {
+        if (data && data.getRandomPost) {
+            seRandomPostId(data.getRandomPost.id);
+        }
+    }, [data]);
+
+    const handleRandomPostClick = () => {
+        fetchRandomPost().then().catch((e) => console.log(e));
+    };
+
+    useEffect(() => {
+        if (randomPostId) {
+            window.location.href = `/post/${randomPostId}`;
+        }
+    }, [randomPostId]);
+
+    const {loggedIn, logout} = useAuth();
 
     return (
         <div className={styles.container}>
@@ -31,21 +60,20 @@ const Header = () => {
                     <Logo size={"small"} glow={true}/>
                 </Link>
                 <Button style={"header"} route={"search"}> [SEARCH] </Button>
-                <Button style={"header"} route={"random"}> [RANDOM] </Button>
-                <Button style={"header"} route={"post"}> [POST] </Button>
+                <Button style={"header"} onClick={handleRandomPostClick}> [RANDOM] </Button>
             </div>
             {!loggedIn ?
-                <div className={styles.section}  >
+                <div className={styles.section}>
                     <Button style={"header"} route={"login"}> [LOGIN] </Button>
                     <Button style={"header"} route={"register"}> [SIGN UP] </Button>
                 </div>
                 :
-                <div className={styles.section} >
+                <div className={styles.section}>
                     <Button style={"header"} route={"profile"}> [PROFILE] </Button>
-                    <Button style={"header"} onClick={logout} > [LOGOUT] </Button>
+                    <Button style={"header"} onClick={logout}> [LOGOUT] </Button>
                 </div>
             }
-            <div className={styles.scrollBar}  style={{width:`${widthScrollBar}%`}}> </div>
+            <div className={styles.scrollBar} style={{width: `${widthScrollBar}%`}}></div>
         </div>
     )
 }

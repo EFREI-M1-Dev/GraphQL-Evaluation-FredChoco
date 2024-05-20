@@ -3,7 +3,7 @@ import Comment from "../../components/Comment/Comment.tsx";
 import TextField from "../../components/TextField/TextField";
 import CardArticle from "../../components/CardArticle/CardArticle.tsx";
 import {gql, useQuery} from "@apollo/client";
-import { LatestPost, Comment as CommentType } from "../../types/graphql.ts";
+import {LatestPost, Comment as CommentType} from "../../types/graphql.ts";
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 
@@ -18,6 +18,7 @@ query POST_QUERY($id: ID!) {
       createdAt
       id
       title
+      imagePath
       user {
         email
         id
@@ -41,16 +42,16 @@ query POST_COMMENTS_QUERY($postId: ID!) {
 `;
 
 const Post = () => {
-    const { id } = useParams();
+    const {id} = useParams();
     const [richPost, setRichPost] = useState<LatestPost | null>(null);
     const [comments, setComments] = useState<CommentType[]>([]);
 
-    const { data, loading } = useQuery(POST, {
-        variables: { id },
+    const {data, loading} = useQuery(POST, {
+        variables: {id},
     });
 
-    const { data: commentsData } = useQuery(POST_COMMENTS, {
-        variables: { postId: richPost ? richPost.post.id : '' },
+    const {data: commentsData} = useQuery(POST_COMMENTS, {
+        variables: {postId: richPost ? richPost.post.id : ''},
     });
 
     useEffect(() => {
@@ -64,7 +65,7 @@ const Post = () => {
     }, [data, commentsData]);
 
 
-    if(!richPost || loading) return <></>
+    if (!richPost || loading) return <></>
 
     console.log(comments);
     return (
@@ -88,15 +89,15 @@ const Post = () => {
             <div className={styles.side__right}>
                 <CardArticle
                     title={richPost.post.title}
-                    image={"https://www.buzzfrance.fr/wp-content/uploads/2022/10/quelle-star-de-kpop-es-tu.jpeg"}
+                    image={`http://localhost:4000/${richPost.post.imagePath}`}
                     authorUsername={richPost.post.user.username}
                     likes={richPost.likes}
                     dislikes={richPost.dislikes}
                     id={richPost.post.id}
                 />
                 <div>
-                    <img src={'/pictograms/like.svg'}/>
-                    <img src={'/pictograms/dislike.svg'}/>
+                    <img src={'/pictograms/like.svg'} alt={"like"}/>
+                    <img src={'/pictograms/dislike.svg'} alt={"dislike"}/>
                 </div>
                 <p>Show comments</p>
             </div>

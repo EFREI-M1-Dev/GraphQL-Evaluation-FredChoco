@@ -4,14 +4,13 @@ import CardArticle from "../../components/CardArticle/CardArticle.tsx";
 import {useEffect, useState} from "react";
 import {useQuery, gql} from "@apollo/client";
 import {Post} from "../../types/graphql";
-// import {useEffect, useState} from "react";
-// import {LatestPost} from "../../types/graphql";
 
 const SEARCH_POST = gql`
 query SEARCH_POST_QUERY($input: String!) {
   getSearchPost(input: $input) {
     id
     title
+    imagePath
     user {
       username
       id
@@ -60,7 +59,7 @@ const SearchPage = () => {
                     <CardArticle
                         key={post.id}
                         title={post.title}
-                        image={"https://www.buzzfrance.fr/wp-content/uploads/2022/10/quelle-star-de-kpop-es-tu.jpeg"}
+                        image={`http://localhost:4000/${post.imagePath}`}
                         authorUsername={post.user.username}
                         id={post.id}
                     />

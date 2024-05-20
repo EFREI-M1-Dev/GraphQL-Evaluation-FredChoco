@@ -7,7 +7,7 @@ export const getTotalCommentCount: QueryResolvers["getTotalCommentCount"] = asyn
         const comments = await dataSources.db.comment.findMany({
             select: commentSelect,
         });
-        return comments.length;
+        return comments.length || 0;
     } catch (e) {
         consola.error(e);
         return 0;

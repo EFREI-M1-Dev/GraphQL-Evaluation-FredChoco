@@ -15,6 +15,7 @@ query USER_POST_QUERY($id: ID!) {
     createdAt
     id
     title
+    imagePath
     user {
       id
       username
@@ -30,6 +31,7 @@ query USER_LIKES_QUERY($id: ID!) {
       id
       title
       content
+      imagePath
       user {
         username
       }
@@ -126,7 +128,7 @@ const Profile = () => {
                         <CardArticle
                             key={post.id}
                             title={post.title}
-                            image={"https://www.buzzfrance.fr/wp-content/uploads/2022/10/quelle-star-de-kpop-es-tu.jpeg"}
+                            image={`http://localhost:4000/${post.imagePath}`}
                             authorUsername={post.user.username}
                             id={post.id}
                         />
@@ -141,7 +143,7 @@ const Profile = () => {
                         <CardArticle
                             key={like.post.id}
                             title={like.post.title}
-                            image={"https://upload.wikimedia.org/wikipedia/commons/5/5a/Aespa%27s_Winter_7.jpg"}
+                            image={`http://localhost:4000/${like.post.imagePath}`}
                             authorUsername={like.post.user.username}
                             id={like.post.id}
                         />

@@ -12,6 +12,8 @@ export const getAppreciationRate: QueryResolvers["getAppreciationRate"] = async 
             select: dislikeSelect,
         });
 
+        if(likes.length + dislikes.length === 0) return 0;
+
         // Appreciation rate
         return likes.length / (likes.length + dislikes.length) * 100;
     } catch (e) {

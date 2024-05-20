@@ -19,6 +19,7 @@ type Post {
   content: String!
   user: User! 
   createdAt: Date!
+  imagePath: String!
 }
 
 type Like {
@@ -70,6 +71,7 @@ type Query {
   getLikesByUser(id: ID!): [Like]! @auth
   getSearchPost(input: String!): [Post]! 
   getAllCommentsByPost(postId: ID!): [Comment]!
+  getRandomPost: Post!
   
   getTotalPostCount: Int! 
   getTotalCommentCount: Int! 

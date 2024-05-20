@@ -76,11 +76,6 @@ export type DislikeDeleteResponse = {
   success: Scalars['Boolean']['output'];
 };
 
-export type DocumentUploadInput = {
-  docType: Scalars['String']['input'];
-  file: Scalars['Upload']['input'];
-};
-
 export type LatestPost = {
   __typename?: 'LatestPost';
   comments: Scalars['Int']['output'];
@@ -127,7 +122,6 @@ export type Mutation = {
   signInUser: UserSignInResponse;
   updateComment: CommentUpdateResponse;
   updateUser: UserUpdateResponse;
-  uploadDocuments?: Maybe<SuccessResult>;
 };
 
 
@@ -208,16 +202,12 @@ export type MutationUpdateUserArgs = {
   input: UpdateUserInput;
 };
 
-
-export type MutationUploadDocumentsArgs = {
-  docs: Array<DocumentUploadInput>;
-};
-
 export type Post = {
   __typename?: 'Post';
   content: Scalars['String']['output'];
   createdAt: Scalars['Date']['output'];
   id: Scalars['ID']['output'];
+  imagePath: Scalars['String']['output'];
   title: Scalars['String']['output'];
   user: User;
 };
@@ -252,6 +242,7 @@ export type Query = {
   getLikesByUser: Array<Maybe<Like>>;
   getLoggedUser?: Maybe<User>;
   getPost?: Maybe<LatestPost>;
+  getRandomPost: Post;
   getSearchPost: Array<Maybe<Post>>;
   getTotalCommentCount: Scalars['Int']['output'];
   getTotalPostCount: Scalars['Int']['output'];
@@ -311,12 +302,6 @@ export type QueryGetUserPostsArgs = {
   id: Scalars['ID']['input'];
 };
 
-export type SuccessResult = {
-  __typename?: 'SuccessResult';
-  message?: Maybe<Scalars['String']['output']>;
-  success: Scalars['Boolean']['output'];
-};
-
 export type UpdateUserInput = {
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
@@ -360,6 +345,11 @@ export type UserUpdateResponse = {
   success: Scalars['Boolean']['output'];
   user?: Maybe<User>;
 };
+
+export type Random_Post_QueryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type Random_Post_QueryQuery = { __typename?: 'Query', getRandomPost: { __typename?: 'Post', id: string } };
 
 export type Statistics_QueryQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -438,7 +428,7 @@ export type Search_Post_QueryQueryVariables = Exact<{
 }>;
 
 
-export type Search_Post_QueryQuery = { __typename?: 'Query', getSearchPost: Array<{ __typename?: 'Post', id: string, title: string, user: { __typename?: 'User', username: string, id: string } } | null> };
+export type Search_Post_QueryQuery = { __typename?: 'Query', getSearchPost: Array<{ __typename?: 'Post', id: string, title: string, imagePath: string, user: { __typename?: 'User', username: string, id: string } } | null> };
 
 export type User_Info_QueryQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -446,6 +436,7 @@ export type User_Info_QueryQueryVariables = Exact<{ [key: string]: never; }>;
 export type User_Info_QueryQuery = { __typename?: 'Query', getLoggedUser?: { __typename?: 'User', id: string, email: string, username: string } | null };
 
 
+export const Random_Post_QueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"RANDOM_POST_QUERY"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getRandomPost"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<Random_Post_QueryQuery, Random_Post_QueryQueryVariables>;
 export const Statistics_QueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"STATISTICS_Query"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getTotalPostCount"}},{"kind":"Field","name":{"kind":"Name","value":"getTotalCommentCount"}},{"kind":"Field","name":{"kind":"Name","value":"getAppreciationRate"}},{"kind":"Field","name":{"kind":"Name","value":"getUserCount"}}]}}]} as unknown as DocumentNode<Statistics_QueryQuery, Statistics_QueryQueryVariables>;
 export const CreatePostDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreatePost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"title"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"content"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"file"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Upload"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createPost"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"title"},"value":{"kind":"Variable","name":{"kind":"Name","value":"title"}}},{"kind":"Argument","name":{"kind":"Name","value":"content"},"value":{"kind":"Variable","name":{"kind":"Name","value":"content"}}},{"kind":"Argument","name":{"kind":"Name","value":"userId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}},{"kind":"Argument","name":{"kind":"Name","value":"file"},"value":{"kind":"Variable","name":{"kind":"Name","value":"file"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"success"}}]}}]}}]} as unknown as DocumentNode<CreatePostMutation, CreatePostMutationVariables>;
 export const Latest_Post_QueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"LATEST_POST_Query"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getLatestPosts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"post"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"likes"}},{"kind":"Field","name":{"kind":"Name","value":"dislikes"}}]}}]}}]} as unknown as DocumentNode<Latest_Post_QueryQuery, Latest_Post_QueryQueryVariables>;
@@ -456,7 +447,7 @@ export const User_Post_QueryDocument = {"kind":"Document","definitions":[{"kind"
 export const User_Likes_QueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"USER_LIKES_QUERY"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getLikesByUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"post"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]}}]}}]} as unknown as DocumentNode<User_Likes_QueryQuery, User_Likes_QueryQueryVariables>;
 export const User_By_UsernameDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"USER_BY_USERNAME"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"username"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getUserByUsername"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"username"},"value":{"kind":"Variable","name":{"kind":"Name","value":"username"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]} as unknown as DocumentNode<User_By_UsernameQuery, User_By_UsernameQueryVariables>;
 export const CreateUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"username"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"username"},"value":{"kind":"Variable","name":{"kind":"Name","value":"username"}}},{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}},{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"success"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<CreateUserMutation, CreateUserMutationVariables>;
-export const Search_Post_QueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SEARCH_POST_QUERY"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getSearchPost"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<Search_Post_QueryQuery, Search_Post_QueryQueryVariables>;
+export const Search_Post_QueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SEARCH_POST_QUERY"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getSearchPost"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"imagePath"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<Search_Post_QueryQuery, Search_Post_QueryQueryVariables>;
 export const User_Info_QueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"USER_INFO_Query"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getLoggedUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]} as unknown as DocumentNode<User_Info_QueryQuery, User_Info_QueryQueryVariables>;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -525,11 +516,6 @@ export type DislikeDeleteResponse = {
   success: Scalars['Boolean']['output'];
 };
 
-export type DocumentUploadInput = {
-  docType: Scalars['String']['input'];
-  file: Scalars['Upload']['input'];
-};
-
 export type LatestPost = {
   __typename?: 'LatestPost';
   comments: Scalars['Int']['output'];
@@ -576,7 +562,6 @@ export type Mutation = {
   signInUser: UserSignInResponse;
   updateComment: CommentUpdateResponse;
   updateUser: UserUpdateResponse;
-  uploadDocuments?: Maybe<SuccessResult>;
 };
 
 
@@ -657,16 +642,12 @@ export type MutationUpdateUserArgs = {
   input: UpdateUserInput;
 };
 
-
-export type MutationUploadDocumentsArgs = {
-  docs: Array<DocumentUploadInput>;
-};
-
 export type Post = {
   __typename?: 'Post';
   content: Scalars['String']['output'];
   createdAt: Scalars['Date']['output'];
   id: Scalars['ID']['output'];
+  imagePath: Scalars['String']['output'];
   title: Scalars['String']['output'];
   user: User;
 };
@@ -701,6 +682,7 @@ export type Query = {
   getLikesByUser: Array<Maybe<Like>>;
   getLoggedUser?: Maybe<User>;
   getPost?: Maybe<LatestPost>;
+  getRandomPost: Post;
   getSearchPost: Array<Maybe<Post>>;
   getTotalCommentCount: Scalars['Int']['output'];
   getTotalPostCount: Scalars['Int']['output'];
@@ -758,12 +740,6 @@ export type QueryGetUserByUsernameArgs = {
 
 export type QueryGetUserPostsArgs = {
   id: Scalars['ID']['input'];
-};
-
-export type SuccessResult = {
-  __typename?: 'SuccessResult';
-  message?: Maybe<Scalars['String']['output']>;
-  success: Scalars['Boolean']['output'];
 };
 
 export type UpdateUserInput = {
@@ -893,7 +869,6 @@ export type ResolversTypes = {
   Dislike: ResolverTypeWrapper<Dislike>;
   DislikeCreateResponse: ResolverTypeWrapper<DislikeCreateResponse>;
   DislikeDeleteResponse: ResolverTypeWrapper<DislikeDeleteResponse>;
-  DocumentUploadInput: DocumentUploadInput;
   LatestPost: ResolverTypeWrapper<LatestPost>;
   Like: ResolverTypeWrapper<Like>;
   LikeCreateResponse: ResolverTypeWrapper<LikeCreateResponse>;
@@ -904,7 +879,6 @@ export type ResolversTypes = {
   PostDeleteResponse: ResolverTypeWrapper<PostDeleteResponse>;
   Query: ResolverTypeWrapper<{}>;
   Float: ResolverTypeWrapper<Scalars['Float']['output']>;
-  SuccessResult: ResolverTypeWrapper<SuccessResult>;
   UpdateUserInput: UpdateUserInput;
   Upload: ResolverTypeWrapper<Scalars['Upload']['output']>;
   User: ResolverTypeWrapper<User>;
@@ -928,7 +902,6 @@ export type ResolversParentTypes = {
   Dislike: Dislike;
   DislikeCreateResponse: DislikeCreateResponse;
   DislikeDeleteResponse: DislikeDeleteResponse;
-  DocumentUploadInput: DocumentUploadInput;
   LatestPost: LatestPost;
   Like: Like;
   LikeCreateResponse: LikeCreateResponse;
@@ -939,7 +912,6 @@ export type ResolversParentTypes = {
   PostDeleteResponse: PostDeleteResponse;
   Query: {};
   Float: Scalars['Float']['output'];
-  SuccessResult: SuccessResult;
   UpdateUserInput: UpdateUserInput;
   Upload: Scalars['Upload']['output'];
   User: User;
@@ -1057,13 +1029,13 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   signInUser?: Resolver<ResolversTypes['UserSignInResponse'], ParentType, ContextType, RequireFields<MutationSignInUserArgs, 'password' | 'username'>>;
   updateComment?: Resolver<ResolversTypes['CommentUpdateResponse'], ParentType, ContextType, RequireFields<MutationUpdateCommentArgs, 'content' | 'postId' | 'userId'>>;
   updateUser?: Resolver<ResolversTypes['UserUpdateResponse'], ParentType, ContextType, RequireFields<MutationUpdateUserArgs, 'id' | 'input'>>;
-  uploadDocuments?: Resolver<Maybe<ResolversTypes['SuccessResult']>, ParentType, ContextType, RequireFields<MutationUploadDocumentsArgs, 'docs'>>;
 };
 
 export type PostResolvers<ContextType = any, ParentType extends ResolversParentTypes['Post'] = ResolversParentTypes['Post']> = {
   content?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  imagePath?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -1098,6 +1070,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getLikesByUser?: Resolver<Array<Maybe<ResolversTypes['Like']>>, ParentType, ContextType, RequireFields<QueryGetLikesByUserArgs, 'id'>>;
   getLoggedUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   getPost?: Resolver<Maybe<ResolversTypes['LatestPost']>, ParentType, ContextType, RequireFields<QueryGetPostArgs, 'id'>>;
+  getRandomPost?: Resolver<ResolversTypes['Post'], ParentType, ContextType>;
   getSearchPost?: Resolver<Array<Maybe<ResolversTypes['Post']>>, ParentType, ContextType, RequireFields<QueryGetSearchPostArgs, 'input'>>;
   getTotalCommentCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   getTotalPostCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
@@ -1105,12 +1078,6 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getUserByUsername?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetUserByUsernameArgs, 'username'>>;
   getUserCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   getUserPosts?: Resolver<Array<Maybe<ResolversTypes['Post']>>, ParentType, ContextType, RequireFields<QueryGetUserPostsArgs, 'id'>>;
-};
-
-export type SuccessResultResolvers<ContextType = any, ParentType extends ResolversParentTypes['SuccessResult'] = ResolversParentTypes['SuccessResult']> = {
-  message?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Upload'], any> {
@@ -1173,7 +1140,6 @@ export type Resolvers<ContextType = any> = {
   PostCreateResponse?: PostCreateResponseResolvers<ContextType>;
   PostDeleteResponse?: PostDeleteResponseResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
-  SuccessResult?: SuccessResultResolvers<ContextType>;
   Upload?: GraphQLScalarType;
   User?: UserResolvers<ContextType>;
   UserCreateResponse?: UserCreateResponseResolvers<ContextType>;

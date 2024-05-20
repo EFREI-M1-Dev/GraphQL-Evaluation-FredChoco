@@ -12,6 +12,7 @@ query LATEST_POST_Query {
     id
     title
     createdAt
+    imagePath
     user {
         username
     }
@@ -41,7 +42,7 @@ const HomePage = () => {
                     <CardArticle
                         key={post.post.id}
                         title={post.post.title}
-                        image={"https://www.buzzfrance.fr/wp-content/uploads/2022/10/quelle-star-de-kpop-es-tu.jpeg"}
+                        image={`http://localhost:4000/${post.post.imagePath}`}
                         authorUsername={post.post.user.username}
                         likes={post.likes}
                         dislikes={post.dislikes}
