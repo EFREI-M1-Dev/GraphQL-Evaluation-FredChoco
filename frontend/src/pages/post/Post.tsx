@@ -362,6 +362,7 @@ const Post = () => {
         <div className={styles.container}>
             <div className={styles.side__left}>
                 <h2 className={styles.postTitle}>{richPost.post.title}</h2>
+                <p>Le {richPost.post.createdAt}</p>
 
                 <p>{richPost.post.content}</p>
 
