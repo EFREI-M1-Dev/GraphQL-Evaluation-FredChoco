@@ -53,6 +53,11 @@ const RegisterPage = () => {
             return;
         }
 
+        if(!UsernameValue || !EmailValue || !PasswordValue || !ConfirmPasswordValue) {
+            m_notificationController.setNotification({message: "Merci de remplir tous les champs", type: "warning"}); // "Please fill all fields
+            return;
+        }
+
         try {
             const {data} = await createUser({
                 variables: {username: UsernameValue, password: PasswordValue, email: EmailValue},
@@ -71,6 +76,11 @@ const RegisterPage = () => {
     }
 
     const handleEdit = async () => {
+        if(!UsernameValue || !EmailValue) {
+            m_notificationController.setNotification({message: "Merci de remplir tous les champs", type: "warning"}); // "Please fill all fields
+            return;
+        }
+
         try {
             const {data} = await editUser({
                 variables: {
