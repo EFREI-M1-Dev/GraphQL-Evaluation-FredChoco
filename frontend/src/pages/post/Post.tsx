@@ -472,7 +472,7 @@ const Post = () => {
         <div className={styles.container}>
             <div className={styles.side__left}>
                 <h2 className={styles.postTitle}>{richPost.post.title}</h2>
-                <p className={styles.postCreatedAt + " glow"}>Le {richPost.post.createdAt.toLocaleDateString()}</p>
+                <p className={styles.postCreatedAt + " glow"}>Le {new Intl.DateTimeFormat('fr-FR').format(new Date(richPost.post.createdAt))}</p>
                 <div className={styles.postContent}>
                     {
                         richPost.post.content.split('\n').map((paragraph, index) => (
@@ -514,7 +514,7 @@ const Post = () => {
                                 <Comment
                                     user={comment.user}
                                     content={comment.content}
-                                    createdAt={comment.createdAt.toLocaleDateString()}
+                                    createdAt={new Intl.DateTimeFormat('fr-FR').format(new Date(comment.createdAt))}
                                 />
                                 {comment.user.id === currentUser?.id && (
                                     <div className={styles.commentButtons}>
