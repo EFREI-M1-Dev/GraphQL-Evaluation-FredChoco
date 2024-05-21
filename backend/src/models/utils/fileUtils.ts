@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import {createWriteStream, existsSync, mkdirSync, unlinkSync} from 'fs';
 import path, {dirname} from 'path';
 import { fileURLToPath } from 'url';
-import {FileUpload} from "graphql-upload-ts/dist/Upload";
+import {FileUpload} from "graphql-upload-ts";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -15,13 +15,17 @@ export const uploadFile = async (file: FileUpload): Promise<string> => {
     const { createReadStream, filename } = await file
     const uniqueName = `${uuidv4()}-${filename.replace(/ /g, '_')}`;
     const filePath = path.join(uploadDir, uniqueName);
-    const writeStream = createWriteStream(filePath);
+    const writeStream = await createWriteStream(filePath);
 
     await new Promise((resolve, reject) => {
         createReadStream().pipe(writeStream)
             .on('finish', resolve)
             .on('error', reject);
     });
+
+    if (filePath.includes('dist')) {
+        return "dist/uploads/" + uniqueName;
+    }
 
     return "uploads/" + uniqueName;
 };

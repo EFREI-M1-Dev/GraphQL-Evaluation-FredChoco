@@ -2,13 +2,13 @@ const config = {
     schema: './src/schema.ts',
     generates: {
         './src/types.ts': {
-            plugins: ["typescript", "typescript-resolvers"],
+            plugins: ["typescript", "typescript-resolvers", "typescript-operations"],
             config: {
                 contextType: './context#DataSourceContext',
                 scalars: {
-                    Date: 'DateTime',
-                    Upload: 'File'
-                }
+                    DateTime: 'Date',
+                    Upload: 'FileUpload',
+                },
             }
         }
     }

@@ -1,5 +1,6 @@
 import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 import { DataSourceContext } from './context';
+import {FileUpload} from "graphql-upload-ts";
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -15,14 +16,14 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
-  Date: { input: DateTime; output: DateTime; }
+  DateTime: { input: Date; output: Date; }
   Upload: { input: FileUpload; output: FileUpload; }
 };
 
 export type Comment = {
   __typename?: 'Comment';
   content: Scalars['String']['output'];
-  createdAt: Scalars['Date']['output'];
+  createdAt: Scalars['DateTime']['output'];
   id: Scalars['ID']['output'];
   post: Post;
   user: User;
@@ -53,7 +54,7 @@ export type CommentUpdateResponse = {
 
 export type Dislike = {
   __typename?: 'Dislike';
-  createdAt: Scalars['Date']['output'];
+  createdAt: Scalars['DateTime']['output'];
   id: Scalars['ID']['output'];
   post: Post;
   user: User;
@@ -84,7 +85,7 @@ export type LatestPost = {
 
 export type Like = {
   __typename?: 'Like';
-  createdAt: Scalars['Date']['output'];
+  createdAt: Scalars['DateTime']['output'];
   id: Scalars['ID']['output'];
   post: Post;
   user: User;
@@ -209,7 +210,7 @@ export type MutationUpdateUserArgs = {
 export type Post = {
   __typename?: 'Post';
   content: Scalars['String']['output'];
-  createdAt: Scalars['Date']['output'];
+  createdAt: Scalars['DateTime']['output'];
   id: Scalars['ID']['output'];
   imagePath: Scalars['String']['output'];
   title: Scalars['String']['output'];
@@ -445,7 +446,7 @@ export type ResolversTypes = {
   CommentCreateResponse: ResolverTypeWrapper<CommentCreateResponse>;
   CommentDeleteResponse: ResolverTypeWrapper<CommentDeleteResponse>;
   CommentUpdateResponse: ResolverTypeWrapper<CommentUpdateResponse>;
-  Date: ResolverTypeWrapper<Scalars['Date']['output']>;
+  DateTime: ResolverTypeWrapper<Scalars['DateTime']['output']>;
   Dislike: ResolverTypeWrapper<Dislike>;
   DislikeCreateResponse: ResolverTypeWrapper<DislikeCreateResponse>;
   DislikeDeleteResponse: ResolverTypeWrapper<DislikeDeleteResponse>;
@@ -480,7 +481,7 @@ export type ResolversParentTypes = {
   CommentCreateResponse: CommentCreateResponse;
   CommentDeleteResponse: CommentDeleteResponse;
   CommentUpdateResponse: CommentUpdateResponse;
-  Date: Scalars['Date']['output'];
+  DateTime: Scalars['DateTime']['output'];
   Dislike: Dislike;
   DislikeCreateResponse: DislikeCreateResponse;
   DislikeDeleteResponse: DislikeDeleteResponse;
@@ -514,7 +515,7 @@ export type AuthDirectiveResolver<Result, Parent, ContextType = DataSourceContex
 
 export type CommentResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['Comment'] = ResolversParentTypes['Comment']> = {
   content?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   post?: Resolver<ResolversTypes['Post'], ParentType, ContextType>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
@@ -544,12 +545,12 @@ export type CommentUpdateResponseResolvers<ContextType = DataSourceContext, Pare
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
-  name: 'Date';
+export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
+  name: 'DateTime';
 }
 
 export type DislikeResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['Dislike'] = ResolversParentTypes['Dislike']> = {
-  createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   post?: Resolver<ResolversTypes['Post'], ParentType, ContextType>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
@@ -580,7 +581,7 @@ export type LatestPostResolvers<ContextType = DataSourceContext, ParentType exte
 };
 
 export type LikeResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['Like'] = ResolversParentTypes['Like']> = {
-  createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   post?: Resolver<ResolversTypes['Post'], ParentType, ContextType>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
@@ -621,7 +622,7 @@ export type MutationResolvers<ContextType = DataSourceContext, ParentType extend
 
 export type PostResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['Post'] = ResolversParentTypes['Post']> = {
   content?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   imagePath?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -725,7 +726,7 @@ export type Resolvers<ContextType = DataSourceContext> = {
   CommentCreateResponse?: CommentCreateResponseResolvers<ContextType>;
   CommentDeleteResponse?: CommentDeleteResponseResolvers<ContextType>;
   CommentUpdateResponse?: CommentUpdateResponseResolvers<ContextType>;
-  Date?: GraphQLScalarType;
+  DateTime?: GraphQLScalarType;
   Dislike?: DislikeResolvers<ContextType>;
   DislikeCreateResponse?: DislikeCreateResponseResolvers<ContextType>;
   DislikeDeleteResponse?: DislikeDeleteResponseResolvers<ContextType>;

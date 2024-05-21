@@ -2,9 +2,8 @@ import gql from "graphql-tag";
 export const typeDefs = gql `
 
 directive @auth on FIELD_DEFINITION
-scalar Date
 scalar Upload
-
+scalar DateTime
 # =========================================MODELS========================================================
 type User {
   id: ID!
@@ -18,7 +17,7 @@ type Post {
   title: String!
   content: String!
   user: User! 
-  createdAt: Date!
+  createdAt: DateTime!
   imagePath: String!
 }
 
@@ -26,14 +25,14 @@ type Like {
   id: ID!
   user: User!
   post: Post!
-  createdAt: Date!
+  createdAt: DateTime!
 }
 
 type Dislike {
   id: ID!
   user: User!
   post: Post!
-  createdAt: Date!
+  createdAt: DateTime!
 }
 
 type Comment {
@@ -41,7 +40,7 @@ type Comment {
     user: User!
     post: Post!
     content: String!
-    createdAt: Date!
+    createdAt: DateTime!
 }
 
 type LatestPost {

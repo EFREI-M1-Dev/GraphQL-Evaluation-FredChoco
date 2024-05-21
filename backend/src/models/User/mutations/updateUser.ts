@@ -8,7 +8,7 @@ export const updateUser: MutationResolvers["updateUser"] = async (_, {id, input}
 
         const hasFile = !!input.file;
         let imagePath = "";
-        if (hasFile && user) {
+        if (hasFile && user && input.file) {
             imagePath = await uploadFile(input.file);
             if (user.imagePath && user.imagePath !== "") await deleteFile(user.imagePath);
         }

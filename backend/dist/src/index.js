@@ -11,11 +11,7 @@ import { typeDefs } from './schema.js';
 import { getUserFromToken } from './modules/auth.js';
 import db from './datasources/db.js';
 import authDirective from './modules/authDirective.js';
-import { fileURLToPath } from "url";
-import path, { dirname } from "path";
 const { authDirectiveTypeDefs, authDirectiveTransformer } = authDirective();
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 let schema = makeExecutableSchema({
     typeDefs: [authDirectiveTypeDefs, typeDefs],
     resolvers,
@@ -25,11 +21,13 @@ const server = new ApolloServer({
     schema,
 });
 const app = express();
+const allowedOrigins = ['http://localhost:5173', 'http://127.0.0.1'];
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: allowedOrigins
 }));
 app.use(bodyParser.json());
-app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
+app.use('/uploads', express.static('uploads'));
+app.use('/dist/uploads', express.static('dist/uploads/'));
 app.use('/graphql', graphqlUploadExpress({
     maxFileSize: 100000000, //100 MB
     maxFiles: 10,

@@ -23,7 +23,7 @@ export const updatePost: MutationResolvers["updatePost"] = async (_, {id, input}
 
         const hasFile = !!input.file;
         let imagePath = "";
-        if (hasFile) {
+        if (hasFile && input.file) {
             imagePath = await uploadFile(input.file);
             await deleteFile(currentPost.imagePath);
         }

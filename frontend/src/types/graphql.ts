@@ -14,7 +14,8 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
-  Date: { input: DateTime; output: DateTime; }
+  /** DateTime custom scalar type */
+  DateTime: { input: Date; output: Date; }
   /** The `Upload` scalar type represents a file upload. */
   Upload: { input: File; output: File; }
 };
@@ -22,7 +23,7 @@ export type Scalars = {
 export type Comment = {
   __typename?: 'Comment';
   content: Scalars['String']['output'];
-  createdAt: Scalars['Date']['output'];
+  createdAt: Scalars['DateTime']['output'];
   id: Scalars['ID']['output'];
   post: Post;
   user: User;
@@ -53,7 +54,7 @@ export type CommentUpdateResponse = {
 
 export type Dislike = {
   __typename?: 'Dislike';
-  createdAt: Scalars['Date']['output'];
+  createdAt: Scalars['DateTime']['output'];
   id: Scalars['ID']['output'];
   post: Post;
   user: User;
@@ -84,7 +85,7 @@ export type LatestPost = {
 
 export type Like = {
   __typename?: 'Like';
-  createdAt: Scalars['Date']['output'];
+  createdAt: Scalars['DateTime']['output'];
   id: Scalars['ID']['output'];
   post: Post;
   user: User;
@@ -209,7 +210,7 @@ export type MutationUpdateUserArgs = {
 export type Post = {
   __typename?: 'Post';
   content: Scalars['String']['output'];
-  createdAt: Scalars['Date']['output'];
+  createdAt: Scalars['DateTime']['output'];
   id: Scalars['ID']['output'];
   imagePath: Scalars['String']['output'];
   title: Scalars['String']['output'];
@@ -407,7 +408,7 @@ export type UpdatePostMutation = { __typename?: 'Mutation', updatePost: { __type
 export type Latest_Post_QueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type Latest_Post_QueryQuery = { __typename?: 'Query', getLatestPosts: Array<{ __typename?: 'LatestPost', likes: number, dislikes: number, post: { __typename?: 'Post', id: string, title: string, createdAt: DateTime, imagePath: string, user: { __typename?: 'User', username: string } } } | null> };
+export type Latest_Post_QueryQuery = { __typename?: 'Query', getLatestPosts: Array<{ __typename?: 'LatestPost', likes: number, dislikes: number, post: { __typename?: 'Post', id: string, title: string, createdAt: Date, imagePath: string, user: { __typename?: 'User', username: string } } } | null> };
 
 export type SignInUserMutationVariables = Exact<{
   username: Scalars['String']['input'];
@@ -422,14 +423,14 @@ export type Post_QueryQueryVariables = Exact<{
 }>;
 
 
-export type Post_QueryQuery = { __typename?: 'Query', getPost: { __typename?: 'LatestPost', comments: number, dislikes: number, likes: number, post: { __typename?: 'Post', content: string, createdAt: DateTime, id: string, title: string, imagePath: string, user: { __typename?: 'User', email: string, id: string, username: string } } } | null };
+export type Post_QueryQuery = { __typename?: 'Query', getPost: { __typename?: 'LatestPost', comments: number, dislikes: number, likes: number, post: { __typename?: 'Post', content: string, createdAt: Date, id: string, title: string, imagePath: string, user: { __typename?: 'User', email: string, id: string, username: string } } } | null };
 
 export type Post_Comments_QueryQueryVariables = Exact<{
   postId: Scalars['ID']['input'];
 }>;
 
 
-export type Post_Comments_QueryQuery = { __typename?: 'Query', getAllCommentsByPost: Array<{ __typename?: 'Comment', content: string, createdAt: DateTime, id: string, user: { __typename?: 'User', username: string, id: string, imagePath: string } } | null> };
+export type Post_Comments_QueryQuery = { __typename?: 'Query', getAllCommentsByPost: Array<{ __typename?: 'Comment', content: string, createdAt: Date, id: string, user: { __typename?: 'User', username: string, id: string, imagePath: string } } | null> };
 
 export type CreateCommentMutationVariables = Exact<{
   userId: Scalars['ID']['input'];
@@ -438,7 +439,7 @@ export type CreateCommentMutationVariables = Exact<{
 }>;
 
 
-export type CreateCommentMutation = { __typename?: 'Mutation', createComment: { __typename?: 'CommentCreateResponse', code: number, message: string, success: boolean, comment: { __typename?: 'Comment', content: string, createdAt: DateTime, user: { __typename?: 'User', username: string } } | null } };
+export type CreateCommentMutation = { __typename?: 'Mutation', createComment: { __typename?: 'CommentCreateResponse', code: number, message: string, success: boolean, comment: { __typename?: 'Comment', content: string, createdAt: Date, user: { __typename?: 'User', username: string } } | null } };
 
 export type UpdateCommentMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -446,7 +447,7 @@ export type UpdateCommentMutationVariables = Exact<{
 }>;
 
 
-export type UpdateCommentMutation = { __typename?: 'Mutation', updateComment: { __typename?: 'CommentUpdateResponse', code: number, message: string, success: boolean, comment: { __typename?: 'Comment', content: string, createdAt: DateTime, user: { __typename?: 'User', username: string } } | null } };
+export type UpdateCommentMutation = { __typename?: 'Mutation', updateComment: { __typename?: 'CommentUpdateResponse', code: number, message: string, success: boolean, comment: { __typename?: 'Comment', content: string, createdAt: Date, user: { __typename?: 'User', username: string } } | null } };
 
 export type DeleteCommentMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -506,14 +507,14 @@ export type User_Post_QueryQueryVariables = Exact<{
 }>;
 
 
-export type User_Post_QueryQuery = { __typename?: 'Query', getUserPosts: Array<{ __typename?: 'LatestPost', likes: number, dislikes: number, post: { __typename?: 'Post', content: string, createdAt: DateTime, id: string, title: string, imagePath: string, user: { __typename?: 'User', id: string, username: string } } } | null> };
+export type User_Post_QueryQuery = { __typename?: 'Query', getUserPosts: Array<{ __typename?: 'LatestPost', likes: number, dislikes: number, post: { __typename?: 'Post', content: string, createdAt: Date, id: string, title: string, imagePath: string, user: { __typename?: 'User', id: string, username: string } } } | null> };
 
 export type User_Likes_QueryQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
 
-export type User_Likes_QueryQuery = { __typename?: 'Query', getPostLikedByUser: Array<{ __typename?: 'LatestPost', comments: number, dislikes: number, likes: number, post: { __typename?: 'Post', content: string, createdAt: DateTime, id: string, imagePath: string, title: string, user: { __typename?: 'User', id: string, username: string } } } | null> };
+export type User_Likes_QueryQuery = { __typename?: 'Query', getPostLikedByUser: Array<{ __typename?: 'LatestPost', comments: number, dislikes: number, likes: number, post: { __typename?: 'Post', content: string, createdAt: Date, id: string, imagePath: string, title: string, user: { __typename?: 'User', id: string, username: string } } } | null> };
 
 export type User_By_UsernameQueryVariables = Exact<{
   username: Scalars['String']['input'];
