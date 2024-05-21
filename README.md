@@ -64,3 +64,7 @@ Un utilisateur connecté peut ajouter, modifier ou supprimer un commentaire.
 ### Page de recherche
 Barre de recherche pour chercher un article par titre, contenu ou auteur.
 Bouton de tri par popularité des articles.
+
+## Autentification
+Une connexion JWT a été établie, donc la gestion et l'authentification des sessions utilisateur sont prises en charge. De plus, une sécurisation des requêtes GraphQL a été mise en place. Il n'est pas possible d'exécuter des requêtes et des mutations protégées par **@auth** (voir le shema GraphQL dans le backend) si l'utilisateur n'est pas authentifié.
+
