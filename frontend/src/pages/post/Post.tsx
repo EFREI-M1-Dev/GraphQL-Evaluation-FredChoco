@@ -8,8 +8,6 @@ import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import Button from "../../components/Button/Button.tsx";
 import {useAuth} from "../../provider/AuthContext.tsx";
-import Like from "../../components/Like/Like.tsx";
-import Dislike from "../../components/Dislike/Dislike.tsx";
 import {useMainControllerContext} from "../../main";
 
 
