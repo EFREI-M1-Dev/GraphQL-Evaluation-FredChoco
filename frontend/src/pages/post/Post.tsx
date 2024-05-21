@@ -10,6 +10,7 @@ import Button from "../../components/Button/Button.tsx";
 import {useAuth} from "../../provider/AuthContext.tsx";
 import Like from "../../components/Like/Like.tsx";
 import Dislike from "../../components/Dislike/Dislike.tsx";
+import {useMainControllerContext} from "../../main";
 
 
 export const POST = gql`
@@ -162,12 +163,22 @@ const Post = () => {
     const {currentUser} = useAuth();
 
     const [likePost] = useMutation(LIKE_POST);
+    const [editComment] = useMutation(EDIT_COMMENT);
     const [deleteLike] = useMutation(DELETE_LIKE_POST);
     const [dislikePost] = useMutation(DISLIKE_POST);
     const [deleteDislike] = useMutation(DELETE_DISLIKE_POST);
-    const [deleteComment] = useMutation(DELETE_COMMENT);
-    const [createComment] = useMutation(CREATE_COMMENT);
-    const [editComment] = useMutation(EDIT_COMMENT);
+    const [deleteComment] = useMutation(DELETE_COMMENT, {
+        refetchQueries: [
+            {query: POST, variables: {id: richPost ? richPost.post.id : ''}},
+        ],
+    });
+    const [createComment] = useMutation(CREATE_COMMENT, {
+        refetchQueries: [
+            {query: POST, variables: {id: richPost ? richPost.post.id : ''}},
+        ],
+    });
+
+    const {m_notificationController} = useMainControllerContext();
 
 
     const {data, loading} = useQuery(POST, {
@@ -229,18 +240,20 @@ const Post = () => {
             });
 
             if (data.createComment.success) {
-                setComments([...comments, data.createComment.comment]);
-                setRichPost((prev) => ({
-                    ...prev,
-                    comments: prev ? prev.comments + 1 : 1,
-                }))
                 setCommentContent('');
-                refetch();
+                refetch().then(() => {
+                    m_notificationController.setNotification({
+                        message: "Commentaire ajouté avec succès",
+                        type: "success"
+                    });
+                }).catch(() => {
+                    throw new Error("Erreur lors de l'ajout du commentaire");
+                });
             } else {
-                alert(data.createComment.message);
+                throw new Error(data.createComment.message);
             }
         } catch (error) {
-            console.error(error);
+            m_notificationController.setNotification({message: "Erreur lors de l'ajout du commentaire", type: "error"});
         }
     };
 
@@ -257,12 +270,22 @@ const Post = () => {
             if (data.updateComment.success) {
                 setEditCommentId(null);
                 setEditCommentContent('');
-                refetch();
+                refetch().then(() => {
+                    m_notificationController.setNotification({
+                        message: "Commentaire modifié avec succès",
+                        type: "success"
+                    });
+                }).catch(() => {
+                    throw new Error("Erreur lors de la modification du commentaire");
+                });
             } else {
-                alert(data.updateComment.message);
+                throw new Error(data.updateComment.message);
             }
         } catch (error) {
-            console.error(error);
+            m_notificationController.setNotification({
+                message: "Erreur lors de la modification du commentaire",
+                type: "error"
+            });
         }
     }
 
@@ -275,18 +298,23 @@ const Post = () => {
             });
 
             if (data.deleteComment.success) {
-                setComments(comments.filter((comment) => comment.id !== commentId));
-                setRichPost((prev) => ({
-                    ...prev,
-                    comments: prev ? prev.comments - 1 : 0,
-                }))
-                refetch();
+                refetch().then(() => {
+                    m_notificationController.setNotification({
+                        message: "Commentaire supprimé avec succès",
+                        type: "success"
+                    });
+                }).catch(() => {
+                    throw new Error("Erreur lors de la suppression du commentaire");
+                });
             } else {
-                alert(data.deleteComment.message);
+                throw new Error(data.deleteComment.message);
             }
 
         } catch (error) {
-            console.error(error);
+            m_notificationController.setNotification({
+                message: "Erreur lors de la suppression du commentaire",
+                type: "error"
+            });
         }
     }
 
@@ -302,7 +330,7 @@ const Post = () => {
                 if (data.deleteLike.success) {
                     setLiked(false);
                 } else {
-                    alert(data.deleteLike.message);
+                    throw new Error(data.deleteLike.message);
                 }
             } else {
                 const {data} = await likePost({
@@ -315,11 +343,14 @@ const Post = () => {
                 if (data.createLike.success) {
                     setLiked(true);
                 } else {
-                    alert(data.createLike.message);
+                    throw new Error(data.createLike.message);
                 }
             }
         } catch (error) {
-            console.error(error);
+            m_notificationController.setNotification({
+                message: "Erreur lors de la mise à jour du like",
+                type: "error"
+            });
         }
     }
 
@@ -335,7 +366,7 @@ const Post = () => {
                 if (data.deleteDislike.success) {
                     setDisliked(false);
                 } else {
-                    alert(data.deleteDislike.message);
+                    throw new Error(data.deleteDislike.message);
                 }
             } else {
                 const {data} = await dislikePost({
@@ -348,11 +379,14 @@ const Post = () => {
                 if (data.createDislike.success) {
                     setDisliked(true);
                 } else {
-                    alert(data.createDislike.message);
+                    throw new Error(data.createDislike.message);
                 }
             }
         } catch (error) {
-            console.error(error);
+            m_notificationController.setNotification({
+                message: "Erreur lors de la mise à jour du dislike",
+                type: "error"
+            });
         }
     }
 
@@ -376,22 +410,23 @@ const Post = () => {
                     onChange={(e) => setCommentContent(e.target.value)}
                 />
 
-                <Button onClick={handleAddComment}>Ajouter un commentaire</Button>
+                <Button style={"primary"} onClick={handleAddComment}>Ajouter le commentaire</Button>
 
                 {comments.map((comment) => (
                     <div key={comment.id} className={styles.commentContainer}>
                         {editCommentId === comment.id ? (
                             <>
                                 <div className={styles.column}>
-                                <TextField
-                                    placeholder={"Modifier le commentaire..."}
-                                    type={"area"}
-                                    defaultNumberOfRows={3}
-                                    value={editCommentContent}
-                                    onChange={(e) => setEditCommentContent(e.target.value)}
-                                    style={"search"}
-                                />
-                                    <Button onClick={() => handleEditComment(comment.id)} style={"primary"}>Enregistrer</Button>
+                                    <TextField
+                                        placeholder={"Modifier le commentaire..."}
+                                        type={"area"}
+                                        defaultNumberOfRows={3}
+                                        value={editCommentContent}
+                                        onChange={(e) => setEditCommentContent(e.target.value)}
+                                        style={"search"}
+                                    />
+                                    <Button onClick={() => handleEditComment(comment.id)}
+                                            style={"primary"}>Enregistrer</Button>
                                     <Button onClick={() => setEditCommentId(null)} style={"primary"}>Annuler</Button>
                                 </div>
                             </>
@@ -403,16 +438,14 @@ const Post = () => {
                                     createdAt={comment.createdAt}
                                 />
                                 {comment.user.id === currentUser?.id && (
-                                    <>
-
-                                        <div className={styles.commentButtons}>
-                                            <Button onClick={() => {
-                                                setEditCommentId(comment.id);
-                                                setEditCommentContent(comment.content);
-                                            }} style={"primary"}>Modifier</Button>
-                                            <Button onClick={() => handleDeleteComment(comment.id)} style={"primary"}>Supprimer</Button>
-                                        </div>
-                                    </>
+                                    <div className={styles.commentButtons}>
+                                        <Button onClick={() => {
+                                            setEditCommentId(comment.id);
+                                            setEditCommentContent(comment.content);
+                                        }} style={"primary"}>Modifier</Button>
+                                        <Button onClick={() => handleDeleteComment(comment.id)}
+                                                style={"primary"}>Supprimer</Button>
+                                    </div>
                                 )}
                             </>
                         )}
@@ -436,9 +469,9 @@ const Post = () => {
                         <div onClick={handleLikePost}><Like glow={false}/></div>
                     )}
                     {disliked ? (
-                        <div onClick={handleDislikePost}><Dislike glow={true} /></div>
+                        <div onClick={handleDislikePost}><Dislike glow={true}/></div>
                     ) : (
-                        <div onClick={handleDislikePost}><Dislike glow={false} /></div>
+                        <div onClick={handleDislikePost}><Dislike glow={false}/></div>
                     )}
                 </div>
             </div>
