@@ -14,6 +14,9 @@ mutation CreatePost($title: String!, $content: String!, $userId: ID!, $file: Upl
     code
     message
     success
+    post {
+    id
+    }
   }
 }
 `;
@@ -81,9 +84,9 @@ const CreatePostPage = () => {
                 },
             });
 
-            const {message, success} = data.createPost;
+            const {message, success, post} = data.createPost;
             if (success) {
-                navigate('/');
+                navigate('/post/' + post.id);
                 m_notificationController.setNotification({message: "Article créé", type: "success"});
             } else {
                 m_notificationController.setNotification({message, type: "error"});
@@ -121,7 +124,7 @@ const CreatePostPage = () => {
 
             const {message, success} = data.updatePost;
             if (success) {
-                navigate('/');
+                navigate('/post/' + idPost);
                 m_notificationController.setNotification({message: "Article modifié", type: "success"});
             } else {
                 m_notificationController.setNotification({message, type: "error"});
