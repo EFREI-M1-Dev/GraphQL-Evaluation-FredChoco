@@ -180,6 +180,7 @@ const CreatePostPage = () => {
                         value={ContentValue}
                         onChange={(e) => setContentValue(e.target.value)}
                         defaultNumberOfRows={10}
+                        onKeyDown={ (e) => e.stopPropagation()}
                     />
 
                     {ImagePath && (

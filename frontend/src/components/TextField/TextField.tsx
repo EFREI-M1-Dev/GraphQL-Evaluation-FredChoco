@@ -9,6 +9,7 @@ const TextField = (
         style?: "text" | "password" | "search" | "area"
         value?: string;
         onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+        onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
         className?: string;
         defaultNumberOfRows?: number;
     }
@@ -36,6 +37,7 @@ const TextField = (
                 value={props.value}
                 onChange={props.onChange}
                 rows={props.defaultNumberOfRows}
+                onKeyDown={props.onKeyDown}
 
             />
         );
@@ -48,6 +50,7 @@ const TextField = (
             placeholder={props.placeholder}
             value={props.value}
             onChange={props.onChange}
+            onKeyDown={props.onKeyDown}
         />
     );
 }

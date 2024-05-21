@@ -6,6 +6,8 @@ import {gql, useMutation} from "@apollo/client";
 import {LATEST_POST} from "../../pages/home/Home";
 import {STATISTICS} from "../Metrics/Metrics";
 import {useMainControllerContext} from "../../main";
+import DislikeIcon from '../../assets/pictograms/dislike.svg?react';
+import LikeIcon from '../../assets/pictograms/like.svg?react';
 
 const CardArticle = (
     props: {
@@ -86,8 +88,8 @@ const CardArticle = (
                           to={`/profile/${props.authorUsername}`}>Par <i>{capitalize(props.authorUsername)}</i></Link>
                     <div className={styles.containerStat}>
                         <div className={styles.stat}>
-                            <img className={styles.icon} src={'/pictograms/like.svg'} alt={"like"}/>
-                            <img className={styles.icon} src={'/pictograms/dislike.svg'} alt={"dislike"}/>
+                            <LikeIcon className={styles.icon}/>
+                            <DislikeIcon className={styles.icon}/>
                         </div>
                         <div className={styles.stat + " " + styles.number}>
                             <span>{props.likes || 0}</span>

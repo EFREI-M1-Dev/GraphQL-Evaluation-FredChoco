@@ -118,10 +118,6 @@
     justify-content : center;
     flex-direction  : column;
 
-    &:first-child {
-      gap : .5em;
-    }
-
     .icon {
       width : 1em;
     }
@@ -131,9 +127,12 @@
       justify-content : center;
       align-items     : center;
     }
-
-
   }
+
+  .number {
+    gap: .2em;
+  }
+
 }
 
 
