@@ -27,7 +27,7 @@ const Logo = (
 
     return (
         <div className={styles.container}>
-            <h2>{number}{props.isPercent && "%"}</h2>
+            <h2>{number}{props.isPercent && " %"}</h2>
             <h1>{props.title}</h1>
         </div>
     );
