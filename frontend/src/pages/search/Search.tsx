@@ -7,8 +7,8 @@ import {LatestPost} from "../../types/graphql";
 import Button from "../../components/Button/Button.tsx";
 
 const SEARCH_POST = gql`
-query SEARCH_POST_QUERY($input: String!) {
-  getSearchPost(input: $input) {
+query SEARCH_POST_QUERY($input: String!, $sort: Boolean!) {
+  getSearchPost(input: $input, sortPopularity: $sort) {
     post {
       id
       title
@@ -32,7 +32,8 @@ const SearchPage = () => {
 
     const {data} = useQuery(SEARCH_POST, {
         variables: {
-            input: search
+            input: search,
+            sort: popularityOn
         },
         skip: search.trim() === ""
     });
@@ -44,12 +45,9 @@ const SearchPage = () => {
     }, [data]);
 
     const handlePopularity = () => {
-        const sortedPosts = [...allSearchPosts].sort((a, b) => {
-            return b.likes - a.likes;
-        });
-        setAllSearchPosts(popularityOn ? sortedPosts.reverse() : sortedPosts);
         setPopularityOn(!popularityOn);
     };
+
 
     return (
         <div className={styles.container}>
