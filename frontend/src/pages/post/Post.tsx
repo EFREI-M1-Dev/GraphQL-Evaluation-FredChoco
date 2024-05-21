@@ -9,7 +9,8 @@ import {useEffect, useState} from "react";
 import Button from "../../components/Button/Button.tsx";
 import {useAuth} from "../../provider/AuthContext.tsx";
 import {useMainControllerContext} from "../../main";
-
+import LikeIcon from "../../assets/pictograms/like.svg?react";
+import DislikeIcon from "../../assets/pictograms/dislike.svg?react";
 
 export const POST = gql`
 query POST_QUERY($id: ID!) {
@@ -430,8 +431,8 @@ const Post = () => {
         <div className={styles.container}>
             <div className={styles.side__left}>
                 <h2 className={styles.postTitle}>{richPost.post.title}</h2>
-                <p className={styles.postCreatedAt + " glow" }>Le {richPost.post.createdAt}</p>
-                <div  className={styles.postContent}>
+                <p className={styles.postCreatedAt + " glow"}>Le {richPost.post.createdAt}</p>
+                <div className={styles.postContent}>
                     {
                         richPost.post.content.split('\n').map((paragraph, index) => (
                             <span key={index}>{paragraph}</span>
@@ -499,9 +500,19 @@ const Post = () => {
                     dislikes={richPost.dislikes}
                     id={richPost.post.id}
                 />
-                <div className={styles.container}>
-                    <div onClick={handleLikePost}><Like glow={liked} /></div>
-                    <div onClick={handleDislikePost}><Dislike glow={disliked}/></div>
+                <div className={styles.rowNotation}>
+                    <div className={styles.note}>
+                        {richPost.likes}
+                        <div onClick={handleLikePost}>
+                            <LikeIcon className={liked ? styles.glow : ''}/>
+                        </div>
+                    </div>
+                    <div className={styles.note} >
+                        <div onClick={handleDislikePost}>
+                            <DislikeIcon className={disliked ? styles.glow : ''}/>
+                        </div>
+                        {richPost.dislikes}
+                    </div>
                 </div>
             </div>
         </div>
