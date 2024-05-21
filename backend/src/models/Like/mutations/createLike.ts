@@ -21,6 +21,21 @@ export const createLike: MutationResolvers["createLike"] = async (_, {userId, po
             select: likeSelect
         });
 
+        const dislike = await dataSources.db.dislike.findFirst({
+            where: {
+                userId: userId,
+                postId: postId
+            }
+        });
+
+        if (dislike) {
+            await dataSources.db.dislike.delete({
+                where: {
+                    id: dislike.id
+                }
+            });
+        }
+
         if (!createdLike) {
             throw new Error('Failed to create like');
         }

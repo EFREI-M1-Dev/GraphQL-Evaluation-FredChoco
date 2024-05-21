@@ -8,10 +8,9 @@ import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import Button from "../../components/Button/Button.tsx";
 import {useAuth} from "../../provider/AuthContext.tsx";
-import Like from "../../components/Like/Like.tsx";
-import Dislike from "../../components/Dislike/Dislike.tsx";
 import {useMainControllerContext} from "../../main";
-
+import DislikeIcon from '../../assets/pictograms/dislike.svg?react';
+import LikeIcon from '../../assets/pictograms/like.svg?react';
 
 export const POST = gql`
 query POST_QUERY($id: ID!) {
@@ -159,6 +158,8 @@ const Post = () => {
     const [editCommentContent, setEditCommentContent] = useState<string>('');
     const [liked, setLiked] = useState<boolean>(false);
     const [disliked, setDisliked] = useState<boolean>(false);
+    const [isProcessing, setIsProcessing] = useState(false);
+
 
     const {currentUser} = useAuth();
 
@@ -171,6 +172,15 @@ const Post = () => {
                     postId: richPost?.post.id,
                 }
             },
+            {
+                query: GET_DISLIKE_POST, variables: {
+                    userId: currentUser?.id,
+                    postId: richPost?.post.id,
+                }
+            },
+            {
+                query: POST, variables: {id: richPost ? richPost.post.id : ''}
+            }
         ],
     });
     const [deleteLike] = useMutation(DELETE_LIKE_POST, {
@@ -181,6 +191,15 @@ const Post = () => {
                     postId: richPost?.post.id,
                 }
             },
+            {
+                query: GET_DISLIKE_POST, variables: {
+                    userId: currentUser?.id,
+                    postId: richPost?.post.id,
+                }
+            },
+            {
+                query: POST, variables: {id: richPost ? richPost.post.id : ''}
+            }
         ],
     });
     const [dislikePost] = useMutation(DISLIKE_POST, {
@@ -190,6 +209,15 @@ const Post = () => {
                     userId: currentUser?.id,
                     postId: richPost?.post.id,
                 }
+            },
+            {
+                query: GET_LIKE_POST, variables: {
+                    userId: currentUser?.id,
+                    postId: richPost?.post.id,
+                }
+            },
+            {
+                query: POST, variables: {id: richPost ? richPost.post.id : ''}
             }
         ],
     })
@@ -202,6 +230,15 @@ const Post = () => {
                     postId: richPost?.post.id,
                 }
             },
+            {
+                query: GET_LIKE_POST, variables: {
+                    userId: currentUser?.id,
+                    postId: richPost?.post.id,
+                }
+            },
+            {
+                query: POST, variables: {id: richPost ? richPost.post.id : ''}
+            }
         ],
     });
     const [deleteComment] = useMutation(DELETE_COMMENT, {
@@ -355,6 +392,8 @@ const Post = () => {
     }
 
     const handleLikePost = async () => {
+        if (isProcessing) return;
+        setIsProcessing(true);
         try {
             if (liked) {
                 const {data} = await deleteLike({
@@ -387,10 +426,16 @@ const Post = () => {
                 message: "Erreur lors de la mise à jour du like",
                 type: "error"
             });
+        } finally {
+            setTimeout(() => {
+                setIsProcessing(false);
+            }, 1000);
         }
     }
 
     const handleDislikePost = async () => {
+        if (isProcessing) return;
+        setIsProcessing(true);
         try {
             if (disliked) {
                 const {data} = await deleteDislike({
@@ -423,6 +468,10 @@ const Post = () => {
                 message: "Erreur lors de la mise à jour du dislike",
                 type: "error"
             });
+        } finally {
+            setTimeout(() => {
+                setIsProcessing(false);
+            }, 1000);
         }
     }
 
@@ -433,7 +482,11 @@ const Post = () => {
             <div className={styles.side__left}>
                 <h2 className={styles.postTitle}>{richPost.post.title}</h2>
                 <p>Le {richPost.post.createdAt}</p>
-                <p>{richPost.post.content}</p>
+                {
+                    richPost.post.content.split('\n').map((paragraph, index) => (
+                        <span key={index}>{paragraph}</span>
+                    ))
+                }
                 <p>{richPost.comments} commentaire{richPost.comments > 1 ? 's' : ''}</p>
                 <TextField
                     placeholder={"Ajouter un commentaire..."}
@@ -494,9 +547,19 @@ const Post = () => {
                     dislikes={richPost.dislikes}
                     id={richPost.post.id}
                 />
-                <div className={styles.container}>
-                    <div onClick={handleLikePost}><Like glow={liked} /></div>
-                    <div onClick={handleDislikePost}><Dislike glow={disliked}/></div>
+                <div className={styles.rowNotation}>
+                    <div className={styles.note}>
+                        {richPost.likes}
+                        <div onClick={handleLikePost} className={liked ? styles.glow : ''}>
+                            <LikeIcon/>
+                        </div>
+                    </div>
+                    <div className={styles.note}>
+                        <div onClick={handleDislikePost} className={disliked ? styles.glow : ''}>
+                            <DislikeIcon/>
+                        </div>
+                        {richPost.dislikes}
+                    </div>
                 </div>
             </div>
         </div>
