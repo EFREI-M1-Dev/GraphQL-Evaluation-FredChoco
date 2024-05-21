@@ -46,7 +46,7 @@ export const getSearchPost: QueryResolvers["getSearchPost"] = async (_, {input, 
 
         if (sortPopularity) {
             transformedPosts = transformedPosts.sort((a, b) => {
-                const ratioA = a.likes / (a.likes + a.dislikes || 1); // Ajoutez un || 1 pour éviter la division par zéro
+                const ratioA = a.likes / (a.likes + a.dislikes || 1);
                 const ratioB = b.likes / (b.likes + b.dislikes || 1);
                 return ratioB - ratioA;
             });
