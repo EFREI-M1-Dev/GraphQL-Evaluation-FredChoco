@@ -68,9 +68,9 @@ type Query {
   getAllComments: [Comment]! @auth
   getAllPosts: [Post]! @auth
   getLatestPosts: [LatestPost]!
-  getUserPosts(id: ID!): [LatestPost]! @auth
-  getLikesByUser(id: ID!): [Like]! @auth
-  getSearchPost(input: String!): [LatestPost]! 
+  getUserPosts(id: ID!): [LatestPost]!
+  getLikesByUser(id: ID!): [Like]!
+  getSearchPost(input: String!, sortPopularity: Boolean!): [LatestPost]! 
   getAllCommentsByPost(postId: ID!): [Comment]!
   getRandomPost: Post!
   

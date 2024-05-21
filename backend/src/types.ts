@@ -15,8 +15,8 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
-  Date: { input: any; output: any; }
-  Upload: { input: any; output: any; }
+  Date: { input: string; output: string; }
+  Upload: { input: File; output: File; }
 };
 
 export type Comment = {
@@ -299,6 +299,7 @@ export type QueryGetPostArgs = {
 
 export type QueryGetSearchPostArgs = {
   input: Scalars['String']['input'];
+  sortPopularity: Scalars['Boolean']['input'];
 };
 
 
@@ -666,7 +667,7 @@ export type QueryResolvers<ContextType = DataSourceContext, ParentType extends R
   getLoggedUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   getPost?: Resolver<Maybe<ResolversTypes['LatestPost']>, ParentType, ContextType, RequireFields<QueryGetPostArgs, 'id'>>;
   getRandomPost?: Resolver<ResolversTypes['Post'], ParentType, ContextType>;
-  getSearchPost?: Resolver<Array<Maybe<ResolversTypes['LatestPost']>>, ParentType, ContextType, RequireFields<QueryGetSearchPostArgs, 'input'>>;
+  getSearchPost?: Resolver<Array<Maybe<ResolversTypes['LatestPost']>>, ParentType, ContextType, RequireFields<QueryGetSearchPostArgs, 'input' | 'sortPopularity'>>;
   getTotalCommentCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   getTotalPostCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   getUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetUserArgs, 'id'>>;
