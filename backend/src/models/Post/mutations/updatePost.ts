@@ -1,8 +1,8 @@
 import {MutationResolvers} from "../../../types";
 import consola from "consola";
 import {createJWT} from "../../../modules/auth";
-import {postSelect} from "../../selectorsPrisma";
-import {deleteFile, uploadFile} from "../../utils/fileUtils";
+import {postSelect} from "../../selectorsPrisma.js";
+import {deleteFile, uploadFile} from "../../utils/fileUtils.js";
 
 export const updatePost: MutationResolvers["updatePost"] = async (_, {id, input}, {dataSources}) => {
     try {

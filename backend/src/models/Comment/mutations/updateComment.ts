@@ -1,6 +1,6 @@
 import {MutationResolvers} from "../../../types";
 import consola from "consola";
-import {commentSelect} from "../../selectorsPrisma";
+import {commentSelect} from "../../selectorsPrisma.js";
 
 export const updateComment: MutationResolvers["updateComment"] = async (_, {id, content}, {dataSources, user}) => {
     try {

@@ -4,7 +4,11 @@ const config = {
         './src/types.ts': {
             plugins: ["typescript", "typescript-resolvers"],
             config: {
-                contextType: './context#DataSourceContext'
+                contextType: './context#DataSourceContext',
+                scalars: {
+                    Date: 'string',
+                    Upload: 'File'
+                }
             }
         }
     }

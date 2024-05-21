@@ -1,7 +1,7 @@
 import { MutationResolvers } from "../../../types";
 import consola from "consola";
 import { postSelect } from "../../selectorsPrisma.js";
-import { uploadFile } from "../../utils/fileUtils";
+import { uploadFile } from "../../utils/fileUtils.js";
 
 export const createPost: MutationResolvers["createPost"] = async (_, { title, content, userId, file }, { dataSources }) => {
     try {

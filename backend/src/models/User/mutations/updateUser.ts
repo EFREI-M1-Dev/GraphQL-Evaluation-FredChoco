@@ -1,7 +1,7 @@
 import {MutationResolvers} from "../../../types";
 import consola from "consola";
-import {createJWT} from "../../../modules/auth";
-import {deleteFile, uploadFile} from "../../utils/fileUtils";
+import {createJWT} from "../../../modules/auth.js";
+import {deleteFile, uploadFile} from "../../utils/fileUtils.js";
 
 export const updateUser: MutationResolvers["updateUser"] = async (_, {id, input}, {dataSources, user}) => {
     try {

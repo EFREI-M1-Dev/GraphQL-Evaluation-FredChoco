@@ -3,7 +3,7 @@ import consola from "consola";
 import path, {dirname} from "path";
 import {fileURLToPath} from "url";
 import {existsSync, unlinkSync} from "fs";
-import {deleteFile} from "../../utils/fileUtils";
+import {deleteFile} from "../../utils/fileUtils.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
