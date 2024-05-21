@@ -158,6 +158,7 @@ const Post = () => {
     const [editCommentContent, setEditCommentContent] = useState<string>('');
     const [liked, setLiked] = useState<boolean>(false);
     const [disliked, setDisliked] = useState<boolean>(false);
+    const [isProcessing, setIsProcessing] = useState(false);
 
     const {currentUser} = useAuth();
 
@@ -170,6 +171,13 @@ const Post = () => {
                     postId: richPost?.post.id,
                 }
             },
+            {
+                query: GET_DISLIKE_POST, variables: {
+                    userId: currentUser?.id,
+                    postId: richPost?.post.id,
+                }
+            },
+            {query: POST, variables: {id: richPost ? richPost.post.id : ''}},
         ],
     });
     const [deleteLike] = useMutation(DELETE_LIKE_POST, {
@@ -180,6 +188,13 @@ const Post = () => {
                     postId: richPost?.post.id,
                 }
             },
+            {
+                query: GET_DISLIKE_POST, variables: {
+                    userId: currentUser?.id,
+                    postId: richPost?.post.id,
+                }
+            },
+            {query: POST, variables: {id: richPost ? richPost.post.id : ''}},
         ],
     });
     const [dislikePost] = useMutation(DISLIKE_POST, {
@@ -189,7 +204,14 @@ const Post = () => {
                     userId: currentUser?.id,
                     postId: richPost?.post.id,
                 }
-            }
+            },
+            {
+                query: GET_LIKE_POST, variables: {
+                    userId: currentUser?.id,
+                    postId: richPost?.post.id,
+                }
+            },
+            {query: POST, variables: {id: richPost ? richPost.post.id : ''}},
         ],
     })
 
@@ -201,6 +223,13 @@ const Post = () => {
                     postId: richPost?.post.id,
                 }
             },
+            {
+                query: GET_LIKE_POST, variables: {
+                    userId: currentUser?.id,
+                    postId: richPost?.post.id,
+                }
+            },
+            {query: POST, variables: {id: richPost ? richPost.post.id : ''}},
         ],
     });
     const [deleteComment] = useMutation(DELETE_COMMENT, {
@@ -354,6 +383,8 @@ const Post = () => {
     }
 
     const handleLikePost = async () => {
+        if (isProcessing) return;
+        setIsProcessing(true);
         try {
             if (liked) {
                 const {data} = await deleteLike({
@@ -386,10 +417,16 @@ const Post = () => {
                 message: "Erreur lors de la mise à jour du like",
                 type: "error"
             });
+        } finally {
+            setTimeout(() => {
+                setIsProcessing(false);
+            }, 1000);
         }
     }
 
     const handleDislikePost = async () => {
+        if (isProcessing) return;
+        setIsProcessing(true);
         try {
             if (disliked) {
                 const {data} = await deleteDislike({
@@ -422,6 +459,10 @@ const Post = () => {
                 message: "Erreur lors de la mise à jour du dislike",
                 type: "error"
             });
+        } finally {
+            setTimeout(() => {
+                setIsProcessing(false);
+            }, 1000);
         }
     }
 
