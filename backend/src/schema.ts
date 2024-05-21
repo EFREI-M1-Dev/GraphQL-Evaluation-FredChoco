@@ -68,7 +68,7 @@ type Query {
   getAllComments: [Comment]! @auth
   getAllPosts: [Post]! @auth
   getLatestPosts: [LatestPost]!
-  getUserPosts(id: ID!): [Post]! @auth
+  getUserPosts(id: ID!): [LatestPost]! @auth
   getLikesByUser(id: ID!): [Like]! @auth
   getSearchPost(input: String!): [LatestPost]! 
   getAllCommentsByPost(postId: ID!): [Comment]!

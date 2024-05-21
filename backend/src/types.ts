@@ -261,7 +261,7 @@ export type Query = {
   getUser?: Maybe<User>;
   getUserByUsername?: Maybe<User>;
   getUserCount: Scalars['Int']['output'];
-  getUserPosts: Array<Maybe<Post>>;
+  getUserPosts: Array<Maybe<LatestPost>>;
 };
 
 
@@ -672,7 +672,7 @@ export type QueryResolvers<ContextType = DataSourceContext, ParentType extends R
   getUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetUserArgs, 'id'>>;
   getUserByUsername?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetUserByUsernameArgs, 'username'>>;
   getUserCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  getUserPosts?: Resolver<Array<Maybe<ResolversTypes['Post']>>, ParentType, ContextType, RequireFields<QueryGetUserPostsArgs, 'id'>>;
+  getUserPosts?: Resolver<Array<Maybe<ResolversTypes['LatestPost']>>, ParentType, ContextType, RequireFields<QueryGetUserPostsArgs, 'id'>>;
 };
 
 export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Upload'], any> {

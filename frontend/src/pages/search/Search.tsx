@@ -3,7 +3,7 @@ import TextField from "../../components/TextField/TextField";
 import CardArticle from "../../components/CardArticle/CardArticle.tsx";
 import {useEffect, useState} from "react";
 import {useQuery, gql} from "@apollo/client";
-import {LatestPost, Post} from "../../types/graphql";
+import {LatestPost} from "../../types/graphql";
 import Button from "../../components/Button/Button.tsx";
 
 const SEARCH_POST = gql`
@@ -63,11 +63,13 @@ const SearchPage = () => {
                 />
             </div>
 
-            <Button onClick={handlePopularity} style={popularityOn ? "activated" : "primary"}>
-                Popularity
-            </Button>
+            <div className={styles.buttonContainer}>
+                <Button onClick={handlePopularity} style={popularityOn ? "activated" : "primary"}>
+                    Popularity
+                </Button>
+            </div>
 
-            <h1 className={styles.title}>RÉSULTATS DE LA RECHERCHE:</h1>
+            <h1 className={styles.title}>RÉSULTATS DE LA RECHERCHE :</h1>
             <div className={styles.cardContainer}>
 
                 {allSearchPosts.length === 0 && (
