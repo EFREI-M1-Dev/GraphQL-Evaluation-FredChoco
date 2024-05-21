@@ -2,7 +2,7 @@ import styles from "./_Profile.module.scss";
 import CardArticle from "../../components/CardArticle/CardArticle.tsx";
 import {gql, useQuery} from "@apollo/client";
 import {useEffect, useState} from "react";
-import {Like, LatestPost} from "../../types/graphql.ts";
+import {LatestPost} from "../../types/graphql.ts";
 import {useAuth} from "../../provider/AuthContext";
 import Carousel from "../../components/Carousel/Carousel.tsx";
 import {useNavigate, useParams} from 'react-router-dom';
@@ -28,15 +28,20 @@ query USER_POST_QUERY($id: ID!) {
 }
 `;
 
-const USER_LIKES = gql`
+export const USER_LIKES = gql`
 query USER_LIKES_QUERY($id: ID!) {
-  getLikesByUser(id: $id) {
+  getPostLikedByUser(id: $id) {
+    comments
+    dislikes
+    likes
     post {
-      id
-      title
       content
+      createdAt
+      id
       imagePath
+      title
       user {
+        id
         username
       }
     }
@@ -61,7 +66,7 @@ const Profile = () => {
     const navigate = useNavigate();
 
     const [allUserPosts, setAllUserPosts] = useState<LatestPost[]>([]);
-    const [allUserLikes, setAllUserLikes] = useState<Like[]>([]);
+    const [allUserLikes, setAllUserLikes] = useState<LatestPost[]>([]);
     const [profileUser, setProfileUser] = useState(currentUser);
     const [imagePath, setImagePath] = useState<string>("");
 
@@ -102,7 +107,7 @@ const Profile = () => {
 
     useEffect(() => {
         if (likesData) {
-            setAllUserLikes(likesData.getLikesByUser);
+            setAllUserLikes(likesData.getPostLikedByUser);
         }
     }, [likesData]);
 
@@ -117,6 +122,7 @@ const Profile = () => {
         }
     }, [profileUser]);
 
+    console.log(allUserLikes);
     return (
         <div className={styles.container}>
             <div className={styles.containerProfile}>
@@ -170,6 +176,8 @@ const Profile = () => {
                             image={`http://localhost:4000/${like.post.imagePath}`}
                             authorUsername={like.post.user.username}
                             id={like.post.id}
+                            likes={like.likes}
+                            dislikes={like.dislikes}
                         />
                     ))}
                 </Carousel>
