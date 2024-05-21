@@ -16,7 +16,7 @@ export type Scalars = {
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
   Date: { input: DateTime; output: DateTime; }
-  Upload: { input: File; output: File; }
+  Upload: { input: FileUpload; output: FileUpload; }
 };
 
 export type Comment = {

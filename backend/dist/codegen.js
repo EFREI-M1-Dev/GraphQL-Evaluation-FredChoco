@@ -6,7 +6,7 @@ const config = {
             config: {
                 contextType: './context#DataSourceContext',
                 scalars: {
-                    Date: 'string',
+                    Date: 'DateTime',
                     Upload: 'File'
                 }
             }
