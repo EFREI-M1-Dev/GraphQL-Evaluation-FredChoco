@@ -424,14 +424,14 @@ const Post = () => {
                 />
                 <div className={styles.container}>
                     {liked ? (
-                        <div onClick={handleLikePost}><Like color={"#F221EB"} /></div>
+                        <div onClick={handleLikePost}><Like glow={true}/></div>
                     ) : (
-                        <div onClick={handleLikePost}><Like color={"white"} /></div>
+                        <div onClick={handleLikePost}><Like glow={false}/></div>
                     )}
                     {disliked ? (
-                        <div onClick={handleDislikePost}><Dislike color={"#F221EB"} /></div>
+                        <div onClick={handleDislikePost}><Dislike glow={true} /></div>
                     ) : (
-                        <div onClick={handleDislikePost}><Dislike color={"white"} /></div>
+                        <div onClick={handleDislikePost}><Dislike glow={false} /></div>
                     )}
                 </div>
                 <p>Show comments</p>
