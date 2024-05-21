@@ -432,9 +432,9 @@ const Post = () => {
         <div className={styles.container}>
             <div className={styles.side__left}>
                 <h2 className={styles.postTitle}>{richPost.post.title}</h2>
-                <p>Le {richPost.post.createdAt}</p>
-                <p>{richPost.post.content}</p>
-                <p>{richPost.comments} commentaire{richPost.comments > 1 ? 's' : ''}</p>
+                <p className={styles.postCreatedAt + " glow" }>Le {richPost.post.createdAt}</p>
+                <p className={styles.postContent}>{richPost.post.content}</p>
+                <p className={styles.noMarginBottom}>{richPost.comments} commentaire{richPost.comments > 1 ? 's' : ''}</p>
                 <TextField
                     placeholder={"Ajouter un commentaire..."}
                     type={"text"}

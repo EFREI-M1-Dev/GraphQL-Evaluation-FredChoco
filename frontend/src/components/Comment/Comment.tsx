@@ -27,7 +27,7 @@ const Comment = (
         <div className={styles.container}>
             <hr />
             <div className={styles.section}>
-                <img src={imagePath} alt="profile" className={styles.profileImage}/>
+                <Link to={"/profile/" + user.username} className={styles.link}><img src={imagePath} alt="profile" className={styles.profileImage}/></Link>
                 <p><Link to={"/profile/" + user.username} className={styles.link}>{user.username}</Link></p>
                 <p className={"glow"}>{createdAt}</p>
             </div>
