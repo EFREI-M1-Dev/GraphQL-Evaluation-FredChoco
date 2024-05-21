@@ -23,8 +23,8 @@ const Like = (
         </g>
         <defs>
             <filter id="filter0_d_142_246" x="-5.27765" y="-3.75" width="59.5833" height="57.517"
-                    filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                    filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                <feFlood floodOpacity="0" result="BackgroundImageFix"/>
                 <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0"
                                result="hardAlpha"/>
                 <feOffset/>

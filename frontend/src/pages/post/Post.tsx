@@ -43,6 +43,7 @@ query POST_COMMENTS_QUERY($postId: ID!) {
     user {
       username
       id
+      imagePath
     }
   }
 }
@@ -378,33 +379,39 @@ const Post = () => {
                 <Button onClick={handleAddComment}>Ajouter un commentaire</Button>
 
                 {comments.map((comment) => (
-                    <div>
+                    <div key={comment.id} className={styles.commentContainer}>
                         {editCommentId === comment.id ? (
                             <>
+                                <div className={styles.column}>
                                 <TextField
                                     placeholder={"Modifier le commentaire..."}
-                                    type={"text"}
+                                    type={"area"}
+                                    defaultNumberOfRows={3}
                                     value={editCommentContent}
                                     onChange={(e) => setEditCommentContent(e.target.value)}
                                     style={"search"}
                                 />
-                                <Button onClick={() => handleEditComment(comment.id)}>Enregistrer</Button>
-                                <Button onClick={() => setEditCommentId(null)}>Annuler</Button>
+                                    <Button onClick={() => handleEditComment(comment.id)} style={"primary"}>Enregistrer</Button>
+                                    <Button onClick={() => setEditCommentId(null)} style={"primary"}>Annuler</Button>
+                                </div>
                             </>
                         ) : (
                             <>
                                 <Comment
-                                    username={comment.user.username}
+                                    user={comment.user}
                                     content={comment.content}
                                     createdAt={comment.createdAt}
                                 />
                                 {comment.user.id === currentUser?.id && (
                                     <>
-                                        <Button onClick={() => {
-                                            setEditCommentId(comment.id);
-                                            setEditCommentContent(comment.content);
-                                        }}>Modifier</Button>
-                                        <Button onClick={() => handleDeleteComment(comment.id)}>Supprimer</Button>
+
+                                        <div className={styles.commentButtons}>
+                                            <Button onClick={() => {
+                                                setEditCommentId(comment.id);
+                                                setEditCommentContent(comment.content);
+                                            }} style={"primary"}>Modifier</Button>
+                                            <Button onClick={() => handleDeleteComment(comment.id)} style={"primary"}>Supprimer</Button>
+                                        </div>
                                     </>
                                 )}
                             </>
@@ -434,7 +441,6 @@ const Post = () => {
                         <div onClick={handleDislikePost}><Dislike glow={false} /></div>
                     )}
                 </div>
-                <p>Show comments</p>
             </div>
         </div>
     );

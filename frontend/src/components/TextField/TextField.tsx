@@ -35,7 +35,7 @@ const TextField = (
                 placeholder={props.placeholder}
                 value={props.value}
                 onChange={props.onChange}
-                rows={10}
+                rows={props.defaultNumberOfRows}
 
             />
         );

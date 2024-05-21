@@ -17,6 +17,13 @@ export const getSearchPost: QueryResolvers["getSearchPost"] = async (_, {input},
                         content: {
                             contains: input
                         }
+                    },
+                    {
+                        user: {
+                            username: {
+                                contains: input
+                            }
+                        }
                     }
                 ]
             },
