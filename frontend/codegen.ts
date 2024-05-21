@@ -13,7 +13,7 @@ const config: CodegenConfig = {
             },
             config: {
                 scalars: {
-                    Date: 'string',
+                    Date: 'DateTime',
                     Upload: 'File'
                 },
                 avoidOptionals: true

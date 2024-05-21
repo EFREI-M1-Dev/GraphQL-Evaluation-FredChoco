@@ -14,7 +14,7 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
-  Date: { input: string; output: string; }
+  Date: { input: DateTime; output: DateTime; }
   /** The `Upload` scalar type represents a file upload. */
   Upload: { input: File; output: File; }
 };
@@ -299,6 +299,7 @@ export type QueryGetPostArgs = {
 
 export type QueryGetSearchPostArgs = {
   input: Scalars['String']['input'];
+  sortPopularity: Scalars['Boolean']['input'];
 };
 
 
@@ -406,7 +407,7 @@ export type UpdatePostMutation = { __typename?: 'Mutation', updatePost: { __type
 export type Latest_Post_QueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type Latest_Post_QueryQuery = { __typename?: 'Query', getLatestPosts: Array<{ __typename?: 'LatestPost', likes: number, dislikes: number, post: { __typename?: 'Post', id: string, title: string, createdAt: string, imagePath: string, user: { __typename?: 'User', username: string } } } | null> };
+export type Latest_Post_QueryQuery = { __typename?: 'Query', getLatestPosts: Array<{ __typename?: 'LatestPost', likes: number, dislikes: number, post: { __typename?: 'Post', id: string, title: string, createdAt: DateTime, imagePath: string, user: { __typename?: 'User', username: string } } } | null> };
 
 export type SignInUserMutationVariables = Exact<{
   username: Scalars['String']['input'];
@@ -421,14 +422,14 @@ export type Post_QueryQueryVariables = Exact<{
 }>;
 
 
-export type Post_QueryQuery = { __typename?: 'Query', getPost: { __typename?: 'LatestPost', comments: number, dislikes: number, likes: number, post: { __typename?: 'Post', content: string, createdAt: string, id: string, title: string, imagePath: string, user: { __typename?: 'User', email: string, id: string, username: string } } } | null };
+export type Post_QueryQuery = { __typename?: 'Query', getPost: { __typename?: 'LatestPost', comments: number, dislikes: number, likes: number, post: { __typename?: 'Post', content: string, createdAt: DateTime, id: string, title: string, imagePath: string, user: { __typename?: 'User', email: string, id: string, username: string } } } | null };
 
 export type Post_Comments_QueryQueryVariables = Exact<{
   postId: Scalars['ID']['input'];
 }>;
 
 
-export type Post_Comments_QueryQuery = { __typename?: 'Query', getAllCommentsByPost: Array<{ __typename?: 'Comment', content: string, createdAt: string, id: string, user: { __typename?: 'User', username: string, id: string, imagePath: string } } | null> };
+export type Post_Comments_QueryQuery = { __typename?: 'Query', getAllCommentsByPost: Array<{ __typename?: 'Comment', content: string, createdAt: DateTime, id: string, user: { __typename?: 'User', username: string, id: string, imagePath: string } } | null> };
 
 export type CreateCommentMutationVariables = Exact<{
   userId: Scalars['ID']['input'];
@@ -437,7 +438,7 @@ export type CreateCommentMutationVariables = Exact<{
 }>;
 
 
-export type CreateCommentMutation = { __typename?: 'Mutation', createComment: { __typename?: 'CommentCreateResponse', code: number, message: string, success: boolean, comment: { __typename?: 'Comment', content: string, createdAt: string, user: { __typename?: 'User', username: string } } | null } };
+export type CreateCommentMutation = { __typename?: 'Mutation', createComment: { __typename?: 'CommentCreateResponse', code: number, message: string, success: boolean, comment: { __typename?: 'Comment', content: string, createdAt: DateTime, user: { __typename?: 'User', username: string } } | null } };
 
 export type UpdateCommentMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -445,7 +446,7 @@ export type UpdateCommentMutationVariables = Exact<{
 }>;
 
 
-export type UpdateCommentMutation = { __typename?: 'Mutation', updateComment: { __typename?: 'CommentUpdateResponse', code: number, message: string, success: boolean, comment: { __typename?: 'Comment', content: string, createdAt: string, user: { __typename?: 'User', username: string } } | null } };
+export type UpdateCommentMutation = { __typename?: 'Mutation', updateComment: { __typename?: 'CommentUpdateResponse', code: number, message: string, success: boolean, comment: { __typename?: 'Comment', content: string, createdAt: DateTime, user: { __typename?: 'User', username: string } } | null } };
 
 export type DeleteCommentMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -505,7 +506,7 @@ export type User_Post_QueryQueryVariables = Exact<{
 }>;
 
 
-export type User_Post_QueryQuery = { __typename?: 'Query', getUserPosts: Array<{ __typename?: 'LatestPost', likes: number, dislikes: number, post: { __typename?: 'Post', content: string, createdAt: string, id: string, title: string, imagePath: string, user: { __typename?: 'User', id: string, username: string } } } | null> };
+export type User_Post_QueryQuery = { __typename?: 'Query', getUserPosts: Array<{ __typename?: 'LatestPost', likes: number, dislikes: number, post: { __typename?: 'Post', content: string, createdAt: DateTime, id: string, title: string, imagePath: string, user: { __typename?: 'User', id: string, username: string } } } | null> };
 
 export type User_Likes_QueryQueryVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -540,6 +541,7 @@ export type UpdateUserMutation = { __typename?: 'Mutation', updateUser: { __type
 
 export type Search_Post_QueryQueryVariables = Exact<{
   input: Scalars['String']['input'];
+  sort: Scalars['Boolean']['input'];
 }>;
 
 
@@ -574,5 +576,5 @@ export const User_Likes_QueryDocument = {"kind":"Document","definitions":[{"kind
 export const User_By_UsernameDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"USER_BY_USERNAME"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"username"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getUserByUsername"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"username"},"value":{"kind":"Variable","name":{"kind":"Name","value":"username"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"imagePath"}}]}}]}}]} as unknown as DocumentNode<User_By_UsernameQuery, User_By_UsernameQueryVariables>;
 export const CreateUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"username"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"username"},"value":{"kind":"Variable","name":{"kind":"Name","value":"username"}}},{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}},{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"success"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<CreateUserMutation, CreateUserMutationVariables>;
 export const UpdateUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updateUserId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateUserInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updateUserId"}}},{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"success"}},{"kind":"Field","name":{"kind":"Name","value":"token"}}]}}]}}]} as unknown as DocumentNode<UpdateUserMutation, UpdateUserMutationVariables>;
-export const Search_Post_QueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SEARCH_POST_QUERY"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getSearchPost"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"post"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"imagePath"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"likes"}},{"kind":"Field","name":{"kind":"Name","value":"dislikes"}},{"kind":"Field","name":{"kind":"Name","value":"comments"}}]}}]}}]} as unknown as DocumentNode<Search_Post_QueryQuery, Search_Post_QueryQueryVariables>;
+export const Search_Post_QueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SEARCH_POST_QUERY"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"sort"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getSearchPost"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}},{"kind":"Argument","name":{"kind":"Name","value":"sortPopularity"},"value":{"kind":"Variable","name":{"kind":"Name","value":"sort"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"post"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"imagePath"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"likes"}},{"kind":"Field","name":{"kind":"Name","value":"dislikes"}},{"kind":"Field","name":{"kind":"Name","value":"comments"}}]}}]}}]} as unknown as DocumentNode<Search_Post_QueryQuery, Search_Post_QueryQueryVariables>;
 export const User_Info_QueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"USER_INFO_Query"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getLoggedUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"imagePath"}}]}}]}}]} as unknown as DocumentNode<User_Info_QueryQuery, User_Info_QueryQueryVariables>;

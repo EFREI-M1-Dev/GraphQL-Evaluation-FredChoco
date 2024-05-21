@@ -36,7 +36,7 @@ const documents = {
     "\nquery USER_BY_USERNAME($username: String!) {\n  getUserByUsername(username: $username) {\n    id\n    username\n    email\n    imagePath\n  }\n}\n": types.User_By_UsernameDocument,
     "\nmutation createUser($username: String!, $password: String!, $email: String!) {\n  createUser(username: $username, password: $password, email: $email) {\n    code\n    message\n    success\n    user {\n      username\n      id\n    }\n  }\n}\n": types.CreateUserDocument,
     "\nmutation UpdateUser($updateUserId: ID!, $input: UpdateUserInput!) {\n  updateUser(id: $updateUserId, input: $input) {\n    code\n    message\n    success\n    token\n  }\n}\n": types.UpdateUserDocument,
-    "\nquery SEARCH_POST_QUERY($input: String!) {\n  getSearchPost(input: $input) {\n    post {\n      id\n      title\n      imagePath\n      user {\n        username\n        id\n      }\n    }\n    likes\n    dislikes\n    comments\n  }\n}\n": types.Search_Post_QueryDocument,
+    "\nquery SEARCH_POST_QUERY($input: String!, $sort: Boolean!) {\n  getSearchPost(input: $input, sortPopularity: $sort) {\n    post {\n      id\n      title\n      imagePath\n      user {\n        username\n        id\n      }\n    }\n    likes\n    dislikes\n    comments\n  }\n}\n": types.Search_Post_QueryDocument,
     "\n  query USER_INFO_Query {\n    getLoggedUser {\n      id\n      email\n      username\n      imagePath\n    }\n  }\n": types.User_Info_QueryDocument,
 };
 
@@ -149,7 +149,7 @@ export function gql(source: "\nmutation UpdateUser($updateUserId: ID!, $input: U
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\nquery SEARCH_POST_QUERY($input: String!) {\n  getSearchPost(input: $input) {\n    post {\n      id\n      title\n      imagePath\n      user {\n        username\n        id\n      }\n    }\n    likes\n    dislikes\n    comments\n  }\n}\n"): (typeof documents)["\nquery SEARCH_POST_QUERY($input: String!) {\n  getSearchPost(input: $input) {\n    post {\n      id\n      title\n      imagePath\n      user {\n        username\n        id\n      }\n    }\n    likes\n    dislikes\n    comments\n  }\n}\n"];
+export function gql(source: "\nquery SEARCH_POST_QUERY($input: String!, $sort: Boolean!) {\n  getSearchPost(input: $input, sortPopularity: $sort) {\n    post {\n      id\n      title\n      imagePath\n      user {\n        username\n        id\n      }\n    }\n    likes\n    dislikes\n    comments\n  }\n}\n"): (typeof documents)["\nquery SEARCH_POST_QUERY($input: String!, $sort: Boolean!) {\n  getSearchPost(input: $input, sortPopularity: $sort) {\n    post {\n      id\n      title\n      imagePath\n      user {\n        username\n        id\n      }\n    }\n    likes\n    dislikes\n    comments\n  }\n}\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

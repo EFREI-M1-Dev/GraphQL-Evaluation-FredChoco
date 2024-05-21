@@ -8,7 +8,7 @@ const config: CodegenConfig = {
             config: {
                 contextType: './context#DataSourceContext',
                 scalars: {
-                    Date: 'string',
+                    Date: 'DateTime',
                     Upload: 'File'
                 }
             }
