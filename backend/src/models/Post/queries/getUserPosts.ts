@@ -1,6 +1,6 @@
-import {Post, QueryResolvers, User} from "../../../types";
+import {QueryResolvers} from "../../../types";
 import consola from "consola";
-import {likeSelect, postSelect} from "../../selectorsPrisma.js";
+import {postSelect} from "../../selectorsPrisma.js";
 
 export const getUserPosts: QueryResolvers["getUserPosts"] = async (_, {id}, {dataSources}) => {
 
@@ -10,13 +10,25 @@ export const getUserPosts: QueryResolvers["getUserPosts"] = async (_, {id}, {dat
             orderBy: {
                 createdAt: "desc",
             },
-            select: postSelect,
+            select: {
+                ...postSelect,
+                Like: true,
+                Dislike: true,
+                Comment: true,
+            },
             where: {
                 userId: id
             }
         });
 
-        return posts || [];
+        const transformedPosts = posts.map((post) => ({
+            post,
+            likes: post.Like.length, // Comptez le nombre de likes
+            dislikes: post.Dislike.length, // Comptez le nombre de dislikes
+            comments: post.Comment.length // Comptez le nombre de commentaires
+        }));
+
+        return transformedPosts || [];
     } catch (e) {
         consola.error(e as Error);
         return [];

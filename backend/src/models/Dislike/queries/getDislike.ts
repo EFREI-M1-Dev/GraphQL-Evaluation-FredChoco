@@ -1,18 +1,17 @@
-import {QueryResolvers} from "../../../types";
+import { QueryResolvers } from "../../../types";
 import {dislikeSelect} from "../../selectorsPrisma.js";
 
-export const getDislike: QueryResolvers["getDislike"] = async (_, {id}, {dataSources}) => {
+export const getDislike: QueryResolvers["getDislike"] = async (_, { userId, postId}, { dataSources }) => {
     try {
-        const dislike = await dataSources.db.dislike.findUnique({
+        const dislike = await dataSources.db.dislike.findFirst({
             where: {
-                id: id
+                userId : userId,
+                postId: postId
             },
             select: dislikeSelect
         });
 
-        if (!dislike) throw new Error('Dislike not found');
-
-        return dislike
+        return dislike || null;
     } catch (e) {
         return null;
     }

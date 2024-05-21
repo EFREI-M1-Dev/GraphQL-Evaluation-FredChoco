@@ -57,8 +57,8 @@ type LatestPost {
 type Query {
   getUser(id: ID!): User @auth
   getPost(id: ID!): LatestPost
-  getLike(id: ID!): Like @auth
-  getDislike(id: ID!): Dislike @auth
+  getLike(userId: ID!, postId: ID!): Like @auth
+  getDislike(userId: ID!, postId: ID!): Dislike @auth
   getComment(id: ID!): Comment @auth
   getLoggedUser: User @auth
   getUserByUsername(username: String!): User
@@ -68,9 +68,9 @@ type Query {
   getAllComments: [Comment]! @auth
   getAllPosts: [Post]! @auth
   getLatestPosts: [LatestPost]!
-  getUserPosts(id: ID!): [Post]! @auth
+  getUserPosts(id: ID!): [LatestPost]! @auth
   getLikesByUser(id: ID!): [Like]! @auth
-  getSearchPost(input: String!): [Post]! 
+  getSearchPost(input: String!): [LatestPost]! 
   getAllCommentsByPost(postId: ID!): [Comment]!
   getRandomPost: Post!
   

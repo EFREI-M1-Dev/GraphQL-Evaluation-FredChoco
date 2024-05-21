@@ -8,7 +8,7 @@ const Button = (
         {
             route?: string;
             children: React.ReactNode,
-            style: "primary" | "header";
+            style: "primary" | "header" | "activated";
             className?: string;
             onClick?: React.MouseEventHandler<HTMLButtonElement>
         }) => {

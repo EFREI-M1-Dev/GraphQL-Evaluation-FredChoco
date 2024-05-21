@@ -36,7 +36,7 @@ const HomePage = () => {
     return (
         <div className={styles.container}>
             <Metrics/>
-            <h1 className={styles.title}>RÉCEMMENT:</h1>
+            <h1 className={styles.title}>RÉCEMMENT :</h1>
             <div className={styles.cardContainer}>
                 {allLatestPosts.map((post) => (
                     <CardArticle

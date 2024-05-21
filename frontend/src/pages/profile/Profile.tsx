@@ -2,7 +2,7 @@ import styles from "./_Profile.module.scss";
 import CardArticle from "../../components/CardArticle/CardArticle.tsx";
 import {gql, useQuery} from "@apollo/client";
 import {useEffect, useState} from "react";
-import {Post, Like} from "../../types/graphql.ts";
+import {Like, LatestPost} from "../../types/graphql.ts";
 import {useAuth} from "../../provider/AuthContext";
 import Carousel from "../../components/Carousel/Carousel.tsx";
 import {useNavigate, useParams} from 'react-router-dom';
@@ -10,17 +10,21 @@ import Button from "../../components/Button/Button";
 
 export const USER_POST = gql`
 query USER_POST_QUERY($id: ID!) {
-  getUserPosts(id: $id) {
-    content
-    createdAt
-    id
-    title
-    imagePath
-    user {
-      id
-      username
+    getUserPosts(id: $id) {
+        post {
+            content
+            createdAt
+            id
+            title
+            imagePath
+            user {
+                id
+                username
+            }
+        }
+        likes
+        dislikes
     }
-  }
 }
 `;
 
@@ -56,7 +60,7 @@ const Profile = () => {
     const {username} = useParams();
     const navigate = useNavigate();
 
-    const [allUserPosts, setAllUserPosts] = useState<Post[]>([]);
+    const [allUserPosts, setAllUserPosts] = useState<LatestPost[]>([]);
     const [allUserLikes, setAllUserLikes] = useState<Like[]>([]);
     const [profileUser, setProfileUser] = useState(currentUser);
     const [imagePath, setImagePath] = useState<string>("");
@@ -143,12 +147,14 @@ const Profile = () => {
                 <Carousel type={'line'}>
                     {allUserPosts.map((post) => (
                         <CardArticle
-                            key={post.id}
-                            title={post.title}
-                            image={`http://localhost:4000/${post.imagePath}`}
-                            authorUsername={post.user.username}
-                            id={post.id}
-                            actionBar={isMyProfile ? post.id : undefined}
+                            key={post.post.id}
+                            title={post.post.title}
+                            image={`http://localhost:4000/${post.post.imagePath}`}
+                            authorUsername={post.post.user.username}
+                            id={post.post.id}
+                            actionBar={isMyProfile ? post.post.id : undefined}
+                            likes={post.likes}
+                            dislikes={post.dislikes}
                         />
                     ))}
                 </Carousel>
