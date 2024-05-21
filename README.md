@@ -6,8 +6,13 @@ Les utilisateurs peuvent s'inscrire, se connecter, créer des articles, les lire
 les commenter, les liker ou disliker. Ils peuvent aussi modifier leur profil avec un
 pseudonyme et une photo de profil.
 
-
-
+## Technologies utilisées
+- Node.js
+- Vite
+- React
+- GraphQL
+- Apollo Server
+- Prisma
 
 ## Lancement du projet
 Installer les dépendances
