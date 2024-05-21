@@ -162,11 +162,48 @@ const Post = () => {
 
     const {currentUser} = useAuth();
 
-    const [likePost] = useMutation(LIKE_POST);
     const [editComment] = useMutation(EDIT_COMMENT);
-    const [deleteLike] = useMutation(DELETE_LIKE_POST);
-    const [dislikePost] = useMutation(DISLIKE_POST);
-    const [deleteDislike] = useMutation(DELETE_DISLIKE_POST);
+    const [likePost] = useMutation(LIKE_POST, {
+        refetchQueries: [
+            {
+                query: GET_LIKE_POST, variables: {
+                    userId: currentUser?.id,
+                    postId: richPost?.post.id,
+                }
+            },
+        ],
+    });
+    const [deleteLike] = useMutation(DELETE_LIKE_POST, {
+        refetchQueries: [
+            {
+                query: GET_LIKE_POST, variables: {
+                    userId: currentUser?.id,
+                    postId: richPost?.post.id,
+                }
+            },
+        ],
+    });
+    const [dislikePost] = useMutation(DISLIKE_POST, {
+        refetchQueries: [
+            {
+                query: GET_DISLIKE_POST, variables: {
+                    userId: currentUser?.id,
+                    postId: richPost?.post.id,
+                }
+            }
+        ],
+    })
+
+    const [deleteDislike] = useMutation(DELETE_DISLIKE_POST, {
+        refetchQueries: [
+            {
+                query: GET_DISLIKE_POST, variables: {
+                    userId: currentUser?.id,
+                    postId: richPost?.post.id,
+                }
+            },
+        ],
+    });
     const [deleteComment] = useMutation(DELETE_COMMENT, {
         refetchQueries: [
             {query: POST, variables: {id: richPost ? richPost.post.id : ''}},
@@ -179,7 +216,6 @@ const Post = () => {
     });
 
     const {m_notificationController} = useMainControllerContext();
-
 
     const {data, loading} = useQuery(POST, {
         variables: {id},
@@ -390,7 +426,6 @@ const Post = () => {
         }
     }
 
-
     if (!richPost || loading) return <></>
 
     return (
@@ -398,11 +433,8 @@ const Post = () => {
             <div className={styles.side__left}>
                 <h2 className={styles.postTitle}>{richPost.post.title}</h2>
                 <p>Le {richPost.post.createdAt}</p>
-
                 <p>{richPost.post.content}</p>
-
                 <p>{richPost.comments} commentaire{richPost.comments > 1 ? 's' : ''}</p>
-
                 <TextField
                     placeholder={"Ajouter un commentaire..."}
                     type={"text"}
@@ -463,16 +495,8 @@ const Post = () => {
                     id={richPost.post.id}
                 />
                 <div className={styles.container}>
-                    {liked ? (
-                        <div onClick={handleLikePost}><Like glow={true}/></div>
-                    ) : (
-                        <div onClick={handleLikePost}><Like glow={false}/></div>
-                    )}
-                    {disliked ? (
-                        <div onClick={handleDislikePost}><Dislike glow={true}/></div>
-                    ) : (
-                        <div onClick={handleDislikePost}><Dislike glow={false}/></div>
-                    )}
+                    <div onClick={handleLikePost}><Like glow={liked} /></div>
+                    <div onClick={handleDislikePost}><Dislike glow={disliked}/></div>
                 </div>
             </div>
         </div>
