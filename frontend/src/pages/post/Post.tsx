@@ -476,7 +476,7 @@ const Post = () => {
                 <div className={styles.postContent}>
                     {
                         richPost.post.content.split('\n').map((paragraph, index) => (
-                            <span key={index}>{paragraph}</span>
+                            <p key={index}>{paragraph}</p>
                         ))
                     }
                 </div>

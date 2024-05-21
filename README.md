@@ -1,5 +1,13 @@
 # GraphQL-Evaluation-FredChoco
 
+## Description du projet
+Nous avons créé un réseau social autour du thème de la kpop. 
+Les utilisateurs peuvent s'inscrire, se connecter, créer des articles, les lire,
+les commenter, les liker ou disliker. Ils peuvent aussi modifier leur profil avec un
+pseudonyme et une photo de profil.
+
+
+
 
 ## Lancement du projet
 Installer les dépendances
@@ -15,7 +23,6 @@ Lancer le serveur
 ```
 
 ## Pages
-
 ### Connexion/Inscription
 Créer un utilisateur
 
