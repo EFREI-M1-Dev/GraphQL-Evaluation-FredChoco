@@ -160,7 +160,7 @@ const Post = () => {
     const [disliked, setDisliked] = useState<boolean>(false);
     const [isProcessing, setIsProcessing] = useState(false);
 
-    const {currentUser} = useAuth();
+    const {currentUser, loggedIn} = useAuth();
 
     const [editComment] = useMutation(EDIT_COMMENT);
     const [likePost] = useMutation(LIKE_POST, {
@@ -311,13 +311,13 @@ const Post = () => {
                         type: "success"
                     });
                 }).catch(() => {
-                    throw new Error("Erreur lors de l'ajout du commentaire");
+                    throw new Error(loggedIn ? "Erreur lors de l'ajout du commentaire" : "Connectez-vous pour commenter.");
                 });
             } else {
                 throw new Error(data.createComment.message);
             }
         } catch (error) {
-            m_notificationController.setNotification({message: "Erreur lors de l'ajout du commentaire", type: "error"});
+            m_notificationController.setNotification({message: loggedIn ? "Erreur lors de l'ajout du commentaire" : "Connectez-vous pour commenter.", type: "error"});
         }
     };
 
@@ -414,7 +414,7 @@ const Post = () => {
             }
         } catch (error) {
             m_notificationController.setNotification({
-                message: "Erreur lors de la mise à jour du like",
+                message: loggedIn ? "Erreur lors de la mise à jour du like" : "Connectez-vous pour liker",
                 type: "error"
             });
         } finally {
@@ -456,7 +456,7 @@ const Post = () => {
             }
         } catch (error) {
             m_notificationController.setNotification({
-                message: "Erreur lors de la mise à jour du dislike",
+                message: loggedIn ? "Erreur lors de la mise à jour du like" : "Connectez-vous pour disliker",
                 type: "error"
             });
         } finally {
