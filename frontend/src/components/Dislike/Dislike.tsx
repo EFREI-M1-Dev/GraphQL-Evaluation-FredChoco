@@ -24,8 +24,8 @@ const Dislike = (
                 </g>
                 <defs>
                     <filter id="filter0_d_14_3191" x="-5.83331" y="-3.75024" width="59.5833" height="57.517"
-                            filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                            filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                        <feFlood floodOpacity="0" result="BackgroundImageFix"/>
                         <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
                                        result="hardAlpha"/>
                         <feOffset/>
