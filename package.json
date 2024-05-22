@@ -4,7 +4,8 @@
     "setup": "npm install && (cd frontend && npm install) && (cd .. && cd backend && npm install)",
     "start-front": "cd frontend && npm run start",
     "start-back": "cd backend && npm run start",
-    "start": "concurrently \"npm run start-front\" \"npm run start-back\""
+    "start-all": "concurrently \"npm run start-front\" \"npm run start-back\"",
+    "start": "npm run setup && npm run start-all"
   },
   "dependencies": {
     "concurrently": "^8.2.2"
