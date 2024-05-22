@@ -9,7 +9,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "generate": "graphql-codegen",
-    "start": "npm run build && http-server dist"
+    "start": "npm run build && http-server dist -p 5008 -P http://localhost:5008/?"
   },
   "dependencies": {
     "@apollo/client": "^3.10.4",

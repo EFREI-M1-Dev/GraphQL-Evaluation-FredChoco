@@ -31,6 +31,10 @@ const app = express();
 
 const allowedOrigins = ['http://localhost:5173', 'http://127.0.0.1'];
 
+if(process.env.URL_FRONTEND) {
+    allowedOrigins.push(process.env.URL_FRONTEND);
+}
+
 app.use(cors({
     origin: allowedOrigins
 }));
@@ -67,8 +71,8 @@ const startServer = async () => {
         })
     );
 
-    app.listen({ port: 4000 }, () => {
-        consola.log(`🚀 Server ready at: http://localhost:4000/graphql`);
+    app.listen({ port: 5009 }, () => {
+        consola.log(`🚀 Server ready at: http://localhost:5009/graphql`);
     });
 };
 

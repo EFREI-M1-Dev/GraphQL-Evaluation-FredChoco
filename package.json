@@ -2,7 +2,7 @@
   "name": "graphql-fredray-chocolatine",
   "scripts": {
     "setup": "npm install && (cd frontend && npm install) && (cd .. && cd backend && npm install)",
-    "start-front": "cd frontend && npm run dev",
+    "start-front": "cd frontend && npm run start",
     "start-back": "cd backend && npm run start",
     "start": "concurrently \"npm run start-front\" \"npm run start-back\""
   },

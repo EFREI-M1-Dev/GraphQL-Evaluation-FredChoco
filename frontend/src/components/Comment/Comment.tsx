@@ -17,7 +17,7 @@ const Comment = (
         if (user) {
             let path = "https://via.placeholder.com/150";
             if (user.imagePath !== "https://via.placeholder.com/150") {
-                path = "http://localhost:4000/" + user.imagePath;
+                path = "http://localhost:5009/" + user.imagePath;
             }
             setImagePath(path);
         }

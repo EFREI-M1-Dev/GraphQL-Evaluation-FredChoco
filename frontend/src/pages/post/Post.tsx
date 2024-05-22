@@ -535,7 +535,7 @@ const Post = () => {
             <div className={styles.side__right}>
                 <CardArticle
                     title={richPost.post.title}
-                    image={`http://localhost:4000/${richPost.post.imagePath}`}
+                    image={`http://localhost:5009/${richPost.post.imagePath}`}
                     authorUsername={richPost.post.user.username}
                     likes={richPost.likes}
                     dislikes={richPost.dislikes}

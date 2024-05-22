@@ -4,11 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "compile": "tsc",
+    "compile": "npm run migrate && tsc",
     "start": "npm run compile && node ./dist/src/index.js",
-    "dev": "tsx watch src",
+    "dev": "npm run migrate && tsx watch src",
     "generate": "graphql-codegen",
-    "prisma": "prisma"
+    "prisma": "prisma",
+    "migrate": "npx prisma generate && prisma migrate dev"
   },
   "keywords": [],
   "author": "",

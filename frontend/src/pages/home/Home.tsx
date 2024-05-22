@@ -42,7 +42,7 @@ const HomePage = () => {
                     <CardArticle
                         key={post.post.id}
                         title={post.post.title}
-                        image={`http://localhost:4000/${post.post.imagePath}`}
+                        image={`http://localhost:5009/${post.post.imagePath}`}
                         authorUsername={post.post.user.username}
                         likes={post.likes}
                         dislikes={post.dislikes}

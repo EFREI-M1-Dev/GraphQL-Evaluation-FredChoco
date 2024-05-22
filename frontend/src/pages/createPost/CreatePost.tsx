@@ -84,7 +84,7 @@ const CreatePostPage = () => {
                 },
             });
 
-            const {message, success, post} = data.createPost;
+            const {message, success} = data.createPost;
             if (success) {
                 navigate('/post/' + post.id);
                 m_notificationController.setNotification({message: "Article créé", type: "success"});
@@ -153,7 +153,7 @@ const CreatePostPage = () => {
             if (data) {
                 setTitleValue(data.getPost.post.title);
                 setContentValue(data.getPost.post.content);
-                setImagePath("http://localhost:4000/" + data.getPost.post.imagePath);
+                setImagePath("http://localhost:5009/" + data.getPost.post.imagePath);
             }
         }
     }, [idPost, data]);

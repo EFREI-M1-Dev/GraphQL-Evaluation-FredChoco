@@ -116,7 +116,7 @@ const Profile = () => {
         if (profileUser) {
             let path = "https://via.placeholder.com/150";
             if (profileUser.imagePath !== "https://via.placeholder.com/150") {
-                path = "http://localhost:4000/" + profileUser.imagePath;
+                path = "http://localhost:5009/" + profileUser.imagePath;
             }
             setImagePath(path);
         }
@@ -155,7 +155,7 @@ const Profile = () => {
                         <CardArticle
                             key={post.post.id}
                             title={post.post.title}
-                            image={`http://localhost:4000/${post.post.imagePath}`}
+                            image={`http://localhost:5009/${post.post.imagePath}`}
                             authorUsername={post.post.user.username}
                             id={post.post.id}
                             actionBar={isMyProfile ? post.post.id : undefined}
@@ -173,7 +173,7 @@ const Profile = () => {
                         <CardArticle
                             key={like.post.id}
                             title={like.post.title}
-                            image={`http://localhost:4000/${like.post.imagePath}`}
+                            image={`http://localhost:5009/${like.post.imagePath}`}
                             authorUsername={like.post.user.username}
                             id={like.post.id}
                             likes={like.likes}

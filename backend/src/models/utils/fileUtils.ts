@@ -1,13 +1,17 @@
 import { v4 as uuidv4 } from 'uuid';
 import {createWriteStream, existsSync, mkdirSync, unlinkSync} from 'fs';
-import path, {dirname} from 'path';
+import path, {dirname, sep} from 'path';
 import { fileURLToPath } from 'url';
 import {FileUpload} from "graphql-upload-ts";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+const getUploadDir = () => {
+    return path.join(__dirname.split(`${sep}backend${sep}dist`)[0], 'backend', 'uploads');
+}
+
 export const uploadFile = async (file: FileUpload): Promise<string> => {
-    const uploadDir = path.join(__dirname, '../../../uploads');
+    const uploadDir = getUploadDir();
     if (!existsSync(uploadDir)) {
         mkdirSync(uploadDir, { recursive: true });
     }
@@ -33,7 +37,7 @@ export const uploadFile = async (file: FileUpload): Promise<string> => {
 export const deleteFile = async (filePath: string) => {
     const nameFile = filePath.split('/').pop();
     if (nameFile) {
-        const uploadDir = path.join(__dirname, '../../../uploads');
+        const uploadDir = getUploadDir();
         const filePath = `${uploadDir}/${nameFile}`;
         if (existsSync(filePath)) {
             await unlinkSync(filePath);

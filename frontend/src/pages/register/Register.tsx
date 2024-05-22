@@ -125,7 +125,7 @@ const RegisterPage = () => {
         if (loggedIn && currentUser) {
             setUsernameValue(currentUser.username);
             setEmailValue(currentUser.email);
-            setImagePath("http://localhost:4000/" + currentUser.imagePath);
+            setImagePath("http://localhost:5009/" + currentUser.imagePath);
         }
     }, [currentUser, loggedIn]);
 
