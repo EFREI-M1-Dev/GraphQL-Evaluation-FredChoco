@@ -106,10 +106,10 @@ Un fichier [**selectorPrisma**](https://github.com/EFREI-M1-Dev/GraphQL-Evaluati
 
 ## Authentification
 Une Authentification avec JWT a été faite comme vue en cours.  
-De plus une Directive a été créer afin de bloquer les requêtes non authentifié.  
-(Avec cela il suffit de rajouter **@auth** a la fin de la queries ou de la mutations dans le [**schema GraphQL**](https://github.com/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/blob/main/backend/src/schema.ts) pour la sécurisé)
+De plus une Directive a été créée afin de bloquer les requêtes non authentifiées.  
+(Avec cela, il suffit de rajouter **@auth** à la fin de la query ou de la mutation dans le [**schema GraphQL**](https://github.com/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/blob/main/backend/src/schema.ts) pour la sécuriser)
   - [**auth.ts**](https://github.com/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/blob/main/backend/src/modules/auth.ts)
   - [**authDirective.ts**](https://github.com/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/blob/main/backend/src/modules/authDirective.ts)
 
 ## Codegen   
-- Codegen a été utilisé pour générer tous les types du [**schema GraphQL**](https://github.com/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/blob/main/backend/src/schema.ts) utilisable dans l'application.
+- Codegen a été utilisé pour générer tous les types du [**schema GraphQL**](https://github.com/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/blob/main/backend/src/schema.ts) utilisables dans l'application.
