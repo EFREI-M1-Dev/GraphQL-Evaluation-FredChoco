@@ -84,7 +84,7 @@ const CreatePostPage = () => {
                 },
             });
 
-            const {message, success} = data.createPost;
+            const {message, success,post} = data.createPost;
             if (success) {
                 navigate('/post/' + post.id);
                 m_notificationController.setNotification({message: "Article créé", type: "success"});
