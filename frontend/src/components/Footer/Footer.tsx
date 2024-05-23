@@ -10,6 +10,8 @@ const Footer = () => {
             try {
                 const response = await fetch("https://api.github.com/repos/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/commits/main ");
                 const data = await response.json();
+                if (!data.sha)
+                    throw new Error("No commit sha found");
                 setCommitSha(data.sha);
             } catch (error) {
                 console.error(error);
