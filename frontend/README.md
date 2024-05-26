@@ -179,16 +179,16 @@ Sur cette page, on retrouve un formulaire qui permet l'ajout d'un article avec u
 ![Alt "Create Post Page"](https://github.com/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/blob/main/frontend/illustration-readme/createPost.png?raw=true "Create Post Page")
 
 ### La page modification d'un Article "Edit Post Page":
-Sur cette page, on retrouve toutes les informations de l'article avec la possibilité de modifier chaque champ.
+Sur cette page, on retrouve toutes les informations de l'article avec la possibilité de modifier chaque champ.  
 ![Alt "Edit Post Page"](https://github.com/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/blob/main/frontend/illustration-readme/editPost.png?raw=true "Edit Post Page")
 
 ### La carte d'un Article par defaut "Card Post":
-Cette carte représente les informations d'un article, avec la photo d'illustration, le titre, le créateur, ainsi que le nombre de likes et de dislikes.
+Cette carte représente les informations d'un article, avec la photo d'illustration, le titre, le créateur, ainsi que le nombre de likes et de dislikes.  
 ![Alt "Card post"](https://github.com/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/blob/main/frontend/illustration-readme/cardPost.png?raw=true "Card Post")
 
 
 ### La carte d'un de nos Article  "Card My Post":
-Cette carte représente de la même façon les informations d'un article, mais elle permet en plus, si l'article appartient à la personne connectée (donc si c'est l'auteur de l'article), de supprimer ou de modifier l'article.
+Cette carte représente de la même façon les informations d'un article, mais elle permet en plus, si l'article appartient à la personne connectée (donc si c'est l'auteur de l'article), de supprimer ou de modifier l'article.  
 ![Alt "Card My Post"](https://github.com/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/blob/main/frontend/illustration-readme/cardMyPost.png?raw=true "Card My Post")
 
 
