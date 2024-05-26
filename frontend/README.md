@@ -17,13 +17,13 @@ Installer les dépendances
   npm install
 ```
 
-Lancer le serveur en mode **Dev** [http://localhost:5009/graphql](http://localhost:5009/graphql)
+Lancer le serveur en mode **Dev** [http://localhost:5173/](http://localhost:5173/)
 
 ```bash
   npm run dev
 ```
 
-Lancer le serveur en mode **Prod** (compiler) [http://localhost:5009/graphql](http://localhost:5009/graphql)
+Lancer le serveur en mode **Prod** (compiler) [http://localhost:5008/](http://localhost:5008/)
 
 ```bash
   npm run start
