@@ -99,3 +99,82 @@ Points importants :
 - README.md
 - tsconfig.json
 - vite.config.ts
+
+## Quelques images de l'application en fonction des différentes fonctionnalités
+
+### La page d'acceuil "Home page" :
+![Alt "Home page"](https://github.com/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/blob/main/frontend/illustration-readme/homePageLatestPost.png?raw=true "Home page")
+
+### La page de connexion "Login page" :
+![Alt "Login page"](https://github.com/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/blob/main/frontend/illustration-readme/loginPage.png?raw=true "Login page")
+
+### La page d'inscription "Sign up page" :
+![Alt "Sign up page"](https://github.com/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/blob/main/frontend/illustration-readme/createPage.png?raw=true "Sign up page")
+
+### La page de recherche  VIDE "Search empty" :
+![Alt "Search empty"](https://github.com/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/blob/main/frontend/illustration-readme/searchEmpty.png?raw=true "Search empty")
+
+### La page de recherche "E" "Search lettre E" :
+![Alt "Search E"](https://github.com/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/blob/main/frontend/illustration-readme/searchLettreE.png?raw=true "Search E")
+
+### La page de recherche "E" triée par popularit" "Search popularity" :
+![Alt "Search popularity"](https://github.com/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/blob/main/frontend/illustration-readme/searchPopularityActiv.png?raw=true "Search popularity")
+
+### La page d'un Post "Post Page":
+![Alt "Post page"](https://github.com/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/blob/main/frontend/illustration-readme/unPost.png?raw=true "Post page")
+
+### La section modification commentaire "Edit comment":
+![Alt "Edit comment"](https://github.com/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/blob/main/frontend/illustration-readme/editComment.png?raw=true "Edit comment")
+
+### La page de profile "Profil Page":
+![Alt "Profil page"](https://github.com/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/blob/main/frontend/illustration-readme/profilPage.png?raw=true "Profil page")
+
+### La page modification de profile "Edit profil Page":
+![Alt "Edit Profil page"](https://github.com/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/blob/main/frontend/illustration-readme/editAccount.png?raw=true "Edit Profil page")
+
+
+### La page création d'un Article "Create Post Page":
+![Alt "Create Post Page"](https://github.com/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/blob/main/frontend/illustration-readme/createPost.png?raw=true "Create Post Page")
+
+### La page modification d'un Article "Edit Post Page":
+![Alt "Edit Post Page"](https://github.com/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/blob/main/frontend/illustration-readme/editPost.png?raw=true "Edit Post Page")
+
+### La carte d'un Article par defaut "Card Post":
+![Alt "Card post"](https://github.com/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/blob/main/frontend/illustration-readme/cardPost.png?raw=true "Card Post")
+
+
+### La carte d'un de nos Article  "Card My Post":
+![Alt "Card My Post"](https://github.com/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/blob/main/frontend/illustration-readme/cardMyPost.png?raw=true "Card My Post")
+
+
+### Le Footer des pages  "Footer":
+![Alt "Footer"](https://github.com/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/blob/main/frontend/illustration-readme/footer.png?raw=true "Footer")
+
+### Le Button "random" dans le header "Btn Random":
+![Alt "Btn Random"](https://github.com/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/blob/main/frontend/illustration-readme/btnRandom.png?raw=true "Btn Random")
+
+
+## La Gestion des Formulaires et les notifications
+
+### ERREUR ET WARNING :
+![Alt "Btn Random"](https://github.com/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/blob/main/frontend/illustration-readme/notif/invalidPasswordError.png?raw=true "Btn Random")
+
+![Alt "Btn Random"](https://github.com/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/blob/main/frontend/illustration-readme/notif/likeError.png?raw=true "Btn Random")
+
+![Alt "Btn Random"](https://github.com/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/blob/main/frontend/illustration-readme/notif/dislikeError.png?raw=true "Btn Random")
+
+![Alt "Btn Random"](https://github.com/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/blob/main/frontend/illustration-readme/notif/postCommentError.png?raw=true "Btn Random")
+
+![Alt "Btn Random"](https://github.com/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/blob/main/frontend/illustration-readme/notif/pwdNotMatch.png?raw=true "Btn Random")
+
+![Alt "Btn Random"](https://github.com/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/blob/main/frontend/illustration-readme/notif/allInputsError.png?raw=true "Btn Random")
+
+### SUCCESS :
+
+![Alt "Btn Random"](https://github.com/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/blob/main/frontend/illustration-readme/notif/loginSuccess.png?raw=true "Btn Random")
+
+![Alt "Btn Random"](https://github.com/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/blob/main/frontend/illustration-readme/notif/logoutSuccess.png?raw=true "Btn Random")
+
+![Alt "Btn Random"](https://github.com/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/blob/main/frontend/illustration-readme/notif/editCommentSuccess.png?raw=true "Btn Random")
+
+![Alt "Btn Random"](https://github.com/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/blob/main/frontend/illustration-readme/notif/addPostSuccess.png?raw=true "Btn Random")
