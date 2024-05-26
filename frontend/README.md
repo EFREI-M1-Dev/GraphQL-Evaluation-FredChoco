@@ -163,6 +163,11 @@ Enfin, il retrouve un carrousel avec les différents articles qu'il a aimés.
 
 ![Alt "Profil page"](https://github.com/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/blob/main/frontend/illustration-readme/profilPage.png?raw=true "Profil page")
 
+### La page de profile d'un autre utilisateur "Profil Page":
+Sur cette page, on retrouve toutes les même informations liées à l'utilisateur choisi.
+
+![Alt "Profil page"](https://github.com/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/blob/main/frontend/illustration-readme/profileNotMy.png?raw=true "Profil page")
+
 ### La page modification de profile "Edit profil Page":
 Sur cette page, on retrouve un formulaire qui permet la modification des informations du profil.
 On peut modifier le nom d'utilisateur, l'email et la photo de profil.

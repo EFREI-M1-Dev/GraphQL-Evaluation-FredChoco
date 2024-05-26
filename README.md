@@ -1,7 +1,7 @@
 # GraphQL-Evaluation-FredChoco
 
 ## Description du projet
-Nous avons créé un réseau social autour du thème de la kpop. 
+Nous avons créé un réseau social autour du thème de la kpop.
 Les utilisateurs peuvent s'inscrire, se connecter, créer des articles, les lire,
 les commenter, les liker ou disliker. Ils peuvent aussi modifier leur profil avec un
 pseudonyme et une photo de profil.
@@ -15,20 +15,31 @@ pseudonyme et une photo de profil.
 - [TypeScript](https://www.typescriptlang.org/)
 - [SASS](https://sass-lang.com/)
 
-## Lancement du projet
-Installer les dépendances
+## README
+Je vous invite à lire dans un premier temps les README des différentes parties :
+- [README Frontend](https://github.com/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/blob/main/frontend/README.md)
+- [README Backend](https://github.com/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/blob/main/backend/README.md)
 
-```bash
-  npm run setup
-```
+## Lancement du projet globalement
+**! Les commandes ont été essayées sur un environnement Windows !**
 
-Lancer le serveur
+Tout en une seule commande (install / start-back / start-front).
+- Installation de tous les packages frontend et backend
+- Construction du frontend et du backend
+- Démarrage du frontend et du backend en production
 
 ```bash
   npm run start
 ```
 
-## Pages
+Installer les dépendances (frontend et backend)
+
+```bash
+  npm run setup
+```
+
+
+## Pages et fonctionnalités globales
 ### Connexion/Inscription
 Créer un utilisateur
 
