@@ -6,6 +6,7 @@ import {gql, useMutation} from "@apollo/client";
 import {useNavigate} from "react-router-dom";
 import {useAuth} from "../../provider/AuthContext";
 import {useMainControllerContext} from "../../main";
+import {STATISTICS} from "../../components/Metrics/Metrics";
 
 const CREATE_USER = gql`
 mutation createUser($username: String!, $password: String!, $email: String!) {
@@ -41,7 +42,9 @@ const RegisterPage = () => {
     const {m_notificationController} = useMainControllerContext();
     const {currentUser, loggedIn, login} = useAuth();
 
-    const [createUser] = useMutation(CREATE_USER);
+    const [createUser] = useMutation(CREATE_USER, {
+        refetchQueries: [{query: STATISTICS}]
+    });
     const [editUser] = useMutation(UPDATE_USER);
 
     const [FileValue, setFileValue] = useState<File | null>(null);

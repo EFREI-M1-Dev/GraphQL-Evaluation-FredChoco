@@ -6,6 +6,25 @@ import {userSelect} from "../../selectorsPrisma.js";
 export const createUser: MutationResolvers["createUser"] = async (_, { username, password, email }, { dataSources }) => {
 
     try {
+
+        const userExists = await dataSources.db.user.findFirst({
+            where: {
+                OR: [
+                    { username },
+                    { email }
+                ]
+            }
+        });
+        
+        if(userExists) {
+            return {
+                code: 400,
+                success: false,
+                message: 'Username or email already exists',
+                user: null
+            }
+        }
+
         const createdUser = await dataSources.db.user.create({
             data: {
                 username,

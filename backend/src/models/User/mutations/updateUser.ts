@@ -14,6 +14,24 @@ export const updateUser: MutationResolvers["updateUser"] = async (_, {id, input}
         }
 
 
+        const userExists = await dataSources.db.user.findFirst({
+            where: {
+                OR: [
+                    { username: input.username },
+                    { email: input.email }
+                ]
+            }
+        });
+
+        if(userExists) {
+            return {
+                code: 400,
+                success: false,
+                message: 'Username or email already exists',
+                user: null
+            }
+        }
+
         const updatedUser = await dataSources.db.user.update({
             where: {id},
             data: {
