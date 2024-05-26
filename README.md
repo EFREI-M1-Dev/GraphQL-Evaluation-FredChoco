@@ -38,6 +38,10 @@ Installer les dépendances (frontend et backend)
   npm run setup
 ```
 
+## Informations de connexion
+Si besoin 2 utilisateurs sont déjà créer
+- **choco** (pwd : "**password**") 
+- **fredray** (pwd : "**password**")
 
 ## Pages et fonctionnalités globales
 ### Connexion/Inscription
