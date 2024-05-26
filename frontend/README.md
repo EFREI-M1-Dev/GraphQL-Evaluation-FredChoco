@@ -127,7 +127,7 @@ La recherche cherche dans :
 Voici la page de recherche avec une recherche de la lettre 'e' et l'affichage des résultats.
 ![Alt "Search E"](https://github.com/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/blob/main/frontend/illustration-readme/searchLettreE.png?raw=true "Search E")
 
-### La page de recherche "E" triée par popularit" "Search popularity" :
+### La page de recherche "E" triée par popularité "Search popularity" :
 Voici la page de recherche avec une recherche de la lettre 'e' et l'affichage des résultats. Cependant, **l'option 'popularité' a été activée**. Les articles sont donc triés du plus populaire au moins populaire.
 
 ![Alt "Search popularity"](https://github.com/EFREI-M1-Dev/GraphQL-Evaluation-FredChoco/blob/main/frontend/illustration-readme/searchPopularityActiv.png?raw=true "Search popularity")
