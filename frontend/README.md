@@ -10,7 +10,7 @@
 - [TypeScript](https://www.typescriptlang.org/)
 - [SASS](https://sass-lang.com/)
 
-## Lancement du backend
+## Lancement du frontend
 Installer les dépendances
 
 ```bash
@@ -40,19 +40,19 @@ Points importants :
 
 - Le dossier **controller** représente l'endroit où tous les contrôleurs sont rangés. Ici, il y a un controllerMain.ts qui contient une instance de chaque autre contrôleur, comme le controllerNotification.
 
-- Dans **pages**, cela représente les différentes pages du site, comme par exemple la page Home ou la page Login. Dans la même logique que les composants, chaque dossier contient un fichier **.tsx** et un fichier **.scss** qui représentent la page et son style affilié.
+- Dans **pages**, cela représente les différentes pages du site, comme la page Home ou la page Login. Dans la même logique que les composants, chaque dossier contient un fichier **.tsx** et un fichier **.scss** qui représentent la page et son style affilié.
 
 - Dans **provider** se trouvent 2 fichiers qui vont être utilisés pour créer des providers dans *main.tsx* :
-    - **AppoloClient.ts** : représente et crée une instance pour la connexion avec notre backend ApolloServer.
+    - **ApolloClient.ts** : représente et crée une instance pour la connexion avec notre backend ApolloServer.
     - **AuthContext.ts** : permet de gérer globalement l'authentification, avec des commandes comme login / logout ou les différentes variables comme le *currentUser* qui représente l'utilisateur actuellement connecté.
 
-- Dans **styles**, on retrouve les styles globaux de l'application, comme par exemple les couleurs. Ces styles globaux sont réutilisés dans les différents fichiers *.scss*. Cela permet de ne définir qu'une seule fois les couleurs de l'application et donc, en cas de besoin de modification, de le faire à un seul endroit.
+- Dans **styles**, on retrouve les styles globaux de l'application, comme les couleurs. Ces styles globaux sont réutilisés dans les différents fichiers *.scss*. Cela permet de ne définir qu'une seule fois les couleurs de l'application et donc, en cas de besoin de modification, de le faire à un seul endroit.
 
 - Le fichier **codegen.ts** permet de faire une liaison avec le backend afin de générer les différents types. Ces types sont générés dans le dossier **types**.
 
 - Le fichier **main.tsx** représente la base de l'application avec un routeur qui permet de rediriger vers les différentes pages, mais aussi l'initialisation des différents providers (auth / apollo / controller).
 
-- Le fichier **App.tsx** représente la structure de l'application. Il renvoie le composant donné par le routeur mais en plus, il englobe celui-ci avec le header, le footer et les pop-ups pour les notifications. Cela permet de ne pas définir le header, etc., plusieurs fois dans chaque page.
+- Le fichier **App.tsx** représente la structure de l'application. Il renvoie le composant donné par le routeur et en plus, il englobe celui-ci avec le header, le footer et les pop-ups pour les notifications. Cela permet de ne pas définir le header, etc., plusieurs fois dans chaque page.
 
 
 
@@ -71,7 +71,7 @@ Points importants :
         - Comment
         - ...
     - **controller**
-        - controlerMain.ts 
+        - controllerMain.ts 
         - controllerNotification.ts
     - **pages**
         - createPost
@@ -82,7 +82,7 @@ Points importants :
         - login
         - ...
     - **provider**
-        - AppoloClient.ts
+        - ApolloClient.ts
         - AuthContext.tsx
     - **styles**
         - fonts

@@ -7,12 +7,13 @@ les commenter, les liker ou disliker. Ils peuvent aussi modifier leur profil ave
 pseudonyme et une photo de profil.
 
 ## Technologies utilisées
-- Node.js
-- Vite
-- React
-- GraphQL
-- Apollo Server
-- Prisma
+- [Node.js](https://nodejs.org/en)
+- [Vite](https://vitejs.dev/)
+- [React](https://fr.react.dev/)
+- [GraphQl](https://graphql.org/)
+- [Apollo Server](https://www.apollographql.com/docs/apollo-server/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [SASS](https://sass-lang.com/)
 
 ## Lancement du projet
 Installer les dépendances
