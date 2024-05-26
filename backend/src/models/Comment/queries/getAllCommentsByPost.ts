@@ -9,7 +9,10 @@ export const getAllCommentsByPost: QueryResolvers["getAllCommentsByPost"] = asyn
             where: {
                 postId: postId
             },
-            select: commentSelect
+            select: commentSelect,
+            orderBy: {
+                createdAt: 'desc'
+            }
         });
 
         return comments || [];

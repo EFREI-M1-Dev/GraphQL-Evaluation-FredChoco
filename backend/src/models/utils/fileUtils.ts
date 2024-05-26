@@ -5,9 +5,14 @@ import { fileURLToPath } from 'url';
 import {FileUpload} from "graphql-upload-ts";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+import fs from 'fs';
 
 const getUploadDir = () => {
-    return path.join(__dirname.split(`${sep}backend${sep}dist`)[0], 'backend', 'uploads');
+    if(__dirname.split(`${sep}backend${sep}dist`)[1] === undefined){
+        return path.join(__dirname.split(`${sep}backend${sep}src`)[0], 'backend', 'uploads');
+    } else {
+        return path.join(__dirname.split(`${sep}backend${sep}dist`)[0], 'backend', 'uploads');
+    }
 }
 
 export const uploadFile = async (file: FileUpload): Promise<string> => {

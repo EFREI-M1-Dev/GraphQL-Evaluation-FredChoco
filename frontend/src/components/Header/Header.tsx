@@ -70,7 +70,7 @@ const Header = () => {
                 </div>
                 :
                 <div className={styles.section}>
-                    <Button style={"header"} route={"profile"}> [PROFILE] </Button>
+                    <Button style={"header"} reloadDocument={true} route={"profile"}> [PROFILE] </Button>
                     <Button style={"header"} onClick={() =>
                     {
                         logout();

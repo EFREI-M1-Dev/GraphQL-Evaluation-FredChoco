@@ -11,6 +11,7 @@ const Button = (
             style: "primary" | "header" | "activated";
             className?: string;
             onClick?: React.MouseEventHandler<HTMLButtonElement>
+            reloadDocument?: boolean;
         }) => {
     const isCurrentPath = props.style === "header" && (window.location.pathname.split("/").pop() === props.route);
 
@@ -32,7 +33,7 @@ const Button = (
 
     if (props.route) {
         return (
-            <Link to={props.route} className={styles.link} >
+            <Link to={props.route} className={styles.link} reloadDocument={props.reloadDocument}>
                 {button}
             </Link>
         )
